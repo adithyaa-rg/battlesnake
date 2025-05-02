@@ -310,9 +310,9 @@ def plot_durations(show_result=False):
     plt.pause(0.001)  # pause a bit so that plots are updated
 
 if torch.cuda.is_available() or torch.backends.mps.is_available():
-    num_episodes = start_ep + 4000
+    num_episodes = start_ep + 10000
 else:
-    num_episodes = start_ep + 4000
+    num_episodes = start_ep + 10000
 
 
 
