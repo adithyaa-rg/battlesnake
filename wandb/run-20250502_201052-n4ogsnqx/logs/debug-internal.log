@@ -1,0 +1,11 @@
+{"time":"2025-05-02T20:10:52.764103104+02:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-05-02T20:10:52.764114925+02:00","level":"INFO","msg":"created symlink","path":"/home/adithyaa/KTH/battlesnake/wandb/run-20250502_201052-n4ogsnqx/logs/debug-core.log"}
+{"time":"2025-05-02T20:10:52.868820039+02:00","level":"INFO","msg":"created new stream","id":"n4ogsnqx"}
+{"time":"2025-05-02T20:10:52.868891356+02:00","level":"INFO","msg":"stream: started","id":"n4ogsnqx"}
+{"time":"2025-05-02T20:10:52.868954951+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"n4ogsnqx"}
+{"time":"2025-05-02T20:10:52.868985393+02:00","level":"INFO","msg":"sender: started","stream_id":"n4ogsnqx"}
+{"time":"2025-05-02T20:10:52.869123324+02:00","level":"INFO","msg":"handler: started","stream_id":"n4ogsnqx"}
+{"time":"2025-05-02T20:10:53.518515006+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-02T20:10:53.625086324+02:00","level":"INFO","msg":"stream: closing","id":"n4ogsnqx"}
+{"time":"2025-05-02T20:10:53.625133652+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-02T20:10:53.6266515+02:00","level":"INFO","msg":"Stopped system monitor"}

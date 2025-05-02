@@ -1,0 +1,15 @@
+{"time":"2025-05-02T20:11:17.679747523+02:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-05-02T20:11:17.679782909+02:00","level":"INFO","msg":"created symlink","path":"/home/adithyaa/KTH/battlesnake/wandb/run-20250502_201117-2nmu62sc/logs/debug-core.log"}
+{"time":"2025-05-02T20:11:17.786818537+02:00","level":"INFO","msg":"created new stream","id":"2nmu62sc"}
+{"time":"2025-05-02T20:11:17.786876225+02:00","level":"INFO","msg":"stream: started","id":"2nmu62sc"}
+{"time":"2025-05-02T20:11:17.786987204+02:00","level":"INFO","msg":"handler: started","stream_id":"2nmu62sc"}
+{"time":"2025-05-02T20:11:17.786987077+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"2nmu62sc"}
+{"time":"2025-05-02T20:11:17.787107879+02:00","level":"INFO","msg":"sender: started","stream_id":"2nmu62sc"}
+{"time":"2025-05-02T20:11:18.292397718+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-02T20:13:48.972677335+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/mas4/mas-dqn-battlesnake/2nmu62sc/file_stream\": dial tcp: lookup api.wandb.ai on 127.0.0.53:53: server misbehaving"}
+{"time":"2025-05-02T20:13:51.238817043+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/mas4/mas-dqn-battlesnake/2nmu62sc/file_stream\": dial tcp: lookup api.wandb.ai on 127.0.0.53:53: server misbehaving"}
+{"time":"2025-05-02T20:13:55.371785698+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/mas4/mas-dqn-battlesnake/2nmu62sc/file_stream\": dial tcp: lookup api.wandb.ai on 127.0.0.53:53: server misbehaving"}
+{"time":"2025-05-02T20:13:59.126482749+02:00","level":"INFO","msg":"stream: closing","id":"2nmu62sc"}
+{"time":"2025-05-02T20:13:59.12651124+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-02T20:13:59.127030908+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-02T20:14:00.86088025+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}

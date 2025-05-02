@@ -1,0 +1,173 @@
+Device: cpu
+Number of Actions: 4
+Number of Observations: (11, 11, 5)
+Loaded model weights from models/DQN/policynet_dqn_weights_ep4000.pth
+Loaded model weights from models/DQN/targetnet_dqn_weights_ep4000.pth
+Latest checkpoint number: 4000
+Observation Space Shape: (4, 3, 11, 11)
+Episode 4000 started
+Saved model at episode 4000 to models/DQN/policynet_dqn_weights_ep4000.pth
+Saved model at episode 4000 to models/DQN/targetnet_dqn_weights_ep4000.pth
+battlesnake.py:334: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  state_agents = torch.tensor(state_agents, device = device, dtype=torch.float32)
+Episode 4050 started
+Episode 4100 started
+Saved model at episode 4100 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 4100 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 4150 started
+Episode 4200 started
+Saved model at episode 4200 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 4200 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 4250 started
+Episode 4300 started
+Saved model at episode 4300 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 4300 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 4350 started
+Episode 4400 started
+Saved model at episode 4400 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 4400 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 4450 started
+Episode 4500 started
+Saved model at episode 4500 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 4500 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 4550 started
+Episode 4600 started
+Saved model at episode 4600 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 4600 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 4650 started
+Episode 4700 started
+Saved model at episode 4700 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 4700 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 4750 started
+Episode 4800 started
+Saved model at episode 4800 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 4800 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 4850 started
+Episode 4900 started
+Saved model at episode 4900 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 4900 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 4950 started
+Episode 5000 started
+Saved model at episode 5000 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 5000 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 5050 started
+Episode 5100 started
+Saved model at episode 5100 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 5100 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 5150 started
+Episode 5200 started
+Saved model at episode 5200 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 5200 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 5250 started
+Episode 5300 started
+Saved model at episode 5300 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 5300 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 5350 started
+Episode 5400 started
+Saved model at episode 5400 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 5400 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 5450 started
+Episode 5500 started
+Saved model at episode 5500 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 5500 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 5550 started
+Episode 5600 started
+Saved model at episode 5600 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 5600 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 5650 started
+Episode 5700 started
+Saved model at episode 5700 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 5700 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 5750 started
+Episode 5800 started
+Saved model at episode 5800 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 5800 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 5850 started
+Episode 5900 started
+Saved model at episode 5900 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 5900 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 5950 started
+Episode 6000 started
+Saved model at episode 6000 to models/DQN/policynet_dqn_weights_ep6000.pth
+Saved model at episode 6000 to models/DQN/targetnet_dqn_weights_ep6000.pth
+Episode 6050 started
+Episode 6100 started
+Saved model at episode 6100 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 6100 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 6150 started
+Episode 6200 started
+Saved model at episode 6200 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 6200 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 6250 started
+Episode 6300 started
+Saved model at episode 6300 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 6300 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 6350 started
+Episode 6400 started
+Saved model at episode 6400 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 6400 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 6450 started
+Episode 6500 started
+Saved model at episode 6500 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 6500 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 6550 started
+Episode 6600 started
+Saved model at episode 6600 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 6600 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 6650 started
+Episode 6700 started
+Saved model at episode 6700 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 6700 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 6750 started
+Episode 6800 started
+Saved model at episode 6800 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 6800 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 6850 started
+Episode 6900 started
+Saved model at episode 6900 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 6900 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 6950 started
+Episode 7000 started
+Saved model at episode 7000 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 7000 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 7050 started
+Episode 7100 started
+Saved model at episode 7100 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 7100 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 7150 started
+Episode 7200 started
+Saved model at episode 7200 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 7200 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 7250 started
+Episode 7300 started
+Saved model at episode 7300 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 7300 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 7350 started
+Episode 7400 started
+Saved model at episode 7400 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 7400 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 7450 started
+Episode 7500 started
+Saved model at episode 7500 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 7500 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 7550 started
+Episode 7600 started
+Saved model at episode 7600 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 7600 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 7650 started
+Episode 7700 started
+Saved model at episode 7700 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 7700 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 7750 started
+Episode 7800 started
+Saved model at episode 7800 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 7800 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 7850 started
+Episode 7900 started
+Saved model at episode 7900 to models/DQN/{name}_dqn_weights_temp.pth
+Saved model at episode 7900 to models/DQN/{name}_dqn_weights_temp.pth
+Episode 7950 started
+Episode 8000 started
+Saved model at episode 8000 to models/DQN/policynet_dqn_weights_ep8000.pth
+Saved model at episode 8000 to models/DQN/targetnet_dqn_weights_ep8000.pth
+Complete

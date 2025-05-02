@@ -1,0 +1,27 @@
+{"time":"2025-05-02T20:17:04.085584261+02:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-05-02T20:17:04.085612585+02:00","level":"INFO","msg":"created symlink","path":"/home/adithyaa/KTH/battlesnake/wandb/run-20250502_201704-atgnfc69/logs/debug-core.log"}
+{"time":"2025-05-02T20:17:04.189053977+02:00","level":"INFO","msg":"created new stream","id":"atgnfc69"}
+{"time":"2025-05-02T20:17:04.18908177+02:00","level":"INFO","msg":"stream: started","id":"atgnfc69"}
+{"time":"2025-05-02T20:17:04.189107988+02:00","level":"INFO","msg":"handler: started","stream_id":"atgnfc69"}
+{"time":"2025-05-02T20:17:04.189116025+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"atgnfc69"}
+{"time":"2025-05-02T20:17:04.189141716+02:00","level":"INFO","msg":"sender: started","stream_id":"atgnfc69"}
+{"time":"2025-05-02T20:17:04.191995307+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai on 127.0.0.53:53: server misbehaving"}
+{"time":"2025-05-02T20:17:06.65336189+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai on 127.0.0.53:53: server misbehaving"}
+{"time":"2025-05-02T20:17:19.093945091+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-02T20:17:40.075511527+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/mas4/mas-dqn-battlesnake/atgnfc69/file_stream\": dial tcp: lookup api.wandb.ai on 127.0.0.53:53: server misbehaving"}
+{"time":"2025-05-02T20:18:32.985556605+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-05-02T20:19:01.638541952+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/mas4/mas-dqn-battlesnake/atgnfc69/file_stream\": dial tcp: lookup api.wandb.ai on 127.0.0.53:53: server misbehaving"}
+{"time":"2025-05-02T20:19:05.168049319+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": net/http: request canceled (Client.Timeout exceeded while awaiting headers)"}
+{"time":"2025-05-02T20:19:06.393350856+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/mas4/mas-dqn-battlesnake/atgnfc69/file_stream\": dial tcp: lookup api.wandb.ai on 127.0.0.53:53: server misbehaving"}
+{"time":"2025-05-02T20:19:11.047435406+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/mas4/mas-dqn-battlesnake/atgnfc69/file_stream\": dial tcp: lookup api.wandb.ai on 127.0.0.53:53: server misbehaving"}
+{"time":"2025-05-02T20:20:20.331374981+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/mas4/mas-dqn-battlesnake/atgnfc69/file_stream\": dial tcp: lookup api.wandb.ai on 127.0.0.53:53: server misbehaving"}
+{"time":"2025-05-02T20:21:16.118817566+02:00","level":"INFO","msg":"stream: closing","id":"atgnfc69"}
+{"time":"2025-05-02T20:21:16.118915467+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-02T20:21:16.120174624+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-02T20:21:34.202800509+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-02T20:21:37.086211947+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/mas4/mas-dqn-battlesnake/atgnfc69/file_stream\": dial tcp: lookup api.wandb.ai on 127.0.0.53:53: server misbehaving"}
+{"time":"2025-05-02T20:21:50.463231478+02:00","level":"INFO","msg":"handler: closed","stream_id":"atgnfc69"}
+{"time":"2025-05-02T20:21:50.463397547+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"atgnfc69"}
+{"time":"2025-05-02T20:21:50.463410456+02:00","level":"INFO","msg":"sender: closed","stream_id":"atgnfc69"}
+{"time":"2025-05-02T20:21:50.463653886+02:00","level":"ERROR","msg":"runfiles: CreateRunFiles returned error: api: failed sending: POST https://api.wandb.ai/graphql giving up after 1 attempt(s): context canceled"}
+{"time":"2025-05-02T20:21:50.463741331+02:00","level":"INFO","msg":"stream: closed","id":"atgnfc69"}
