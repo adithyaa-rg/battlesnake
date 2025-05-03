@@ -56,6 +56,7 @@ env.seed(42)
 n_agents = 4
 
 
+
 device = torch.device(
     "cuda" if torch.cuda.is_available() else
     "mps" if torch.backends.mps.is_available() else
