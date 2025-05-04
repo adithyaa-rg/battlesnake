@@ -1,0 +1,32 @@
+{
+  "os": "Linux-6.8.0-51-generic-x86_64-with-debian-trixie-sid",
+  "python": "3.7.12",
+  "startedAt": "2025-05-04T23:03:29.345612Z",
+  "program": "ppo_basic.py",
+  "codePath": "ppo_basic.py",
+  "git": {
+    "remote": "https://github.com/adithyaa-rg/battlesnake.git",
+    "commit": "c9c4934e0a08da0a67c22929d3aff665d1256791"
+  },
+  "email": "ed21b005@smail.iitm.ac.in",
+  "root": "/home/adithyaa/KTH/battlesnake",
+  "host": "adithyaa",
+  "username": "adithyaa",
+  "executable": "/home/adithyaa/miniconda3/envs/py37/bin/python",
+  "codePathLocal": "ppo_basic.py",
+  "cpu_count": 4,
+  "cpu_count_logical": 8,
+  "disk": {
+    "/": {
+      "total": "502392610816",
+      "used": "54460600320"
+    }
+  },
+  "memory": {
+    "total": "8092479488"
+  },
+  "cpu": {
+    "count": 4,
+    "countLogical": 8
+  }
+}

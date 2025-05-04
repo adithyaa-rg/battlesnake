@@ -1,0 +1,17 @@
+{"time":"2025-05-05T01:03:29.351472154+02:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-05-05T01:03:29.351516757+02:00","level":"INFO","msg":"created symlink","path":"/home/adithyaa/KTH/battlesnake/wandb/run-20250505_010329-bmfy5ipc/logs/debug-core.log"}
+{"time":"2025-05-05T01:03:29.455342896+02:00","level":"INFO","msg":"created new stream","id":"bmfy5ipc"}
+{"time":"2025-05-05T01:03:29.455360666+02:00","level":"INFO","msg":"stream: started","id":"bmfy5ipc"}
+{"time":"2025-05-05T01:03:29.455437385+02:00","level":"INFO","msg":"handler: started","stream_id":"bmfy5ipc"}
+{"time":"2025-05-05T01:03:29.455570632+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"bmfy5ipc"}
+{"time":"2025-05-05T01:03:29.455571299+02:00","level":"INFO","msg":"sender: started","stream_id":"bmfy5ipc"}
+{"time":"2025-05-05T01:03:29.901448465+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-05T01:03:33.156589239+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-05T01:03:33.156956169+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-05T01:03:34.157751099+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"saving job artifact","runtime_seconds":0.731352633}],"total_operations":1}}
+{"time":"2025-05-05T01:03:36.342549836+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-05T01:03:37.834343204+02:00","level":"INFO","msg":"stream: closing","id":"bmfy5ipc"}
+{"time":"2025-05-05T01:03:37.8343582+02:00","level":"INFO","msg":"handler: closed","stream_id":"bmfy5ipc"}
+{"time":"2025-05-05T01:03:37.834367359+02:00","level":"INFO","msg":"sender: closed","stream_id":"bmfy5ipc"}
+{"time":"2025-05-05T01:03:37.834365497+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"bmfy5ipc"}
+{"time":"2025-05-05T01:03:37.834418449+02:00","level":"INFO","msg":"stream: closed","id":"bmfy5ipc"}
