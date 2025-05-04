@@ -399,7 +399,7 @@ def main():
 
 )
 
-    training_ppo._collect_trajectory(50, 1000, wandb=run, logpath= None)
+    training_ppo._collect_trajectory(50, 20000, wandb=run, logpath= None)
 
 if __name__ == "__main__":
     main()
