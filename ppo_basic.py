@@ -9,6 +9,8 @@
 # }
 # Based on the above code
 
+# PPO - good blog: https://spinningup.openai.com/en/latest/algorithms/ppo.html
+# PPO original paper: https://arxiv.org/pdf/1707.06347
 
 import numpy as np
 import os
@@ -26,6 +28,9 @@ from battlesnake_gym.snake_gym import BattlesnakeGym
 
 class RolloutBuffer:
     def __init__(self):
+        """
+            Rollout of each agent until an update is stored here
+        """
         self.states = {1: [], 2: [], 3: [], 4: []}
         self.actions = {1: [], 2: [], 3: [], 4: []}
         self.logprobs = {1: [], 2: [], 3: [], 4: []}
@@ -34,6 +39,9 @@ class RolloutBuffer:
         self.dones = {1: [], 2: [], 3: [], 4: []}
 
     def store_transition(self, state, action, logprob, reward, done, state_value, key):
+        """
+            Each transition getting appended
+        """
         self.states[key].append(state)
         self.actions[key].append(action)
         self.logprobs[key].append(logprob)
@@ -51,6 +59,10 @@ class RolloutBuffer:
 
 class PolicyValueNetwork(nn.Module):
     def __init__(self, n_actions, device = 'cpu'):
+        """
+        A CNN based DQN algorithm considering state space as a 3 channel input and gives a value function and an action to take - it is a shared parameter network where we try to learn 
+        parameters for both Value Function Approximation and Policy Function
+        """
         super(PolicyValueNetwork, self).__init__()
 
         self.n_actions = n_actions
@@ -83,6 +95,9 @@ class PolicyValueNetwork(nn.Module):
         return policy_probs, state_value
     
     def select_action(self, obs):
+        """
+            Get the action probability and corresponding log probablitliy to use in the cost functions. Return these two along with the value function for a given observation
+        """
         with torch.no_grad():
             action_out, value = self.forward(obs)
             # print('stage-0:', action_out.shape, value, obs.shape)
@@ -135,6 +150,7 @@ class PPOAgent:
             device=device,
         )
 
+        # Set the parameters, setup network and optimizer
         self.optimizer = torch.optim.Adam([
             {'params': self.policy.feature_extractor.parameters()},
             {'params': self.policy.actor_head.parameters(), 'lr': lr_actor},
@@ -144,11 +160,13 @@ class PPOAgent:
         self.buffer = RolloutBuffer()
         self.mse_loss = nn.MSELoss()
 
+        # Keys for each buffer
         self.keys = [1, 2, 3, 4]
 
         self.start_index = 0
         
         if load:
+            # Load from an existing model - ideally partially trained
             if ckpt_directory is not None:
                 PATH = ckpt_directory
                 all_files = [f for f in os.listdir(PATH) if os.path.isfile(os.path.join(PATH, f))]
@@ -160,7 +178,8 @@ class PPOAgent:
                     self.policy.eval()
                     self.start_index = np.max(ind)
                     print(f"Loaded : {PATH}, start_point = {self.start_index}")
-
+                else:
+                    print("No existing file")
             else:
                 raise("Enter Checkpoint Directory")
 
@@ -173,6 +192,7 @@ class PPOAgent:
             4: []
         }
 
+        # Compute returns for every agent's trajectory based on the rewards
         for key in self.keys:
             returns = overall_returns[key]
             discounted_reward = 0
@@ -188,6 +208,7 @@ class PPOAgent:
         return overall_returns
     
     def update_policy(self):
+        # Compute Returns
         rewards_to_go = self.compute_returns()
 
         for key in self.keys:
@@ -196,6 +217,7 @@ class PPOAgent:
             old_logprobs = torch.from_numpy(np.array(self.buffer.logprobs[key])).float().to(self.device)
             state_vals = torch.from_numpy(np.array(self.buffer.state_values[key])).float().to(self.device)
 
+            # Advantage based on estimated values and returns
             advantages = rewards_to_go[key] - state_vals
             advantages = (advantages - advantages.mean()) / (advantages.std() + 1e-6)
 
@@ -223,12 +245,17 @@ class PPOAgent:
                     # Finding Surrogate Loss
                     # print(ratios.shape, batch_advantages.shape)
                     # print(ratios.shape, batch_advantages.shape)
+
+                    # Calculate Loss Function
                     surr1 = ratios * batch_advantages
                     surr2 = torch.clamp(ratios, 1-self.eps_clip, 1+self.eps_clip) * batch_advantages
 
-                    # final loss of clipped objective PPO
+                    # final loss of clipped objective PPO - actor loss
                     actor_loss = -torch.min(surr1, surr2).mean()
+
                     # print(state_values.dtype, batch_rewards_to_go.dtype)
+
+                    # criticloss
                     critic_loss = 0.5 * self.mse_loss(state_values.squeeze(), batch_rewards_to_go)
                     loss = actor_loss + self.value_loss_coef * critic_loss - self.entropy_coef * dist_entropy.mean()
                     # print("Final loss:", actor_loss, critic_loss, dist_entropy, loss)
@@ -237,7 +264,7 @@ class PPOAgent:
                     self.optimizer.zero_grad()
                     loss.backward()
                     self.optimizer.step()
-        
+            # clear the buffer after every update - no model creation happening here
             self.buffer.clear(key=key)
 
 class PPOTraining:
@@ -257,6 +284,12 @@ class PPOTraining:
         self.render = render
 
     def get_agent_observed_state(self, agent_id, observation):
+        """
+        Agent state is input as 11x11 grids on n+1 dimensions. First dimension is food positions, rest of them are positions of each agent.
+        This is a way to modify that to get a 3x11x11 grid with agent position, ennemy positions and food positions
+
+        Agent ID is the current agent's id, and we want to get an output wrt this agent.
+        """
         food_spaces = observation[:, :, 0]
         agent_positions = observation[:, :, agent_id + 1]
 
@@ -270,6 +303,9 @@ class PPOTraining:
 
 
     def _collect_trajectory(self, max_eps_steps, num_train_steps, wandb = None, logpath = None):
+        """
+            Training loop - collect trajectories and then returns - based on which do update using PPO Rule
+        """
         observation_agents = np.empty((self.n_observations[-1] - 1, self.n_channels, self.map_size[0], self.map_size[1]))
         state_agents = np.empty((self.n_observations[-1] - 1, self.n_channels, self.map_size[0], self.map_size[1]))
         print(f"Observation Space Shape: {observation_agents.shape}")
@@ -299,23 +335,27 @@ class PPOTraining:
             eps_length = 0
 
             for _ in range(1, max_eps_steps + 1):
+                # Collect Experience
                 
                 state_agents = torch.tensor(state_agents, device = self.PPO.device, dtype=torch.float32)
                 actions, logprobs, values = self.PPO.policy.select_action(state_agents)
 
                 next_obs, rewards, terminated, info = self.env.step(actions)
+
+                # Do you want to render???
                 if self.render:
                     self.env.render()
 
-                # print(rewards)
-
+                # Episode Reward approximation based on each agent's reward - maybe could use a better rep
                 eps_reward += np.sum(list(rewards.values()))/len(list(rewards.values()))
                 t_so_far += 1
                 eps_length += 1
 
+                # id termination of episode
                 termination = np.array(list(terminated.values()), dtype = np.int32)
                 done = np.count_nonzero(termination) == termination.shape[0] - 1 or np.count_nonzero(termination) == termination.shape[0]
 
+                # Storing transiiton of each agent according to keys
                 for i, key in enumerate(self.keys):
                     self.PPO.buffer.store_transition(state_agents[i], actions[i], logprobs[i], rewards[i], terminated[i], values[i], key=key)
 
@@ -346,6 +386,7 @@ class PPOTraining:
                     running_num_eps = 0
 
                 if t_so_far % self.save_interval == 0:
+                    # Saving learned model till now
                     checkpoint_path = os.path.join(self.ckpt_dir, f"battlesnake_step_{self.start_ind + t_so_far}.pt")
                     torch.save(self.PPO.policy.state_dict(), checkpoint_path)
 

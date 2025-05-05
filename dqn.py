@@ -5,7 +5,11 @@ import torch.optim as optim
 
 
 class DQN(nn.Module):
+    
     def __init__(self, n_actions):
+        """
+        A CNN based DQN algorithm considering state space as a 3 channel input and gives output Q Value function
+        """
         super(DQN, self).__init__()
         self.conv1 = nn.Conv2d(3, 15, kernel_size=3, dtype = torch.float32)
         self.pool1 = nn.MaxPool2d(2, 2)

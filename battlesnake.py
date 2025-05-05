@@ -29,6 +29,10 @@ run = wandb.init(
 
 )
 
+"""
+This runs the DQN Algorithm to train the Battlesnakes environment. The environment used is from Sagemaker - AWS
+"""
+
 actions = {
     "up": 0,
     "down": 1,
@@ -37,6 +41,7 @@ actions = {
 }
 # is_move_safe = {"up": True, "down": True, "left": True, "right": True}
 
+# Hyperparameters
 BATCH_SIZE = 128
 GAMMA = 0.99
 TEMP_START = 100
@@ -49,6 +54,7 @@ LR = 1e-4
 map_size = (11, 11)
 n_snakes = 4
 
+# Loading the environment
 env = BattlesnakeGym(map_size=map_size, number_of_snakes=n_snakes)
 env.seed(42)
 
@@ -135,12 +141,15 @@ def load_model(model, name):
     return model
 
 def save_model(model, episode, name):
+    """
+    Save every 2000 episodes in a new file. Overwrite old files every 100 iteration. It is just to save the model parameters so that training can be restarted
+    """
     if episode % 2000 == 0:
         # Save as a new file every 2000 episodes
         save_path = os.path.join(weights_dir, f"{name}_dqn_weights_ep{episode}.pth")
     elif episode % 100 == 0:
         # Overwrite the same file every 100 episodes
-        save_path = os.path.join(weights_dir, "{name}_dqn_weights_temp.pth")
+        save_path = os.path.join(weights_dir, f"{name}_dqn_weights_temp.pth")
     else:
         return  # Don't save if not a 100-episode interval
 
@@ -149,6 +158,12 @@ def save_model(model, episode, name):
 
 
 def get_agent_observed_state(agent_id, observation):
+    """
+    Agent state is input as 11x11 grids on n+1 dimensions. First dimension is food positions, rest of them are positions of each agent.
+    This is a way to modify that to get a 3x11x11 grid with agent position, ennemy positions and food positions
+
+    Agent ID is the current agent's id, and we want to get an output wrt this agent.
+    """
     food_spaces = observation[:, :, 0]
     agent_positions = observation[:, :, agent_id + 1]
 
@@ -161,6 +176,10 @@ def get_agent_observed_state(agent_id, observation):
     return stacked
 
 def optimize_model():
+    """
+    Simple DQN Implemented referenced from
+    https://pytorch.org/tutorials/intermediate/reinforcement_q_learning.html
+    """
     if len(memory) < BATCH_SIZE:
         return
     transitions = memory.sample(BATCH_SIZE)
@@ -210,6 +229,7 @@ def optimize_model():
     torch.nn.utils.clip_grad_value_(policy_net.parameters(), 100)
     optimizer.step()
 
+# Action space: 4 agents and four actions per agent=> 
 n_actions = env.action_space[0].n
 print(f"Number of Actions: {n_actions}")
 
@@ -217,6 +237,7 @@ observation, reward, terminated, info = env.reset()
 n_observations = observation.shape
 print(f"Number of Observations: {n_observations}")
 
+# Explained in the state space transform function
 n_channels = 3
 restart = True
 
@@ -224,6 +245,7 @@ policy_net = DQN(n_actions).to(device)
 target_net = DQN(n_actions).to(device)
 start_ep = 0
 if not restart:
+    # Addressing non stationarity while training a DQN
     policy_net = load_model(policy_net, "policynet")
     target_net = load_model(target_net, "targetnet")
     start_ep = find_latest_checkpoint(weights_dir, "policynet")
@@ -232,6 +254,7 @@ if not restart:
 
 target_net.load_state_dict(policy_net.state_dict())
 
+# Initializing NN parameters and components
 optimizer = optim.AdamW(policy_net.parameters(), lr=LR, amsgrad=True)
 memory = ReplayMemory(10000)
 
@@ -243,6 +266,7 @@ def softmax(x, temp):
 
 def select_action(states):
     global steps_done
+    # Select an action for each agent based on softmax with number of steps done controlling softmax temperature. We get one action for each agent. Initally favours exploration over exploitation with a small temperature
 
     actions = []
     for i in range(states.shape[0]):
@@ -264,6 +288,9 @@ episode_durs = deque([], maxlen=100)
 episodic_rews = deque([], maxlen=100)
 
 def plot_rewards(show_result=False, window_size=100):
+    """
+    Logging and Visualization
+    """
     plt.figure(2)
     rewards_t = torch.tensor(episodic_rewards, dtype=torch.float)
     colours = ['r', 'g', 'b', 'y']
@@ -292,6 +319,9 @@ def plot_rewards(show_result=False, window_size=100):
     plt.pause(0.001)
 
 def plot_durations(show_result=False):
+    """
+    Logging and Visualization
+    """
     plt.figure(1)
     durations_t = torch.tensor(episode_durations, dtype=torch.float)
     if show_result:
@@ -326,8 +356,10 @@ for i_episode in range(start_ep, num_episodes + 1):
     accumulated_rewards = np.zeros((4))
     if i_episode % 50 == 0:
         print(f"Episode {i_episode} started")
+    # Get overall env state
     state, _, _, info = env.reset()
     for j in range(n_observations[-1] - 1):
+        # Get modified state for each agent
         state_space = get_agent_observed_state(j, state)
         state_agents[j] = torch.tensor(state_space)
 
@@ -335,10 +367,12 @@ for i_episode in range(start_ep, num_episodes + 1):
     state_agents = torch.tensor(state_agents, device = device, dtype=torch.float32)
 
     for t in count():
+        # Select action corresponding to each state
         actions = select_action(state_agents)
         observation, rewards, terminated, _ = env.step(actions)
         # env.render()
 
+        # Calculate environment restart information
         termination = np.array(list(terminated.values()), dtype = np.int32)
         done = np.count_nonzero(termination) == termination.shape[0] - 1 or np.count_nonzero(termination) == termination.shape[0]
         # print(termination)
@@ -353,19 +387,21 @@ for i_episode in range(start_ep, num_episodes + 1):
                 next_state = torch.tensor(observation_agents[agent], dtype=torch.float32, device = device)
 
             # Store the transition in memory
+
+            # Calculate value returns
             reward = torch.tensor([rewards[agent]], device=device)
             accumulated_rewards[agent] += rewards[agent]
             action = torch.tensor([[actions[agent]]], device=device)
             # print(state_agents[agent].shape, action.shape, next_state.shape, reward.shape,)
+            # Store in replay buffer for DQN Training
             memory.push(state_agents[agent], action, next_state, reward)
 
             # Move to the next state
-            # print(state_agents[agent].shape, next_state.shape)
             state_agents[agent] = next_state
-        # print(f"{t} steps")
+
         # Perform one step of the optimization (on the policy network)
         optimize_model()
-        # Soft update of the target network's weights
+        # Soft update of the target network's weights - keep on moving the target network to avoid non stationarity of training
         # θ′ ← τ θ + (1 −τ )θ′
         target_net_state_dict = target_net.state_dict()
         policy_net_state_dict = policy_net.state_dict()
@@ -381,7 +417,8 @@ for i_episode in range(start_ep, num_episodes + 1):
 
             episodic_rewards.append(accumulated_rewards)
             episodic_rews.append(np.mean(accumulated_rewards))
-
+            
+            # Log if episode is completed
             run.log(
             {"acc_rew": np.mean(episodic_rews),
              "episode duration": np.mean(episode_durs),
