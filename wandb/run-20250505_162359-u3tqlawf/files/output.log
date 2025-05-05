@@ -1,0 +1,55 @@
+Observation Space Shape: (4, 3, 11, 11)
+ppo_basic.py:296: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  state_agents = torch.tensor(state_agents, device = self.PPO.device, dtype=torch.float32)
+episode: 6 | step: 30 | reward: 2.6667 | episode length: 4.666666666666667
+episode: 15 | step: 60 | reward: 1.8056 | episode length: 3.4444444444444446
+episode: 20 | step: 90 | reward: 2.7500 | episode length: 5.0
+episode: 29 | step: 120 | reward: 2.0000 | episode length: 3.3333333333333335
+episode: 36 | step: 150 | reward: 2.6429 | episode length: 4.857142857142857
+episode: 41 | step: 180 | reward: 3.6500 | episode length: 6.2
+episode: 47 | step: 210 | reward: 2.9583 | episode length: 5.0
+episode: 55 | step: 240 | reward: 1.9375 | episode length: 3.75
+episode: 62 | step: 270 | reward: 2.6786 | episode length: 4.285714285714286
+episode: 69 | step: 300 | reward: 2.6429 | episode length: 4.285714285714286
+episode: 75 | step: 330 | reward: 2.1667 | episode length: 4.0
+episode: 83 | step: 360 | reward: 2.3750 | episode length: 4.25
+episode: 92 | step: 390 | reward: 2.0000 | episode length: 3.5555555555555554
+episode: 99 | step: 420 | reward: 1.9286 | episode length: 3.4285714285714284
+episode: 108 | step: 450 | reward: 2.2778 | episode length: 4.0
+episode: 115 | step: 480 | reward: 2.0714 | episode length: 3.857142857142857
+episode: 123 | step: 510 | reward: 2.0000 | episode length: 3.625
+episode: 129 | step: 540 | reward: 2.6667 | episode length: 4.833333333333333
+episode: 138 | step: 570 | reward: 2.0000 | episode length: 3.7777777777777777
+episode: 145 | step: 600 | reward: 2.5357 | episode length: 4.428571428571429
+episode: 151 | step: 630 | reward: 2.9583 | episode length: 4.666666666666667
+episode: 158 | step: 660 | reward: 2.3929 | episode length: 4.0
+episode: 168 | step: 690 | reward: 1.8250 | episode length: 3.4
+episode: 175 | step: 720 | reward: 2.3571 | episode length: 4.0
+episode: 183 | step: 750 | reward: 2.2812 | episode length: 4.0
+episode: 192 | step: 780 | reward: 1.6667 | episode length: 3.111111111111111
+episode: 199 | step: 810 | reward: 2.7857 | episode length: 4.428571428571429
+episode: 204 | step: 840 | reward: 3.7000 | episode length: 6.2
+episode: 209 | step: 870 | reward: 3.1000 | episode length: 5.2
+episode: 218 | step: 900 | reward: 1.9722 | episode length: 3.6666666666666665
+episode: 227 | step: 930 | reward: 2.0278 | episode length: 3.4444444444444446
+episode: 233 | step: 960 | reward: 2.5833 | episode length: 4.5
+episode: 242 | step: 990 | reward: 2.3056 | episode length: 3.5555555555555554
+episode: 251 | step: 1020 | reward: 1.9444 | episode length: 3.3333333333333335
+episode: 259 | step: 1050 | reward: 2.0625 | episode length: 3.75
+episode: 268 | step: 1080 | reward: 2.0556 | episode length: 3.4444444444444446
+episode: 277 | step: 1110 | reward: 1.8889 | episode length: 3.3333333333333335
+episode: 283 | step: 1140 | reward: 3.0833 | episode length: 5.0
+Traceback (most recent call last):
+  File "ppo_basic.py", line 423, in <module>
+    main()
+  File "ppo_basic.py", line 420, in main
+    training_ppo._collect_trajectory(50, 20000, wandb=run, logpath= None)
+  File "ppo_basic.py", line 315, in _collect_trajectory
+    self.PPO.update_policy()
+  File "ppo_basic.py", line 233, in update_policy
+    loss.backward()
+  File "/home/adithyaa/miniconda3/envs/py37/lib/python3.7/site-packages/torch/_tensor.py", line 489, in backward
+    self, gradient, retain_graph, create_graph, inputs=inputs
+  File "/home/adithyaa/miniconda3/envs/py37/lib/python3.7/site-packages/torch/autograd/__init__.py", line 199, in backward
+    allow_unreachable=True, accumulate_grad=True)  # Calls into the C++ engine to run the backward pass
+KeyboardInterrupt

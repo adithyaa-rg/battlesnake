@@ -1,0 +1,18 @@
+{"time":"2025-05-05T16:40:57.914784641+02:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-05-05T16:40:57.91480865+02:00","level":"INFO","msg":"created symlink","path":"/home/adithyaa/KTH/battlesnake/wandb/run-20250505_164057-v6a3lnsg/logs/debug-core.log"}
+{"time":"2025-05-05T16:40:58.0186033+02:00","level":"INFO","msg":"created new stream","id":"v6a3lnsg"}
+{"time":"2025-05-05T16:40:58.01862627+02:00","level":"INFO","msg":"stream: started","id":"v6a3lnsg"}
+{"time":"2025-05-05T16:40:58.018705811+02:00","level":"INFO","msg":"handler: started","stream_id":"v6a3lnsg"}
+{"time":"2025-05-05T16:40:58.01871106+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"v6a3lnsg"}
+{"time":"2025-05-05T16:40:58.018739927+02:00","level":"INFO","msg":"sender: started","stream_id":"v6a3lnsg"}
+{"time":"2025-05-05T16:41:04.078154851+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-05T16:43:05.068227192+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/mas4/mas-ppo-battlesnake/v6a3lnsg/file_stream\": EOF"}
+{"time":"2025-05-05T16:44:47.259358564+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-05T16:44:47.259970188+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-05T16:44:48.260081591+02:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"updating run config","runtime_seconds":0.441423832}],"total_operations":1}}
+{"time":"2025-05-05T16:44:52.405879128+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-05T16:44:54.210252278+02:00","level":"INFO","msg":"stream: closing","id":"v6a3lnsg"}
+{"time":"2025-05-05T16:44:54.210266678+02:00","level":"INFO","msg":"handler: closed","stream_id":"v6a3lnsg"}
+{"time":"2025-05-05T16:44:54.210273413+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"v6a3lnsg"}
+{"time":"2025-05-05T16:44:54.21028094+02:00","level":"INFO","msg":"sender: closed","stream_id":"v6a3lnsg"}
+{"time":"2025-05-05T16:44:54.210320158+02:00","level":"INFO","msg":"stream: closed","id":"v6a3lnsg"}

@@ -1,0 +1,16 @@
+{"time":"2025-05-05T16:23:59.321289992+02:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-05-05T16:23:59.321311063+02:00","level":"INFO","msg":"created symlink","path":"/home/adithyaa/KTH/battlesnake/wandb/run-20250505_162359-u3tqlawf/logs/debug-core.log"}
+{"time":"2025-05-05T16:23:59.425096691+02:00","level":"INFO","msg":"created new stream","id":"u3tqlawf"}
+{"time":"2025-05-05T16:23:59.425124831+02:00","level":"INFO","msg":"stream: started","id":"u3tqlawf"}
+{"time":"2025-05-05T16:23:59.42518219+02:00","level":"INFO","msg":"sender: started","stream_id":"u3tqlawf"}
+{"time":"2025-05-05T16:23:59.425181614+02:00","level":"INFO","msg":"handler: started","stream_id":"u3tqlawf"}
+{"time":"2025-05-05T16:23:59.42516805+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"u3tqlawf"}
+{"time":"2025-05-05T16:23:59.84088472+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-05T16:24:03.737643255+02:00","level":"INFO","msg":"stream: closing","id":"u3tqlawf"}
+{"time":"2025-05-05T16:24:03.737668487+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-05T16:24:03.738138144+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-05T16:24:04.63565769+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-05T16:24:04.888990241+02:00","level":"INFO","msg":"handler: closed","stream_id":"u3tqlawf"}
+{"time":"2025-05-05T16:24:04.889106735+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"u3tqlawf"}
+{"time":"2025-05-05T16:24:04.88928018+02:00","level":"INFO","msg":"sender: closed","stream_id":"u3tqlawf"}
+{"time":"2025-05-05T16:24:04.889360425+02:00","level":"INFO","msg":"stream: closed","id":"u3tqlawf"}

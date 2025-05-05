@@ -1,0 +1,54 @@
+Observation Space Shape: (4, 3, 11, 11)
+ppo_basic.py:302: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  state_agents = torch.tensor(state_agents, device = self.PPO.device, dtype=torch.float32)
+episode: 54 | step: 200 | reward: 2.0509 | episode length: 3.685185185185185
+episode: 103 | step: 400 | reward: 2.3469 | episode length: 3.979591836734694
+episode: 156 | step: 600 | reward: 2.1651 | episode length: 3.811320754716981
+episode: 208 | step: 800 | reward: 2.1971 | episode length: 3.8846153846153846
+episode: 263 | step: 1000 | reward: 2.1045 | episode length: 3.6363636363636362
+episode: 311 | step: 1200 | reward: 2.3490 | episode length: 4.125
+episode: 362 | step: 1400 | reward: 2.3431 | episode length: 3.980392156862745
+episode: 415 | step: 1600 | reward: 2.1085 | episode length: 3.7358490566037736
+episode: 469 | step: 1800 | reward: 2.0370 | episode length: 3.685185185185185
+episode: 521 | step: 2000 | reward: 2.1923 | episode length: 3.8653846153846154
+episode: 573 | step: 2200 | reward: 2.1635 | episode length: 3.8653846153846154
+episode: 623 | step: 2400 | reward: 2.3000 | episode length: 4.02
+episode: 678 | step: 2600 | reward: 2.0591 | episode length: 3.6363636363636362
+episode: 726 | step: 2800 | reward: 2.3333 | episode length: 4.166666666666667
+episode: 775 | step: 3000 | reward: 2.4184 | episode length: 4.081632653061225
+episode: 819 | step: 3200 | reward: 2.7216 | episode length: 4.545454545454546
+episode: 872 | step: 3400 | reward: 2.1274 | episode length: 3.69811320754717
+episode: 920 | step: 3600 | reward: 2.3021 | episode length: 4.1875
+episode: 967 | step: 3800 | reward: 2.4521 | episode length: 4.297872340425532
+episode: 1017 | step: 4000 | reward: 2.2350 | episode length: 3.88
+episode: 1068 | step: 4200 | reward: 2.3235 | episode length: 4.019607843137255
+episode: 1117 | step: 4400 | reward: 2.2500 | episode length: 4.0
+episode: 1168 | step: 4600 | reward: 2.2794 | episode length: 4.03921568627451
+episode: 1221 | step: 4800 | reward: 2.1745 | episode length: 3.69811320754717
+episode: 1272 | step: 5000 | reward: 2.2598 | episode length: 4.0
+episode: 1322 | step: 5200 | reward: 2.2150 | episode length: 3.96
+episode: 1378 | step: 5400 | reward: 2.1250 | episode length: 3.607142857142857
+episode: 1430 | step: 5600 | reward: 2.1587 | episode length: 3.8076923076923075
+episode: 1485 | step: 5800 | reward: 1.9727 | episode length: 3.5636363636363635
+episode: 1536 | step: 6000 | reward: 2.3431 | episode length: 4.0
+episode: 1591 | step: 6200 | reward: 2.0727 | episode length: 3.6545454545454548
+Traceback (most recent call last):
+  File "ppo_basic.py", line 432, in <module>
+    main()
+  File "ppo_basic.py", line 429, in main
+    training_ppo._collect_trajectory(1000, 20000, wandb=run, logpath= None)
+  File "ppo_basic.py", line 307, in _collect_trajectory
+    self.env.render()
+  File "/home/adithyaa/miniconda3/envs/py37/lib/python3.7/site-packages/battlesnake_gym-0.1.dev0-py3.7.egg/battlesnake_gym/snake_gym.py", line 679, in render
+    self.viewer.imshow(board)
+  File "/home/adithyaa/miniconda3/envs/py37/lib/python3.7/site-packages/gym/envs/classic_control/rendering.py", line 367, in imshow
+    texture = image.get_texture()
+  File "/home/adithyaa/miniconda3/envs/py37/lib/python3.7/site-packages/pyglet/image/__init__.py", line 832, in get_texture
+    self._current_texture = self.create_texture(Texture, rectangle, force_rectangle)
+  File "/home/adithyaa/miniconda3/envs/py37/lib/python3.7/site-packages/pyglet/image/__init__.py", line 825, in create_texture
+    self.anchor_x, self.anchor_y, 0, None)
+  File "/home/adithyaa/miniconda3/envs/py37/lib/python3.7/site-packages/pyglet/image/__init__.py", line 996, in blit_to_texture
+    data)
+  File "/home/adithyaa/miniconda3/envs/py37/lib/python3.7/site-packages/pyglet/gl/lib.py", line 87, in errcheck
+    def errcheck(result, func, arguments):
+KeyboardInterrupt

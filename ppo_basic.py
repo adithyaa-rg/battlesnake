@@ -115,8 +115,10 @@ class PPOAgent:
             gamma=0.99,
             entropy_coef=0.01,
             value_loss_coef=0.5,
-            batch_size=64,
-            device='cpu'
+            batch_size=192,
+            device='cpu',
+            load=False,
+            ckpt_directory = None
         ):
         self.gamma = gamma
         self.num_epochs = num_epochs
@@ -143,6 +145,25 @@ class PPOAgent:
         self.mse_loss = nn.MSELoss()
 
         self.keys = [1, 2, 3, 4]
+
+        self.start_index = 0
+        
+        if load:
+            if ckpt_directory is not None:
+                PATH = ckpt_directory
+                all_files = [f for f in os.listdir(PATH) if os.path.isfile(os.path.join(PATH, f))]
+                if len(all_files) > 0:
+                    ind = [int(f.split("_")[-1].split('.')[0]) for f in all_files]
+                    ind = np.array(ind)
+                    PATH = PATH + '/' + all_files[ind.argmax()]
+                    self.policy.load_state_dict(torch.load(PATH, weights_only=True))
+                    self.policy.eval()
+                    self.start_index = np.max(ind)
+                    print(f"Loaded : {PATH}, start_point = {self.start_index}")
+
+            else:
+                raise("Enter Checkpoint Directory")
+
 
     def compute_returns(self):
         overall_returns = {
@@ -201,6 +222,7 @@ class PPOAgent:
 
                     # Finding Surrogate Loss
                     # print(ratios.shape, batch_advantages.shape)
+                    # print(ratios.shape, batch_advantages.shape)
                     surr1 = ratios * batch_advantages
                     surr2 = torch.clamp(ratios, 1-self.eps_clip, 1+self.eps_clip) * batch_advantages
 
@@ -219,7 +241,7 @@ class PPOAgent:
             self.buffer.clear(key=key)
 
 class PPOTraining:
-    def __init__(self, env, ppo: PPOAgent, n_observations, n_channels, map_size, update_interval, log_interval, save_interval, ckpt_directory):
+    def __init__(self, env, ppo: PPOAgent, n_observations, n_channels, map_size, update_interval, log_interval, save_interval, ckpt_directory, render = False):
         self.env = env
         self.buffer = RolloutBuffer()
         self.PPO = ppo
@@ -231,6 +253,8 @@ class PPOTraining:
         self.log_interval = log_interval
         self.save_interval = save_interval
         self.ckpt_dir = ckpt_directory
+        self.start_ind = self.PPO.start_index
+        self.render = render
 
     def get_agent_observed_state(self, agent_id, observation):
         food_spaces = observation[:, :, 0]
@@ -280,6 +304,8 @@ class PPOTraining:
                 actions, logprobs, values = self.PPO.policy.select_action(state_agents)
 
                 next_obs, rewards, terminated, info = self.env.step(actions)
+                if self.render:
+                    self.env.render()
 
                 # print(rewards)
 
@@ -320,7 +346,7 @@ class PPOTraining:
                     running_num_eps = 0
 
                 if t_so_far % self.save_interval == 0:
-                    checkpoint_path = os.path.join(self.ckpt_dir, f"battlesnake_step_{t_so_far}.pt")
+                    checkpoint_path = os.path.join(self.ckpt_dir, f"battlesnake_step_{self.start_ind + t_so_far}.pt")
                     torch.save(self.PPO.policy.state_dict(), checkpoint_path)
 
                 state = next_obs
@@ -351,7 +377,9 @@ def main():
     ppo = PPOAgent(
         action_dim=4,
         lr_actor=1e-4,
-        lr_critic=1e-3
+        lr_critic=1e-3,
+        load=True,
+        ckpt_directory="/home/adithyaa/KTH/battlesnake/models/PPO"
     )
 
     # Game Settings
@@ -379,10 +407,11 @@ def main():
         n_observations=n_observations,
         n_channels=n_channels,
         map_size=map_size,
-        update_interval=50,
-        log_interval=30,
-        save_interval=100,
-        ckpt_directory="/home/adithyaa/KTH/battlesnake/models/PPO"
+        update_interval=150,
+        log_interval=200,
+        save_interval=2000,
+        ckpt_directory="/home/adithyaa/KTH/battlesnake/models/PPO",
+        render=True
     )
 
     run = wandb.init(
@@ -396,10 +425,9 @@ def main():
         "architecture": "CNN+PPO",
         "dataset": "BattleSnake"
     },
+    )
 
-)
-
-    training_ppo._collect_trajectory(50, 20000, wandb=run, logpath= None)
+    training_ppo._collect_trajectory(1000, 20000, wandb=run, logpath= None)
 
 if __name__ == "__main__":
     main()

@@ -1,0 +1,93 @@
+Observation Space Shape: (4, 3, 11, 11)
+ppo_basic.py:296: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  state_agents = torch.tensor(state_agents, device = self.PPO.device, dtype=torch.float32)
+episode: 8 | step: 30 | reward: 1.8750 | episode length: 3.25
+episode: 15 | step: 60 | reward: 2.6786 | episode length: 4.571428571428571
+episode: 25 | step: 90 | reward: 1.5750 | episode length: 2.8
+episode: 33 | step: 120 | reward: 1.9375 | episode length: 3.625
+episode: 42 | step: 150 | reward: 2.0556 | episode length: 3.6666666666666665
+episode: 49 | step: 180 | reward: 2.2857 | episode length: 3.857142857142857
+episode: 58 | step: 210 | reward: 2.0556 | episode length: 3.7777777777777777
+episode: 66 | step: 240 | reward: 2.0312 | episode length: 3.75
+episode: 72 | step: 270 | reward: 2.8333 | episode length: 4.833333333333333
+episode: 78 | step: 300 | reward: 2.4167 | episode length: 3.8333333333333335
+episode: 84 | step: 330 | reward: 3.9167 | episode length: 6.166666666666667
+episode: 91 | step: 360 | reward: 2.4643 | episode length: 4.285714285714286
+episode: 98 | step: 390 | reward: 2.6429 | episode length: 4.142857142857143
+episode: 106 | step: 420 | reward: 1.9688 | episode length: 3.75
+episode: 115 | step: 450 | reward: 2.0000 | episode length: 3.3333333333333335
+episode: 122 | step: 480 | reward: 2.5357 | episode length: 4.142857142857143
+episode: 129 | step: 510 | reward: 2.5714 | episode length: 4.428571428571429
+episode: 138 | step: 540 | reward: 2.0833 | episode length: 3.4444444444444446
+episode: 146 | step: 570 | reward: 1.9688 | episode length: 3.75
+episode: 153 | step: 600 | reward: 2.2857 | episode length: 3.857142857142857
+episode: 161 | step: 630 | reward: 2.1250 | episode length: 3.875
+episode: 169 | step: 660 | reward: 2.0312 | episode length: 3.625
+episode: 176 | step: 690 | reward: 2.6429 | episode length: 4.571428571428571
+episode: 182 | step: 720 | reward: 2.7917 | episode length: 5.0
+episode: 188 | step: 750 | reward: 2.8333 | episode length: 5.166666666666667
+episode: 195 | step: 780 | reward: 2.6429 | episode length: 4.428571428571429
+episode: 203 | step: 810 | reward: 2.1250 | episode length: 3.625
+episode: 211 | step: 840 | reward: 2.1875 | episode length: 3.875
+episode: 216 | step: 870 | reward: 3.1000 | episode length: 5.6
+episode: 224 | step: 900 | reward: 2.0000 | episode length: 3.75
+episode: 233 | step: 930 | reward: 1.9167 | episode length: 3.4444444444444446
+episode: 241 | step: 960 | reward: 2.0938 | episode length: 3.75
+episode: 250 | step: 990 | reward: 1.9722 | episode length: 3.4444444444444446
+episode: 259 | step: 1020 | reward: 1.8889 | episode length: 3.3333333333333335
+episode: 267 | step: 1050 | reward: 1.9688 | episode length: 3.625
+episode: 275 | step: 1080 | reward: 2.1250 | episode length: 3.625
+episode: 281 | step: 1110 | reward: 2.8333 | episode length: 4.5
+episode: 289 | step: 1140 | reward: 2.3125 | episode length: 4.125
+episode: 296 | step: 1170 | reward: 2.2500 | episode length: 3.7142857142857144
+episode: 305 | step: 1200 | reward: 2.0556 | episode length: 3.7777777777777777
+episode: 314 | step: 1230 | reward: 1.9722 | episode length: 3.111111111111111
+episode: 323 | step: 1260 | reward: 2.1111 | episode length: 3.7777777777777777
+episode: 329 | step: 1290 | reward: 2.9167 | episode length: 5.0
+episode: 335 | step: 1320 | reward: 2.6250 | episode length: 4.833333333333333
+episode: 342 | step: 1350 | reward: 2.2143 | episode length: 4.0
+episode: 350 | step: 1380 | reward: 1.5938 | episode length: 3.0
+episode: 358 | step: 1410 | reward: 2.6875 | episode length: 4.875
+episode: 365 | step: 1440 | reward: 2.1071 | episode length: 3.7142857142857144
+episode: 372 | step: 1470 | reward: 2.7500 | episode length: 4.428571428571429
+episode: 380 | step: 1500 | reward: 2.3125 | episode length: 4.0
+episode: 388 | step: 1530 | reward: 2.2500 | episode length: 3.75
+episode: 396 | step: 1560 | reward: 1.9688 | episode length: 3.75
+episode: 404 | step: 1590 | reward: 2.3438 | episode length: 3.75
+episode: 414 | step: 1620 | reward: 1.6500 | episode length: 3.1
+episode: 422 | step: 1650 | reward: 1.8438 | episode length: 3.375
+episode: 431 | step: 1680 | reward: 2.0278 | episode length: 3.5555555555555554
+episode: 440 | step: 1710 | reward: 1.8056 | episode length: 3.3333333333333335
+episode: 446 | step: 1740 | reward: 2.6667 | episode length: 5.0
+episode: 453 | step: 1770 | reward: 2.7500 | episode length: 4.285714285714286
+episode: 459 | step: 1800 | reward: 2.7083 | episode length: 4.833333333333333
+episode: 467 | step: 1830 | reward: 2.0938 | episode length: 3.625
+episode: 475 | step: 1860 | reward: 2.5000 | episode length: 4.125
+episode: 481 | step: 1890 | reward: 2.3333 | episode length: 4.0
+episode: 486 | step: 1920 | reward: 3.8500 | episode length: 6.4
+episode: 495 | step: 1950 | reward: 2.3056 | episode length: 3.7777777777777777
+episode: 500 | step: 1980 | reward: 3.2000 | episode length: 5.8
+Traceback (most recent call last):
+  File "ppo_basic.py", line 423, in <module>
+    main()
+  File "ppo_basic.py", line 420, in main
+    training_ppo._collect_trajectory(50, 20000, wandb=run, logpath= None)
+  File "ppo_basic.py", line 297, in _collect_trajectory
+    actions, logprobs, values = self.PPO.policy.select_action(state_agents)
+  File "ppo_basic.py", line 87, in select_action
+    action_out, value = self.forward(obs)
+  File "ppo_basic.py", line 79, in forward
+    features = self.feature_extractor(x)
+  File "/home/adithyaa/miniconda3/envs/py37/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1194, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/adithyaa/miniconda3/envs/py37/lib/python3.7/site-packages/torch/nn/modules/container.py", line 204, in forward
+    input = module(input)
+  File "/home/adithyaa/miniconda3/envs/py37/lib/python3.7/site-packages/torch/nn/modules/module.py", line 1194, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/adithyaa/miniconda3/envs/py37/lib/python3.7/site-packages/torch/nn/modules/pooling.py", line 168, in forward
+    return_indices=self.return_indices)
+  File "/home/adithyaa/miniconda3/envs/py37/lib/python3.7/site-packages/torch/_jit_internal.py", line 485, in fn
+    return if_false(*args, **kwargs)
+  File "/home/adithyaa/miniconda3/envs/py37/lib/python3.7/site-packages/torch/nn/functional.py", line 782, in _max_pool2d
+    return torch.max_pool2d(input, kernel_size, stride, padding, dilation, ceil_mode)
+KeyboardInterrupt

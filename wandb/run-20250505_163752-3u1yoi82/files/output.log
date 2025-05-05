@@ -1,0 +1,13 @@
+Observation Space Shape: (4, 3, 11, 11)
+ppo_basic.py:302: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  state_agents = torch.tensor(state_agents, device = self.PPO.device, dtype=torch.float32)
+Traceback (most recent call last):
+  File "ppo_basic.py", line 432, in <module>
+    main()
+  File "ppo_basic.py", line 429, in main
+    training_ppo._collect_trajectory(1000, 20000, wandb=run, logpath= None)
+  File "ppo_basic.py", line 323, in _collect_trajectory
+    self.PPO.update_policy()
+  File "ppo_basic.py", line 225, in update_policy
+    surr1 = ratios * batch_advantages
+RuntimeError: The size of tensor a (64) must match the size of tensor b (150) at non-singleton dimension 1

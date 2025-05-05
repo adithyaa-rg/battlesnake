@@ -1,0 +1,16 @@
+{"time":"2025-05-05T16:39:08.473490475+02:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-05-05T16:39:08.473506016+02:00","level":"INFO","msg":"created symlink","path":"/home/adithyaa/KTH/battlesnake/wandb/run-20250505_163908-htx6zki2/logs/debug-core.log"}
+{"time":"2025-05-05T16:39:08.576525362+02:00","level":"INFO","msg":"created new stream","id":"htx6zki2"}
+{"time":"2025-05-05T16:39:08.576550085+02:00","level":"INFO","msg":"stream: started","id":"htx6zki2"}
+{"time":"2025-05-05T16:39:08.576607625+02:00","level":"INFO","msg":"handler: started","stream_id":"htx6zki2"}
+{"time":"2025-05-05T16:39:08.576618599+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"htx6zki2"}
+{"time":"2025-05-05T16:39:08.576633235+02:00","level":"INFO","msg":"sender: started","stream_id":"htx6zki2"}
+{"time":"2025-05-05T16:39:09.577249141+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-05T16:39:12.393321988+02:00","level":"INFO","msg":"stream: closing","id":"htx6zki2"}
+{"time":"2025-05-05T16:39:12.393497636+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-05T16:39:12.396130819+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-05T16:39:13.394179548+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-05T16:39:14.715136436+02:00","level":"INFO","msg":"handler: closed","stream_id":"htx6zki2"}
+{"time":"2025-05-05T16:39:14.715210941+02:00","level":"INFO","msg":"sender: closed","stream_id":"htx6zki2"}
+{"time":"2025-05-05T16:39:14.715204612+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"htx6zki2"}
+{"time":"2025-05-05T16:39:14.715281346+02:00","level":"INFO","msg":"stream: closed","id":"htx6zki2"}
