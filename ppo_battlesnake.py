@@ -10,6 +10,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.distributions import Categorical
+from battlesnake_gym.snake_gym import BattlesnakeGym
 
 # Environment import (Gymnasium is the successor to Gym)
 import gym as gym
@@ -22,6 +23,23 @@ import gym as gym
 # This helps in debugging and tracking the training process.
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+def get_agent_observed_state(agent_id, observation):
+    """
+    Agent state is input as 11x11 grids on n+1 dimensions. First dimension is food positions, rest of them are positions of each agent.
+    This is a way to modify that to get a 3x11x11 grid with agent position, ennemy positions and food positions
+
+    Agent ID is the current agent's id, and we want to get an output wrt this agent.
+    """
+    food_spaces = observation[:, :, 0]
+    agent_positions = observation[:, :, agent_id + 1]
+
+    remaining_agent_positions = observation[:, :, 1:]
+    remaining_agent_positions = np.sum(remaining_agent_positions, axis = 2) - agent_positions
+
+    stacked = np.stack([agent_positions, remaining_agent_positions, food_spaces])
+    stacked = np.array(stacked, dtype = np.float32)
+
+    return stacked
 
 class RolloutBuffer:
     """
@@ -70,7 +88,34 @@ class RolloutBuffer:
         """Returns the current number of transitions stored in the buffer."""
         return len(self.states)
 
+# Assuming action indices: 0=up, 1=down, 2=left, 3=right
+def initial_random_policy(observation, action_space):
+    agent_state = observation[0]
+    if (np.sum(agent_state == 5) == 0):
+        # No agent head found, return a random action
+        return action_space.sample()
+    agent_head_index = (np.where(agent_state == 5)[0][0], np.where(agent_state == 5)[1][0])
+    enemy_states = observation[1]
+    new_head_indices = {
+        (agent_head_index[0] - 1, agent_head_index[1]): 0, # Up
+        (agent_head_index[0] + 1, agent_head_index[1]): 1, # Down
+        (agent_head_index[0], agent_head_index[1] - 1): 2, # Left
+        (agent_head_index[0], agent_head_index[1] + 1): 3  # Right
+    }
 
+    # Filter out invalid moves (out of bounds or into walls)
+    valid_moves = []
+    for i, ((x, y), move) in enumerate(new_head_indices.items()):
+        if 0 <= x < agent_state.shape[0] and 0 <= y < agent_state.shape[1]:
+            if agent_state[x, y] != 1 and enemy_states[x, y] == 0: # Assuming 1 is a wall
+                valid_moves.append(move)
+
+    # print(f"Valid moves: {valid_moves}")
+    if len(valid_moves) > 0:
+        action = np.random.choice(valid_moves)
+    else:
+        action = action_space.sample() # Fallback to random action if no valid moves
+    return action
 # Optional: JIT compilation can sometimes provide speedups for neural network forward passes.
 # To use it, uncomment the line below. Test performance with and without it.
 # @torch.jit.script
@@ -95,11 +140,17 @@ class PolicyValueNetwork(nn.Module):
 
         # Shared feature extractor (MLP)
         self.feature_extractor = nn.Sequential(
-            nn.Linear(n_obs, hidden_dim),
-            nn.Tanh(),  # Tanh activation function
+            nn.Conv2d(3, 16, kernel_size=3, stride=1, padding=1),  # (3,11,11) -> (16,11,11)
+            nn.Tanh(),
+            nn.Conv2d(16, 32, kernel_size=3, stride=1, padding=1), # (16,11,11) -> (32,11,11)
+            nn.Tanh(),
+            nn.Flatten(start_dim=1),  # (32,11,11) -> (32*11*11,)
+            nn.Linear(32 * 11 * 11, hidden_dim),
+            nn.Tanh(),
             nn.Linear(hidden_dim, hidden_dim),
             nn.Tanh()
-        ).to(device) # Move layers to the specified device
+        ).to(device)
+ # Move layers to the specified device
 
         # Actor head: outputs probabilities for each discrete action
         self.actor_head = nn.Sequential(
@@ -135,10 +186,13 @@ class PolicyValueNetwork(nn.Module):
 
         # Pass through the shared feature extractor
         features = self.feature_extractor(x)
+        # print(f"Features shape: {features.shape}")
         # Get action probabilities from the actor head
         action_probs = self.actor_head(features)
+        # print(f"Action probabilities shape: {action_probs.shape}")
         # Get state value from the critic head
         state_value = self.critic_head(features)
+        # print(f"State value shape: {state_value.shape}")
         return action_probs, state_value
     
     @torch.no_grad() # Disables gradient calculations for action selection (inference mode)
@@ -342,7 +396,7 @@ class PPOAgent:
         # This is needed for GAE calculation (bootstrapping).
         with torch.no_grad(): # No gradient needed for this value estimation
             # self.policy.forward handles tensor conversion and device placement
-            _, next_value_tensor = self.policy.forward(next_obs_for_bootstrap)
+            _, next_value_tensor = self.policy.forward(next_obs_for_bootstrap.reshape(1, 3, 11, 11)) # Reshape to match input dimensions
             next_value_bootstrap = next_value_tensor.item()
 
         # Compute GAE and returns (targets for the value function)
@@ -434,7 +488,7 @@ class PPOTrainer:
     data collection, policy updates, logging, and model saving.
     """
     def __init__(self, 
-                 env_id: str,                # ID of the Gymnasium environment (e.g., 'CartPole-v1')
+                 env,                # ID of the Gymnasium environment (e.g., 'CartPole-v1')
                  agent: PPOAgent,            # The PPOAgent instance
                  rollout_steps: int = 2048,  # Number of steps to collect in each rollout before updating policy
                  log_interval_episodes: int = 10, # How often to log average episode rewards (in episodes)
@@ -447,9 +501,9 @@ class PPOTrainer:
                 ):
         
         # Initialize the environment
-        self.env = gym.make(env_id)
+        self.env = env
         self.env.reset() # Seed the environment for reproducibility
-        self.env.action_space.seed(seed) # Seed the environment's action space
+        # self.env.action_space.seed() # Seed the environment's action space
         
         self.agent = agent
         self.rollout_steps = rollout_steps
@@ -485,7 +539,7 @@ class PPOTrainer:
         start_time = time.monotonic() # Use monotonic time for measuring duration
         
         # Reset environment to get initial observation. Seed is applied once in __init__ or here.
-        obs = self.env.reset() 
+        obs, _, _, _ = self.env.reset() 
         
         current_episode_reward = 0.0 # Accumulates reward for the current episode
         current_episode_length = 0   # Tracks length of the current episode
@@ -501,21 +555,27 @@ class PPOTrainer:
                     time.sleep(self.render_freq)
             
             # --- Step 1: Collect one step of experience ---
-            action, log_prob, state_val = self.agent.policy.select_action(obs)
-            next_obs, reward, terminated, info = self.env.step(action)
+            # print("Obs Shape", obs.shape)
+            # print("Observation")
+            agents_obs = [get_agent_observed_state(i, obs) for i in range(4)]
             
-            current_episode_reward += reward
+            action, log_prob, state_val = self.agent.policy.select_action(agents_obs[0].reshape(1, 3, 11, 11))
+            action_rest_agents = [action] + [initial_random_policy(agents_obs[i], self.env.action_space[i]) for i in range(1, len(agents_obs))]
+            next_obs, reward, terminated, info = self.env.step(action_rest_agents)
+            # print("Next Obs Shape", next_obs.shape)
+            
+            current_episode_reward += reward[0]
             current_episode_length += 1
             
             # Store the transition in the agent's buffer.
             # `terminated` is True if the episode ended due to environment-defined conditions (e.g., goal reached, failed).
             # `truncated` is True if the episode ended due to a time limit (e.g., `max_ep_len`).
-            self.agent.buffer.store_transition(obs, action, log_prob, reward, state_val, terminated)
+            self.agent.buffer.store_transition(agents_obs[0], action, log_prob, reward[0], state_val, terminated[0])
             obs = next_obs # Update current observation to the next observation
 
             # --- Step 2: Check if episode is done ---
             # An episode is 'done' if it's either terminated or truncated, or reaches max_ep_len.
-            done_by_env = terminated 
+            done_by_env = terminated[0]
             done_by_maxlen = current_episode_length >= self.max_ep_len
             is_episode_done = done_by_env or done_by_maxlen
             
@@ -537,7 +597,7 @@ class PPOTrainer:
                     )
                 
                 # Reset the environment for the next episode
-                obs = self.env.reset()
+                obs, _, _, _ = self.env.reset()
                 current_episode_reward = 0.0
                 current_episode_length = 0
 
@@ -547,7 +607,7 @@ class PPOTrainer:
                 # `done_by_env` will be False, and GAE will bootstrap using V(next_obs).
                 # If the *rollout* ends exactly when an episode ends, `done_by_env` will be True, and GAE
                 # will use 0 as the value for the terminal state.
-                actor_loss, critic_loss, entropy = self.agent.update_policy(next_obs, done_by_env)
+                actor_loss, critic_loss, entropy = self.agent.update_policy(np.array(get_agent_observed_state(0, next_obs)), done_by_env)
                 # Optional: log update losses
                 # logging.debug(f"Update at step {t_step_global}: ActorL={actor_loss:.3f}, CriticL={critic_loss:.3f}, Entropy={entropy:.3f}")
 
@@ -578,7 +638,7 @@ def main():
     # --- Configuration Dictionary ---
     # Centralized configuration for all hyperparameters and settings.
     config: Dict[str, Any] = {
-        "env_id": 'Acrobot-v1',     # Environment ID from Gymnasium
+        "env_id": 'BattleSnake',     # Environment ID from Gymnasium
         "total_training_timesteps": 200_000, # Total environment steps for training
         "rollout_steps": 2048,       # N: Number of steps to collect per PPO update cycle
         "hidden_dim": 64,            # Number of units in hidden layers of the PolicyValueNetwork
@@ -595,29 +655,32 @@ def main():
         "max_ep_len": 500,           # Maximum number of steps per episode (specific to env, e.g., CartPole-v1 is 500)
         "log_interval_episodes": 20, # Log average performance every N episodes
         "save_interval_steps": 50_000, # Save model checkpoint every N global timesteps
-        "ckpt_dir": "./models/PPO_Acrobot", # Relative directory to save model checkpoints
-        "load_model_path": "./models/PPO_Acrobot/ppo_steps_100000.pth", # Path to a pre-trained model to load (e.g., "./models/PPO_CartPole/ppo_steps_100000.pth")
-        "render_mode": True,          # Environment render bool - True or False
-        "render_freq": 0.1,         # Time interval (in seconds) to render the environment 
+        "ckpt_dir": "./models/PPO_BattleSnake", # Relative directory to save model checkpoints
+        "load_model_path": None, # Path to a pre-trained model to load (e.g., "./models/PPO_CartPole/ppo_steps_100000.pth")
+        "render_mode": False,          # Environment render bool - True or False
+        "render_freq": 0.5,         # Time interval (in seconds) to render the environment 
     }
 
     # --- Environment Setup (to get observation and action dimensions) ---
     # Create a temporary dummy environment to inspect its properties.
-    try:
-        dummy_env = gym.make(config["env_id"])
-        n_obs_dim = dummy_env.observation_space.shape[0] # Assuming 1D observation space
-        
-        if isinstance(dummy_env.action_space, gym.spaces.Discrete):
-            action_dim = dummy_env.action_space.n # Number of discrete actions
-        else: # Handle continuous action spaces if needed in the future
-            action_dim = dummy_env.action_space.shape[0]
-            logging.error("This PPO implementation is designed for Discrete action spaces. Continuous actions are not yet supported.")
-            dummy_env.close()
-            return # Exit if action space is not discrete
-        dummy_env.close() # Close the dummy environment
-    except Exception as e:
-        logging.error(f"Error creating dummy environment '{config['env_id']}': {e}")
-        return
+    # try:
+    map_size = (11, 11)
+    n_snakes = 4
+
+    dummy_env = BattlesnakeGym(map_size=map_size, number_of_snakes=n_snakes)
+    obs, _, _, _ = dummy_env.reset()
+    n_obs_dim = dummy_env.observation_space.shape # Assuming 1D observation space
+    # n_obs_dim = (3, map_size[0], map_size[1]) # Assuming 3 channels for RGB-like observation
+    action_dim = dummy_env.action_space[0].n # Assuming discrete action space
+    print(f"Observation space shape: {n_obs_dim}")
+    print(f"Action space shape: {action_dim}")
+
+    modified_obs = get_agent_observed_state(0, obs)
+    initial_random_policy(modified_obs, dummy_env.action_space[0])
+    
+
+    dummy_env.close()
+
 
 
     # --- Agent Initialization ---
@@ -639,8 +702,9 @@ def main():
     )
 
     # --- Trainer Initialization ---
+    env = BattlesnakeGym(map_size=map_size, number_of_snakes=n_snakes)
     trainer = PPOTrainer(
-        env_id=config["env_id"],
+        env=env,
         agent=ppo_agent,
         rollout_steps=config["rollout_steps"],
         log_interval_episodes=config["log_interval_episodes"],
