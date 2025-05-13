@@ -1,0 +1,19 @@
+Observation Space Shape: (4, 3, 11, 11)
+tensor([[0.2491, 0.2446, 0.2522, 0.2541],
+        [0.2374, 0.2474, 0.2227, 0.2924],
+        [0.2484, 0.2454, 0.2505, 0.2557],
+        [0.2633, 0.2228, 0.2392, 0.2748]], device='cuda:0')
+Traceback (most recent call last):
+  File "ppo_basic.py", line 529, in <module>
+    main()
+  File "ppo_basic.py", line 526, in main
+    training_ppo._collect_trajectory(1000, 1e7, wandb=run, logpath= None)
+  File "ppo_basic.py", line 390, in _collect_trajectory
+    state_agents = torch.tensor(state_agents, device = self.PPO.device, dtype=torch.float32)
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/warnings.py", line 112, in _showwarnmsg
+    _showwarnmsg_impl(msg)
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/warnings.py", line 30, in _showwarnmsg_impl
+    file.write(text)
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/wandb/sdk/lib/redirect.py", line 645, in write
+    self._old_write(data)
+KeyboardInterrupt

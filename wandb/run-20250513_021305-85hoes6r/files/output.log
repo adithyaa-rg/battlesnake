@@ -1,0 +1,161 @@
+Observation Space Shape: (4, 3, 11, 11)
+torch.Size([4, 3, 11, 11])
+0 7 4
+1 10 9
+2 7 6
+3 4 9
+ppo_basic.py:392: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  state_agents = torch.tensor(state_agents, device = self.PPO.device, dtype=torch.float32)
+torch.Size([4, 3, 11, 11])
+0 7 4
+1 10 9
+2 7 6
+3 4 9
+torch.Size([4, 3, 11, 11])
+0 7 4
+1 10 9
+2 7 6
+3 4 9
+torch.Size([4, 3, 11, 11])
+0 7 4
+1 10 9
+2 7 6
+3 4 9
+torch.Size([4, 3, 11, 11])
+0 7 4
+1 10 9
+2 7 6
+3 4 9
+torch.Size([4, 3, 11, 11])
+0 0 8
+1 1 10
+2 0 10
+3 9 8
+torch.Size([4, 3, 11, 11])
+0 0 8
+1 1 10
+2 0 10
+3 9 8
+torch.Size([4, 3, 11, 11])
+0 3 6
+1 3 0
+2 2 10
+3 2 3
+torch.Size([4, 3, 11, 11])
+0 3 6
+1 3 0
+2 2 10
+3 2 3
+torch.Size([4, 3, 11, 11])
+0 5 4
+1 4 4
+2 4 0
+3 6 9
+torch.Size([4, 3, 11, 11])
+0 5 4
+1 4 4
+2 4 0
+3 6 9
+torch.Size([4, 3, 11, 11])
+0 5 4
+1 4 4
+2 4 0
+3 6 9
+torch.Size([4, 3, 11, 11])
+0 5 4
+1 4 4
+2 4 0
+3 6 9
+torch.Size([4, 3, 11, 11])
+0 9 8
+1 4 0
+2 10 1
+3 3 8
+torch.Size([4, 3, 11, 11])
+0 9 8
+1 4 0
+2 10 1
+3 3 8
+torch.Size([4, 3, 11, 11])
+0 9 8
+1 4 0
+2 10 1
+3 3 8
+torch.Size([4, 3, 11, 11])
+0 8 7
+1 2 10
+2 10 3
+3 7 8
+torch.Size([4, 3, 11, 11])
+0 8 7
+1 2 10
+2 10 3
+3 7 8
+torch.Size([4, 3, 11, 11])
+0 8 7
+1 2 10
+2 10 3
+3 7 8
+torch.Size([4, 3, 11, 11])
+0 4 5
+1 1 10
+2 0 5
+3 9 4
+torch.Size([4, 3, 11, 11])
+0 4 5
+1 1 10
+2 0 5
+3 9 4
+torch.Size([4, 3, 11, 11])
+0 4 5
+1 1 10
+2 0 5
+3 9 4
+torch.Size([4, 3, 11, 11])
+0 4 5
+1 1 10
+2 0 5
+3 9 4
+torch.Size([4, 3, 11, 11])
+0 4 7
+1 6 0
+2 9 9
+3 5 2
+torch.Size([4, 3, 11, 11])
+0 4 7
+1 6 0
+2 9 9
+3 5 2
+torch.Size([4, 3, 11, 11])
+0 4 7
+1 6 0
+2 9 9
+3 5 2
+torch.Size([4, 3, 11, 11])
+0 4 7
+1 6 0
+2 9 9
+3 5 2
+torch.Size([4, 3, 11, 11])
+0 4 4
+1 3 10
+2 8 5
+3 8 10
+torch.Size([4, 3, 11, 11])
+0 4 4
+1 3 10
+2 8 5
+3 8 10
+torch.Size([4, 3, 11, 11])
+0 4 4
+1 3 10
+2 8 5
+3 8 10
+Traceback (most recent call last):
+  File "ppo_basic.py", line 531, in <module>
+    main()
+  File "ppo_basic.py", line 528, in main
+    training_ppo._collect_trajectory(1000, 1e7, wandb=run, logpath= None)
+  File "ppo_basic.py", line 403, in _collect_trajectory
+    time.sleep(1)
+KeyboardInterrupt

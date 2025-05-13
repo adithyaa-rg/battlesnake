@@ -1,0 +1,22 @@
+Observation Space Shape: (4, 3, 11, 11)
+ppo_basic.py:398: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  state_agents = torch.tensor(state_agents, device = self.PPO.device, dtype=torch.float32)
+episode: 28 | step: 200 | reward: -1.0054 | episode length: 6.892857142857143
+Traceback (most recent call last):
+  File "ppo_basic.py", line 537, in <module>
+    main()
+  File "ppo_basic.py", line 534, in main
+    training_ppo._collect_trajectory(1000, 1e7, wandb=run, logpath= None)
+  File "ppo_basic.py", line 399, in _collect_trajectory
+    actions, logprobs, values = self.PPO.policy.select_action(state_agents)
+  File "ppo_basic.py", line 155, in select_action
+    dist = Categorical(probs=masked_probs)
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/torch/distributions/categorical.py", line 66, in __init__
+    super(Categorical, self).__init__(batch_shape, validate_args=validate_args)
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/torch/distributions/distribution.py", line 57, in __init__
+    f"Expected parameter {param} "
+ValueError: Expected parameter probs (Tensor of shape (4, 4)) of distribution Categorical(probs: torch.Size([4, 4])) to satisfy the constraint Simplex(), but found invalid values:
+tensor([[0.4882, 0.0000, 0.0000, 0.5118],
+        [   nan,    nan,    nan,    nan],
+        [0.3343, 0.0000, 0.3177, 0.3480],
+        [0.4928, 0.0000, 0.0000, 0.5072]], device='cuda:0')

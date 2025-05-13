@@ -1,0 +1,16 @@
+{"time":"2025-05-13T02:20:43.433718769+02:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-05-13T02:20:43.433763412+02:00","level":"INFO","msg":"created symlink","path":"/home/adi/mas/battlesnake/wandb/run-20250513_022043-76ta3tn5/logs/debug-core.log"}
+{"time":"2025-05-13T02:20:43.539441678+02:00","level":"INFO","msg":"created new stream","id":"76ta3tn5"}
+{"time":"2025-05-13T02:20:43.539508704+02:00","level":"INFO","msg":"stream: started","id":"76ta3tn5"}
+{"time":"2025-05-13T02:20:43.539653809+02:00","level":"INFO","msg":"sender: started","stream_id":"76ta3tn5"}
+{"time":"2025-05-13T02:20:43.539652632+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"76ta3tn5"}
+{"time":"2025-05-13T02:20:43.539817569+02:00","level":"INFO","msg":"handler: started","stream_id":"76ta3tn5"}
+{"time":"2025-05-13T02:20:44.072366598+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-13T02:20:46.016841034+02:00","level":"INFO","msg":"stream: closing","id":"76ta3tn5"}
+{"time":"2025-05-13T02:20:46.016906469+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-13T02:20:46.017826296+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-13T02:20:47.209140931+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-13T02:20:47.702874106+02:00","level":"INFO","msg":"handler: closed","stream_id":"76ta3tn5"}
+{"time":"2025-05-13T02:20:47.702966651+02:00","level":"INFO","msg":"sender: closed","stream_id":"76ta3tn5"}
+{"time":"2025-05-13T02:20:47.702955612+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"76ta3tn5"}
+{"time":"2025-05-13T02:20:47.70312665+02:00","level":"INFO","msg":"stream: closed","id":"76ta3tn5"}

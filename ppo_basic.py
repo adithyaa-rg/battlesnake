@@ -14,6 +14,8 @@
 
 import numpy as np
 import os
+import time
+
 
 import torch
 import torch.nn as nn
@@ -94,20 +96,62 @@ class PolicyValueNetwork(nn.Module):
         state_value = self.critic_head(features)
         return policy_probs, state_value
     
-    def select_action(self, obs):
-        """
-            Get the action probability and corresponding log probablitliy to use in the cost functions. Return these two along with the value function for a given observation
-        """
+    # def select_action(self, obs):
+    #     """
+    #         Get the action probability and corresponding log probablitliy to use in the cost functions. Return these two along with the value function for a given observation
+    #     """
+    #     with torch.no_grad():
+    #         action_out, value = self.forward(obs)
+    #         # print('stage-0:', action_out.shape, value, obs.shape)
+
+    #         dist = torch.distributions.Categorical(probs=action_out)
+    #         actions = dist.sample()
+    #         action_logprobs = dist.log_prob(actions)
+
+    #         # print(actions, action_logprobs, value)
+    #     return actions.cpu().numpy(), action_logprobs.cpu().numpy(), value.cpu().numpy()
+
+    def select_action(self, obs, last_actions=None):
         with torch.no_grad():
             action_out, value = self.forward(obs)
-            # print('stage-0:', action_out.shape, value, obs.shape)
+            masked_probs = action_out.clone()
 
-            dist = torch.distributions.Categorical(probs=action_out)
+            for i in range(len(obs)):
+                current_ind = torch.where(obs[i, 0].cpu() == 5)
+
+                if current_ind[0].numel() == 0:
+                    continue
+
+                x, y = current_ind[0][0].item(), current_ind[1][0].item()
+
+                if x + 1 >= obs.shape[2] or obs[i, 0, x + 1, y] == 1:
+                    masked_probs[i, 3] = 0.0
+
+                if x - 1 < 0 or obs[i, 0, x - 1, y] == 1:
+                    masked_probs[i, 2] = 0.0
+
+                if y + 1 >= obs.shape[3] or obs[i, 0, x, y + 1] == 1:
+                    masked_probs[i, 0] = 0.0
+
+                if y - 1 < 0 or obs[i, 0, x, y - 1] == 1:
+                    masked_probs[i, 1] = 0.0
+
+                if masked_probs[i].sum() == 0:
+                    masked_probs[i] = torch.ones_like(masked_probs[i])
+            
+            masked_probs = masked_probs / masked_probs.sum(dim=1, keepdim=True)
+            masked_probs[masked_probs != masked_probs] = 1.0 / masked_probs.shape[1]
+
+            dist = Categorical(probs=masked_probs)
             actions = dist.sample()
             action_logprobs = dist.log_prob(actions)
 
-            # print(actions, action_logprobs, value)
         return actions.cpu().numpy(), action_logprobs.cpu().numpy(), value.cpu().numpy()
+
+    def reverse_action(self, action):
+        # Assuming action indices: 0=up, 1=down, 2=left, 3=right
+        reverse = {0:1, 1:0, 2:3, 3:2}
+        return reverse[action]
     
     def evaluate_actions(self, states, actions):
         action_out, values = self.forward(states)
@@ -128,10 +172,10 @@ class PPOAgent:
             num_epochs=10, 
             eps_clip=0.2, 
             gamma=0.99,
-            entropy_coef=0.01,
+            entropy_coef=0.1,
             value_loss_coef=0.5,
             batch_size=192,
-            device='cpu',
+            device='cuda',
             load=False,
             ckpt_directory = None
         ):
@@ -212,7 +256,7 @@ class PPOAgent:
         rewards_to_go = self.compute_returns()
 
         for key in self.keys:
-            states = torch.from_numpy(np.array([i.detach().numpy() for i in self.buffer.states[key]])).float().to(self.device)
+            states = torch.from_numpy(np.array([i.detach().cpu().numpy() for i in self.buffer.states[key]])).float().to(self.device)
             actions = torch.from_numpy(np.array(self.buffer.actions[key])).float().to(self.device)
             old_logprobs = torch.from_numpy(np.array(self.buffer.logprobs[key])).float().to(self.device)
             state_vals = torch.from_numpy(np.array(self.buffer.state_values[key])).float().to(self.device)
@@ -325,7 +369,9 @@ class PPOTraining:
         'num_episodes': 0,
         }
         
-        while t_so_far < num_train_steps:
+        while eps_so_far < num_train_steps:
+
+            
 
             state, _, _, info = self.env.reset()
             for j in range(self.n_observations[-1] - 1):
@@ -334,17 +380,23 @@ class PPOTraining:
             eps_reward = 0
             eps_length = 0
 
+            # last_actions = {i: None for i in self.keys}
+
             for _ in range(1, max_eps_steps + 1):
                 # Collect Experience
                 
                 state_agents = torch.tensor(state_agents, device = self.PPO.device, dtype=torch.float32)
                 actions, logprobs, values = self.PPO.policy.select_action(state_agents)
 
+                # for i, key in enumerate(self.keys):
+                #     last_actions[key] = actions[i]
+
                 next_obs, rewards, terminated, info = self.env.step(actions)
 
                 # Do you want to render???
                 if self.render:
                     self.env.render()
+                    time.sleep(1)
 
                 # Episode Reward approximation based on each agent's reward - maybe could use a better rep
                 eps_reward += np.sum(list(rewards.values()))/len(list(rewards.values()))
@@ -379,15 +431,15 @@ class PPOTraining:
                             "mean_episode_length": running_eps_length,
                             "episode": eps_so_far,
                             "total_steps": t_so_far,
-                        }, step=t_so_far)
+                        }, step=self.start_ind + t_so_far)
 
                     running_eps_reward = 0
                     running_eps_length = 0
                     running_num_eps = 0
 
-                if t_so_far % self.save_interval == 0:
+                if eps_so_far % self.save_interval == 0:
                     # Saving learned model till now
-                    checkpoint_path = os.path.join(self.ckpt_dir, f"battlesnake_step_{self.start_ind + t_so_far}.pt")
+                    checkpoint_path = os.path.join(self.ckpt_dir, f"battlesnake_step_{self.start_ind + eps_so_far}.pt")
                     torch.save(self.PPO.policy.state_dict(), checkpoint_path)
 
                 state = next_obs
@@ -417,10 +469,11 @@ def main():
 
     ppo = PPOAgent(
         action_dim=4,
-        lr_actor=1e-4,
+        lr_actor=3e-4,
         lr_critic=1e-3,
         load=True,
-        ckpt_directory="/home/adithyaa/KTH/battlesnake/models/PPO"
+        ckpt_directory="/home/adi/mas/battlesnake/models/PPO_no_back",
+        device=device
     )
 
     # Game Settings
@@ -451,24 +504,28 @@ def main():
         update_interval=150,
         log_interval=200,
         save_interval=2000,
-        ckpt_directory="/home/adithyaa/KTH/battlesnake/models/PPO",
+        ckpt_directory="/home/adi/mas/battlesnake/models/PPO_no_back",
         render=True
     )
 
-    run = wandb.init(
-    # Set the wandb entity where your project will be logged (generally your team name).
-    entity="mas4",
-    # Set the wandb project where this run will be logged.
-    project="mas-ppo-battlesnake",
-    # Track hyperparameters and run metadata.
-    config={
-        "learning_rate": 1e-4,
-        "architecture": "CNN+PPO",
-        "dataset": "BattleSnake"
-    },
-    )
+    wandb_init = False
+    if wandb_init != False:
+        run = wandb.init(
+        # Set the wandb entity where your project will be logged (generally your team name).
+        entity="mas4",
+        # Set the wandb project where this run will be logged.
+        project="mas-ppo-battlesnake",
+        # Track hyperparameters and run metadata.
+        config={
+            "learning_rate": 1e-4,
+            "architecture": "CNN+PPO",
+            "dataset": "BattleSnake"
+        },
+        )
+    else:
+        run = None
 
-    training_ppo._collect_trajectory(1000, 60000, wandb=run, logpath= None)
+    training_ppo._collect_trajectory(1000, 1e7, wandb=run, logpath= None)
 
 if __name__ == "__main__":
     main()

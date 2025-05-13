@@ -1,0 +1,12 @@
+Observation Space Shape: (4, 3, 11, 11)
+torch.Size([4, 3, 11, 11])
+Traceback (most recent call last):
+  File "ppo_basic.py", line 529, in <module>
+    main()
+  File "ppo_basic.py", line 526, in main
+    training_ppo._collect_trajectory(1000, 1e7, wandb=run, logpath= None)
+  File "ppo_basic.py", line 391, in _collect_trajectory
+    actions, logprobs, values = self.PPO.policy.select_action(state_agents)
+  File "ppo_basic.py", line 129, in select_action
+    if obs[i, x + 1, y] != 0:
+RuntimeError: Boolean value of Tensor with more than one value is ambiguous

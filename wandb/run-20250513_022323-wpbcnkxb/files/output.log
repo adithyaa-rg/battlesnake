@@ -1,0 +1,38 @@
+Observation Space Shape: (4, 3, 11, 11)
+ppo_basic.py:388: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  state_agents = torch.tensor(state_agents, device = self.PPO.device, dtype=torch.float32)
+episode: 47 | step: 200 | reward: -2.6426 | episode length: 4.212765957446808
+episode: 96 | step: 400 | reward: -2.1184 | episode length: 4.0
+episode: 150 | step: 600 | reward: -2.7157 | episode length: 3.7962962962962963
+episode: 203 | step: 800 | reward: -2.6160 | episode length: 3.7547169811320753
+episode: 256 | step: 1000 | reward: -2.2179 | episode length: 3.7735849056603774
+episode: 307 | step: 1200 | reward: -2.1637 | episode length: 3.9019607843137254
+episode: 357 | step: 1400 | reward: -1.7850 | episode length: 4.04
+episode: 410 | step: 1600 | reward: -2.4689 | episode length: 3.7735849056603774
+episode: 460 | step: 1800 | reward: -2.1650 | episode length: 4.0
+episode: 508 | step: 2000 | reward: -2.2979 | episode length: 4.104166666666667
+episode: 562 | step: 2200 | reward: -2.4796 | episode length: 3.7222222222222223
+episode: 612 | step: 2400 | reward: -2.3600 | episode length: 3.98
+episode: 661 | step: 2600 | reward: -2.4888 | episode length: 4.142857142857143
+episode: 710 | step: 2800 | reward: -2.2071 | episode length: 4.020408163265306
+episode: 760 | step: 3000 | reward: -2.2830 | episode length: 4.06
+episode: 807 | step: 3200 | reward: -2.5032 | episode length: 4.127659574468085
+episode: 860 | step: 3400 | reward: -2.3726 | episode length: 3.8679245283018866
+episode: 911 | step: 3600 | reward: -2.3637 | episode length: 3.9019607843137254
+episode: 959 | step: 3800 | reward: -2.5083 | episode length: 4.208333333333333
+episode: 1005 | step: 4000 | reward: -1.6728 | episode length: 4.260869565217392
+episode: 1059 | step: 4200 | reward: -2.3472 | episode length: 3.740740740740741
+episode: 1111 | step: 4400 | reward: -2.4279 | episode length: 3.826923076923077
+episode: 1163 | step: 4600 | reward: -2.1577 | episode length: 3.8461538461538463
+episode: 1215 | step: 4800 | reward: -2.1837 | episode length: 3.8653846153846154
+episode: 1267 | step: 5000 | reward: -2.9913 | episode length: 3.8846153846153846
+episode: 1314 | step: 5200 | reward: -2.4309 | episode length: 4.191489361702128
+episode: 1365 | step: 5400 | reward: -2.0892 | episode length: 3.9411764705882355
+episode: 1415 | step: 5600 | reward: -2.3640 | episode length: 4.02
+episode: 1469 | step: 5800 | reward: -2.5713 | episode length: 3.7037037037037037
+episode: 1522 | step: 6000 | reward: -2.3462 | episode length: 3.7735849056603774
+episode: 1570 | step: 6200 | reward: -2.3375 | episode length: 3.9375
+episode: 1621 | step: 6400 | reward: -2.6118 | episode length: 4.137254901960785
+episode: 1672 | step: 6600 | reward: -2.5912 | episode length: 3.9411764705882355
+episode: 1722 | step: 6800 | reward: -1.9330 | episode length: 3.96
+episode: 1772 | step: 7000 | reward: -2.2920 | episode length: 4.04

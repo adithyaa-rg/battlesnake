@@ -1,0 +1,21 @@
+Observation Space Shape: (4, 3, 11, 11)
+torch.Size([4, 3, 11, 11])
+ppo_basic.py:374: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  state_agents = torch.tensor(state_agents, device = self.PPO.device, dtype=torch.float32)
+torch.Size([4, 3, 11, 11])
+torch.Size([4, 3, 11, 11])
+torch.Size([4, 3, 11, 11])
+torch.Size([4, 3, 11, 11])
+torch.Size([4, 3, 11, 11])
+torch.Size([4, 3, 11, 11])
+torch.Size([4, 3, 11, 11])
+torch.Size([4, 3, 11, 11])
+torch.Size([4, 3, 11, 11])
+Traceback (most recent call last):
+  File "ppo_basic.py", line 513, in <module>
+    main()
+  File "ppo_basic.py", line 510, in main
+    training_ppo._collect_trajectory(1000, 1e7, wandb=run, logpath= None)
+  File "ppo_basic.py", line 385, in _collect_trajectory
+    time.sleep(1)
+KeyboardInterrupt

@@ -1,0 +1,51 @@
+Observation Space Shape: (4, 3, 11, 11)
+ppo_basic.py:388: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  state_agents = torch.tensor(state_agents, device = self.PPO.device, dtype=torch.float32)
+episode: 49 | step: 200 | reward: -2.4480 | episode length: 4.020408163265306
+episode: 95 | step: 400 | reward: -2.1272 | episode length: 4.391304347826087
+episode: 141 | step: 600 | reward: -2.8152 | episode length: 4.326086956521739
+episode: 194 | step: 800 | reward: -2.1434 | episode length: 3.7735849056603774
+episode: 248 | step: 1000 | reward: -2.0574 | episode length: 3.7037037037037037
+episode: 302 | step: 1200 | reward: -2.5593 | episode length: 3.685185185185185
+episode: 346 | step: 1400 | reward: -1.9886 | episode length: 4.545454545454546
+episode: 398 | step: 1600 | reward: -2.3471 | episode length: 3.8846153846153846
+episode: 454 | step: 1800 | reward: -2.1821 | episode length: 3.5
+episode: 506 | step: 2000 | reward: -2.0260 | episode length: 3.9038461538461537
+episode: 563 | step: 2200 | reward: -2.5465 | episode length: 3.473684210526316
+episode: 611 | step: 2400 | reward: -2.6333 | episode length: 4.229166666666667
+episode: 660 | step: 2600 | reward: -2.2429 | episode length: 4.081632653061225
+episode: 706 | step: 2800 | reward: -1.9641 | episode length: 4.326086956521739
+episode: 752 | step: 3000 | reward: -2.1130 | episode length: 4.3478260869565215
+episode: 804 | step: 3200 | reward: -2.5135 | episode length: 3.826923076923077
+episode: 850 | step: 3400 | reward: -1.9707 | episode length: 4.391304347826087
+episode: 903 | step: 3600 | reward: -1.8594 | episode length: 3.7169811320754715
+episode: 950 | step: 3800 | reward: -2.1213 | episode length: 4.319148936170213
+episode: 998 | step: 4000 | reward: -2.2698 | episode length: 4.020833333333333
+episode: 1050 | step: 4200 | reward: -2.2962 | episode length: 3.9423076923076925
+episode: 1097 | step: 4400 | reward: -2.3074 | episode length: 4.25531914893617
+episode: 1151 | step: 4600 | reward: -2.0037 | episode length: 3.740740740740741
+episode: 1202 | step: 4800 | reward: -2.1931 | episode length: 3.9019607843137254
+episode: 1253 | step: 5000 | reward: -2.5647 | episode length: 3.9019607843137254
+episode: 1304 | step: 5200 | reward: -1.9794 | episode length: 3.9607843137254903
+episode: 1359 | step: 5400 | reward: -2.4655 | episode length: 3.6363636363636362
+episode: 1412 | step: 5600 | reward: -2.1792 | episode length: 3.6792452830188678
+episode: 1463 | step: 5800 | reward: -1.9186 | episode length: 3.980392156862745
+episode: 1514 | step: 6000 | reward: -2.4990 | episode length: 3.9411764705882355
+episode: 1565 | step: 6200 | reward: -2.2157 | episode length: 3.8823529411764706
+episode: 1616 | step: 6400 | reward: -2.5431 | episode length: 3.9411764705882355
+Traceback (most recent call last):
+  File "ppo_basic.py", line 527, in <module>
+    main()
+  File "ppo_basic.py", line 524, in main
+    training_ppo._collect_trajectory(1000, 1e7, wandb=run, logpath= None)
+  File "ppo_basic.py", line 389, in _collect_trajectory
+    actions, logprobs, values = self.PPO.policy.select_action(state_agents)
+  File "ppo_basic.py", line 145, in select_action
+    dist = Categorical(probs=masked_probs)
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/torch/distributions/categorical.py", line 66, in __init__
+    super(Categorical, self).__init__(batch_shape, validate_args=validate_args)
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/torch/distributions/distribution.py", line 54, in __init__
+    valid = constraint.check(value)
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/torch/distributions/constraints.py", line 406, in check
+    return torch.all(value >= 0, dim=-1) & ((value.sum(-1) - 1).abs() < 1e-6)
+KeyboardInterrupt

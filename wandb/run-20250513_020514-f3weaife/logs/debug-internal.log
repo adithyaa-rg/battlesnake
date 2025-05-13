@@ -1,0 +1,16 @@
+{"time":"2025-05-13T02:05:14.641462359+02:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-05-13T02:05:14.641491357+02:00","level":"INFO","msg":"created symlink","path":"/home/adi/mas/battlesnake/wandb/run-20250513_020514-f3weaife/logs/debug-core.log"}
+{"time":"2025-05-13T02:05:14.744411373+02:00","level":"INFO","msg":"created new stream","id":"f3weaife"}
+{"time":"2025-05-13T02:05:14.744434262+02:00","level":"INFO","msg":"stream: started","id":"f3weaife"}
+{"time":"2025-05-13T02:05:14.744451522+02:00","level":"INFO","msg":"handler: started","stream_id":"f3weaife"}
+{"time":"2025-05-13T02:05:14.744453764+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"f3weaife"}
+{"time":"2025-05-13T02:05:14.744527733+02:00","level":"INFO","msg":"sender: started","stream_id":"f3weaife"}
+{"time":"2025-05-13T02:05:15.184924392+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-13T02:05:19.312047317+02:00","level":"INFO","msg":"stream: closing","id":"f3weaife"}
+{"time":"2025-05-13T02:05:19.312073665+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-13T02:05:19.312424908+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-13T02:05:20.314147551+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-13T02:05:20.775894156+02:00","level":"INFO","msg":"handler: closed","stream_id":"f3weaife"}
+{"time":"2025-05-13T02:05:20.775978469+02:00","level":"INFO","msg":"sender: closed","stream_id":"f3weaife"}
+{"time":"2025-05-13T02:05:20.775958252+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"f3weaife"}
+{"time":"2025-05-13T02:05:20.776154258+02:00","level":"INFO","msg":"stream: closed","id":"f3weaife"}

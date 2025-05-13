@@ -1,0 +1,17 @@
+{"time":"2025-05-13T02:14:01.49258454+02:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-05-13T02:14:01.492612798+02:00","level":"INFO","msg":"created symlink","path":"/home/adi/mas/battlesnake/wandb/run-20250513_021401-d7zw8r87/logs/debug-core.log"}
+{"time":"2025-05-13T02:14:01.598616435+02:00","level":"INFO","msg":"created new stream","id":"d7zw8r87"}
+{"time":"2025-05-13T02:14:01.598686904+02:00","level":"INFO","msg":"stream: started","id":"d7zw8r87"}
+{"time":"2025-05-13T02:14:01.598808481+02:00","level":"INFO","msg":"sender: started","stream_id":"d7zw8r87"}
+{"time":"2025-05-13T02:14:01.598804398+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"d7zw8r87"}
+{"time":"2025-05-13T02:14:01.598913331+02:00","level":"INFO","msg":"handler: started","stream_id":"d7zw8r87"}
+{"time":"2025-05-13T02:14:02.124327436+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-13T02:14:17.174251205+02:00","level":"INFO","msg":"stream: closing","id":"d7zw8r87"}
+{"time":"2025-05-13T02:14:17.174301256+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-13T02:14:17.176099229+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-13T02:14:18.364579765+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-13T02:14:18.741059614+02:00","level":"INFO","msg":"handler: closed","stream_id":"d7zw8r87"}
+{"time":"2025-05-13T02:14:18.741159106+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"d7zw8r87"}
+{"time":"2025-05-13T02:14:18.741177625+02:00","level":"INFO","msg":"sender: closed","stream_id":"d7zw8r87"}
+{"time":"2025-05-13T02:14:18.741274305+02:00","level":"INFO","msg":"stream: closed","id":"d7zw8r87"}
+{"time":"2025-05-13T02:14:18.741502395+02:00","level":"WARN","msg":"runwork: ignoring record after close","work":{"Record":{"RecordType":{"Request":{"RequestType":{"StopStatus":{}}}},"control":{"local":true,"mailbox_slot":"w7l7rg7mufeh","connection_id":"127.0.0.1:52394"},"_info":{"stream_id":"d7zw8r87"}}}}

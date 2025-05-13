@@ -1,0 +1,14 @@
+{"time":"2025-05-13T02:27:25.777423541+02:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-05-13T02:27:25.777441658+02:00","level":"INFO","msg":"created symlink","path":"/home/adi/mas/battlesnake/wandb/run-20250513_022725-n892468r/logs/debug-core.log"}
+{"time":"2025-05-13T02:27:25.881653019+02:00","level":"INFO","msg":"created new stream","id":"n892468r"}
+{"time":"2025-05-13T02:27:25.881674598+02:00","level":"INFO","msg":"stream: started","id":"n892468r"}
+{"time":"2025-05-13T02:27:25.88172409+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"n892468r"}
+{"time":"2025-05-13T02:27:25.881890283+02:00","level":"INFO","msg":"sender: started","stream_id":"n892468r"}
+{"time":"2025-05-13T02:27:25.88182729+02:00","level":"INFO","msg":"handler: started","stream_id":"n892468r"}
+{"time":"2025-05-13T02:27:25.88377328+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai on 127.0.0.53:53: server misbehaving"}
+{"time":"2025-05-13T02:27:27.991502979+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai on 127.0.0.53:53: server misbehaving"}
+{"time":"2025-05-13T02:27:32.169658598+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai on 127.0.0.53:53: server misbehaving"}
+{"time":"2025-05-13T02:27:40.377165716+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai on 127.0.0.53:53: server misbehaving"}
+{"time":"2025-05-13T02:27:56.478130493+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai on 127.0.0.53:53: server misbehaving"}
+{"time":"2025-05-13T02:28:13.034338176+02:00","level":"INFO","msg":"stream: closing","id":"n892468r"}
+{"time":"2025-05-13T02:28:31.112432677+02:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai on 127.0.0.53:53: server misbehaving"}

@@ -1,0 +1,29 @@
+Observation Space Shape: (4, 3, 11, 11)
+ppo_basic.py:369: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  state_agents = torch.tensor(state_agents, device = self.PPO.device, dtype=torch.float32)
+episode: 51 | step: 200 | reward: -1.9510 | episode length: 3.8823529411764706
+episode: 109 | step: 400 | reward: -2.5371 | episode length: 3.4655172413793105
+episode: 164 | step: 600 | reward: -2.4518 | episode length: 3.6
+episode: 211 | step: 800 | reward: -2.1468 | episode length: 4.212765957446808
+episode: 263 | step: 1000 | reward: -2.4587 | episode length: 3.9038461538461537
+episode: 311 | step: 1200 | reward: -2.4219 | episode length: 4.166666666666667
+episode: 360 | step: 1400 | reward: -2.3898 | episode length: 4.061224489795919
+episode: 409 | step: 1600 | reward: -2.4582 | episode length: 4.061224489795919
+episode: 462 | step: 1800 | reward: -2.1906 | episode length: 3.792452830188679
+episode: 518 | step: 2000 | reward: -2.3446 | episode length: 3.517857142857143
+Traceback (most recent call last):
+  File "ppo_basic.py", line 507, in <module>
+    main()
+  File "ppo_basic.py", line 504, in main
+    training_ppo._collect_trajectory(1000, 1e7, wandb=run, logpath= None)
+  File "ppo_basic.py", line 357, in _collect_trajectory
+    state, _, _, info = self.env.reset()
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/battlesnake_gym-0.1.dev0-py3.7.egg/battlesnake_gym/snake_gym.py", line 158, in reset
+    self.snakes = Snakes(self.map_size, self.number_of_snakes, self.snake_spawn_locations)
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/battlesnake_gym-0.1.dev0-py3.7.egg/battlesnake_gym/snake.py", line 328, in __init__
+    self.snakes = self._initialise_snakes(number_of_snakes, snake_spawn_locations)
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/battlesnake_gym-0.1.dev0-py3.7.egg/battlesnake_gym/snake.py", line 341, in _initialise_snakes
+    snakes.append(Snake(starting_position=starting_positions[i], map_size=self.map_size))
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/battlesnake_gym-0.1.dev0-py3.7.egg/battlesnake_gym/snake.py", line 40, in __init__
+    self.health = self.FULL_HEALTH
+KeyboardInterrupt

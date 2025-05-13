@@ -1,0 +1,13 @@
+Observation Space Shape: (4, 3, 11, 11)
+torch.Size([4, 3, 11, 11])
+0 8 4
+Traceback (most recent call last):
+  File "ppo_basic.py", line 531, in <module>
+    main()
+  File "ppo_basic.py", line 528, in main
+    training_ppo._collect_trajectory(1000, 1e7, wandb=run, logpath= None)
+  File "ppo_basic.py", line 393, in _collect_trajectory
+    actions, logprobs, values = self.PPO.policy.select_action(state_agents)
+  File "ppo_basic.py", line 131, in select_action
+    if obs[i, x + 1, y] != 0:
+IndexError: index 9 is out of bounds for dimension 1 with size 3

@@ -1,0 +1,16 @@
+{"time":"2025-05-13T01:53:53.093984913+02:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-05-13T01:53:53.094009471+02:00","level":"INFO","msg":"created symlink","path":"/home/adi/mas/battlesnake/wandb/run-20250513_015353-tgck2nf8/logs/debug-core.log"}
+{"time":"2025-05-13T01:53:53.198957316+02:00","level":"INFO","msg":"created new stream","id":"tgck2nf8"}
+{"time":"2025-05-13T01:53:53.199038368+02:00","level":"INFO","msg":"stream: started","id":"tgck2nf8"}
+{"time":"2025-05-13T01:53:53.199071593+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"tgck2nf8"}
+{"time":"2025-05-13T01:53:53.199107736+02:00","level":"INFO","msg":"sender: started","stream_id":"tgck2nf8"}
+{"time":"2025-05-13T01:53:53.199164882+02:00","level":"INFO","msg":"handler: started","stream_id":"tgck2nf8"}
+{"time":"2025-05-13T01:53:54.040742081+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-13T01:54:00.373301003+02:00","level":"INFO","msg":"stream: closing","id":"tgck2nf8"}
+{"time":"2025-05-13T01:54:00.373353052+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-13T01:54:00.373986986+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-13T01:54:01.717597184+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-13T01:54:02.135959752+02:00","level":"INFO","msg":"handler: closed","stream_id":"tgck2nf8"}
+{"time":"2025-05-13T01:54:02.136007335+02:00","level":"INFO","msg":"sender: closed","stream_id":"tgck2nf8"}
+{"time":"2025-05-13T01:54:02.136002878+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"tgck2nf8"}
+{"time":"2025-05-13T01:54:02.13608012+02:00","level":"INFO","msg":"stream: closed","id":"tgck2nf8"}

@@ -1,0 +1,12 @@
+{"time":"2025-05-13T01:54:47.350077214+02:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-05-13T01:54:47.350090856+02:00","level":"INFO","msg":"created symlink","path":"/home/adi/mas/battlesnake/wandb/run-20250513_015447-ex0x57w4/logs/debug-core.log"}
+{"time":"2025-05-13T01:54:47.451925112+02:00","level":"INFO","msg":"created new stream","id":"ex0x57w4"}
+{"time":"2025-05-13T01:54:47.451964234+02:00","level":"INFO","msg":"stream: started","id":"ex0x57w4"}
+{"time":"2025-05-13T01:54:47.451983756+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"ex0x57w4"}
+{"time":"2025-05-13T01:54:47.45198948+02:00","level":"INFO","msg":"sender: started","stream_id":"ex0x57w4"}
+{"time":"2025-05-13T01:54:47.452012117+02:00","level":"INFO","msg":"handler: started","stream_id":"ex0x57w4"}
+{"time":"2025-05-13T01:54:48.37862319+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-13T01:55:08.915127625+02:00","level":"INFO","msg":"stream: closing","id":"ex0x57w4"}
+{"time":"2025-05-13T01:55:08.915183091+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-13T01:55:08.915739198+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-13T01:55:09.845171883+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}

@@ -1,0 +1,21 @@
+Observation Space Shape: (4, 3, 11, 11)
+(array([0, 1, 1, 1]), array([3, 5, 7, 7]), array([ 9,  7,  3, 10]))
+ppo_basic.py:372: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  state_agents = torch.tensor(state_agents, device = self.PPO.device, dtype=torch.float32)
+(array([0, 1, 1, 1]), array([3, 5, 7, 7]), array([ 9,  7,  3, 10]))
+(array([0, 1, 1, 1]), array([3, 5, 7, 7]), array([ 9,  7,  3, 10]))
+(array([0, 1, 1, 1]), array([3, 5, 7, 7]), array([ 9,  7,  3, 10]))
+(array([0, 1, 1, 1]), array([3, 5, 7, 7]), array([ 9,  7,  3, 10]))
+(array([0, 1, 1, 1]), array([10,  0, 10, 10]), array([9, 2, 3, 7]))
+Traceback (most recent call last):
+  File "ppo_basic.py", line 511, in <module>
+    main()
+  File "ppo_basic.py", line 508, in main
+    training_ppo._collect_trajectory(1000, 1e7, wandb=run, logpath= None)
+  File "ppo_basic.py", line 373, in _collect_trajectory
+    actions, logprobs, values = self.PPO.policy.select_action(state_agents)
+  File "ppo_basic.py", line 115, in select_action
+    print(np.where(obs[0].cpu().numpy() == 5))
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/wandb/sdk/lib/redirect.py", line 645, in write
+    self._old_write(data)
+KeyboardInterrupt

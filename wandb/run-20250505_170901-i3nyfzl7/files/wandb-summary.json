@@ -1,1 +1,0 @@
-{"total_steps":60000,"_wandb":{"runtime":653},"_timestamp":1.7464583946756532e+09,"_runtime":653.461224855,"_step":60000,"mean_episode_reward":2.3622448979591835,"mean_episode_length":4.163265306122449,"episode":15418}

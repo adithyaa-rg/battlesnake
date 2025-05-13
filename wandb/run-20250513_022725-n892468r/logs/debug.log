@@ -1,0 +1,37 @@
+2025-05-13 02:27:25,769 INFO    MainThread:28936 [wandb_setup.py:_flush():79] Current SDK version is 0.18.7
+2025-05-13 02:27:25,769 INFO    MainThread:28936 [wandb_setup.py:_flush():79] Configure stats pid to 28936
+2025-05-13 02:27:25,769 INFO    MainThread:28936 [wandb_setup.py:_flush():79] Loading settings from /home/adi/.config/wandb/settings
+2025-05-13 02:27:25,769 INFO    MainThread:28936 [wandb_setup.py:_flush():79] Loading settings from /home/adi/mas/battlesnake/wandb/settings
+2025-05-13 02:27:25,769 INFO    MainThread:28936 [wandb_setup.py:_flush():79] Loading settings from environment variables: {}
+2025-05-13 02:27:25,769 INFO    MainThread:28936 [wandb_setup.py:_flush():79] Applying setup settings: {'mode': None, '_disable_service': None}
+2025-05-13 02:27:25,769 INFO    MainThread:28936 [wandb_setup.py:_flush():79] Inferring run settings from compute environment: {'program_relpath': 'ppo_basic.py', 'program_abspath': '/home/adi/mas/battlesnake/ppo_basic.py', 'program': 'ppo_basic.py'}
+2025-05-13 02:27:25,769 INFO    MainThread:28936 [wandb_setup.py:_flush():79] Applying login settings: {}
+2025-05-13 02:27:25,769 INFO    MainThread:28936 [wandb_init.py:_log_setup():533] Logging user logs to /home/adi/mas/battlesnake/wandb/run-20250513_022725-n892468r/logs/debug.log
+2025-05-13 02:27:25,770 INFO    MainThread:28936 [wandb_init.py:_log_setup():534] Logging internal logs to /home/adi/mas/battlesnake/wandb/run-20250513_022725-n892468r/logs/debug-internal.log
+2025-05-13 02:27:25,770 INFO    MainThread:28936 [wandb_init.py:init():619] calling init triggers
+2025-05-13 02:27:25,770 INFO    MainThread:28936 [wandb_init.py:init():627] wandb.init called with sweep_config: {}
+config: {'learning_rate': 0.0001, 'architecture': 'CNN+PPO', 'dataset': 'BattleSnake'}
+2025-05-13 02:27:25,770 INFO    MainThread:28936 [wandb_init.py:init():669] starting backend
+2025-05-13 02:27:25,770 INFO    MainThread:28936 [wandb_init.py:init():673] sending inform_init request
+2025-05-13 02:27:25,774 INFO    MainThread:28936 [backend.py:_multiprocessing_setup():106] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2025-05-13 02:27:25,774 INFO    MainThread:28936 [wandb_init.py:init():686] backend started and connected
+2025-05-13 02:27:25,782 INFO    MainThread:28936 [wandb_init.py:init():781] updated telemetry
+2025-05-13 02:27:25,843 INFO    MainThread:28936 [wandb_init.py:init():814] communicating run to backend with 90.0 second timeout
+2025-05-13 02:28:13,028 WARNING MainThread:28936 [wandb_init.py:init():1260] interrupted
+Traceback (most recent call last):
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/wandb/sdk/wandb_init.py", line 1256, in init
+    return wi.init()
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/wandb/sdk/wandb_init.py", line 820, in init
+    cancel=True,
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/wandb/sdk/lib/mailbox.py", line 279, in wait
+    found, abandoned = self._slot._get_and_clear(timeout=wait_timeout)
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/wandb/sdk/lib/mailbox.py", line 126, in _get_and_clear
+    if self._wait(timeout=timeout):
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/wandb/sdk/lib/mailbox.py", line 122, in _wait
+    return self._event.wait(timeout=timeout)
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/threading.py", line 552, in wait
+    signaled = self._cond.wait(timeout)
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/threading.py", line 300, in wait
+    gotit = waiter.acquire(True, timeout)
+KeyboardInterrupt
+2025-05-13 02:28:13,034 WARNING MsgRouterThr:28936 [router.py:message_loop():75] message_loop has been closed

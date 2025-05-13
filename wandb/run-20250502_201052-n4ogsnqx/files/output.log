@@ -1,9 +1,0 @@
-Device: cpu
-Number of Actions: 4
-Number of Observations: (11, 11, 5)
-Traceback (most recent call last):
-  File "battlesnake.py", line 192, in <module>
-    policy_net = load_model(policy_net, "policynet")
-  File "battlesnake.py", line 79, in load_model
-    for filename in os.listdir(weights_dir):
-NameError: name 'weights_dir' is not defined

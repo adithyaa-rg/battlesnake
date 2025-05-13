@@ -1,0 +1,27 @@
+Observation Space Shape: (4, 3, 11, 11)
+torch.Size([4, 3, 11, 11])
+(array([0, 1, 1, 1]), array([3, 5, 9, 9]), array([7, 8, 2, 5]))
+Traceback (most recent call last):
+  File "ppo_basic.py", line 512, in <module>
+    main()
+  File "ppo_basic.py", line 509, in main
+    training_ppo._collect_trajectory(1000, 1e7, wandb=run, logpath= None)
+  File "ppo_basic.py", line 383, in _collect_trajectory
+    self.env.render()
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/battlesnake_gym-0.1.dev0-py3.7.egg/battlesnake_gym/snake_gym.py", line 675, in render
+    from gym.envs.classic_control import rendering
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/gym/envs/classic_control/rendering.py", line 25, in <module>
+    from pyglet.gl import *
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/pyglet/gl/__init__.py", line 244, in <module>
+    import pyglet.window
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/pyglet/window/__init__.py", line 1880, in <module>
+    gl._create_shadow_window()
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/pyglet/gl/__init__.py", line 220, in _create_shadow_window
+    _shadow_window = Window(width=1, height=1, visible=False)
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/pyglet/window/xlib/__init__.py", line 165, in __init__
+    super(XlibWindow, self).__init__(*args, **kwargs)
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/pyglet/window/__init__.py", line 632, in __init__
+    self._create()
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/pyglet/window/xlib/__init__.py", line 367, in _create
+    self.display._x_im = xlib.XOpenIM(self._x_display, None, None, None)
+KeyboardInterrupt
