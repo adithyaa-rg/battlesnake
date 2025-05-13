@@ -597,7 +597,7 @@ def main():
         "save_interval_steps": 50_000, # Save model checkpoint every N global timesteps
         "ckpt_dir": "./models/PPO_Acrobot", # Relative directory to save model checkpoints
         "load_model_path": "./models/PPO_Acrobot/ppo_steps_100000.pth", # Path to a pre-trained model to load (e.g., "./models/PPO_CartPole/ppo_steps_100000.pth")
-        "render_mode": True,          # Environment render bool - True or False
+        "render_mode": False,          # Environment render bool - True or False
         "render_freq": 0.1,         # Time interval (in seconds) to render the environment 
     }
 

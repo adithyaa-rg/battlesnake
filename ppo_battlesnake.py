@@ -107,7 +107,7 @@ def initial_random_policy(observation, action_space):
     valid_moves = []
     for i, ((x, y), move) in enumerate(new_head_indices.items()):
         if 0 <= x < agent_state.shape[0] and 0 <= y < agent_state.shape[1]:
-            if agent_state[x, y] != 1 and enemy_states[x, y] == 0: # Assuming 1 is a wall
+            if agent_state[x, y] == 0 and enemy_states[x, y] == 0: # Assuming 1 is a wall
                 valid_moves.append(move)
 
     # print(f"Valid moves: {valid_moves}")
@@ -655,9 +655,9 @@ def main():
         "max_ep_len": 500,           # Maximum number of steps per episode (specific to env, e.g., CartPole-v1 is 500)
         "log_interval_episodes": 20, # Log average performance every N episodes
         "save_interval_steps": 50_000, # Save model checkpoint every N global timesteps
-        "ckpt_dir": "./models/PPO_BattleSnake", # Relative directory to save model checkpoints
+        "ckpt_dir": "./models/PPO_BattleSnake1", # Relative directory to save model checkpoints
         "load_model_path": None, # Path to a pre-trained model to load (e.g., "./models/PPO_CartPole/ppo_steps_100000.pth")
-        "render_mode": False,          # Environment render bool - True or False
+        "render_mode": True,          # Environment render bool - True or False
         "render_freq": 0.5,         # Time interval (in seconds) to render the environment 
     }
 
@@ -667,7 +667,7 @@ def main():
     map_size = (11, 11)
     n_snakes = 4
 
-    dummy_env = BattlesnakeGym(map_size=map_size, number_of_snakes=n_snakes)
+    dummy_env = BattlesnakeGym(map_size=map_size, number_of_snakes=n_snakes, observation_type = "flat-num")
     obs, _, _, _ = dummy_env.reset()
     n_obs_dim = dummy_env.observation_space.shape # Assuming 1D observation space
     # n_obs_dim = (3, map_size[0], map_size[1]) # Assuming 3 channels for RGB-like observation
