@@ -1,506 +1,667 @@
-
-# @misc{ppo_pytorch,
-#     author = {Azim, Saqib},
-#     title = {Proximal Policy Optimization using PyTorch},
-#     year = {2024},
-#     publisher = {GitHub},
-#     journal = {GitHub repository},
-#     howpublished = {\url{https://github.com/saqib1707/RL-PPO-PyTorch}},
-# }
-# Based on the above code
-
-# PPO - good blog: https://spinningup.openai.com/en/latest/algorithms/ppo.html
-# PPO original paper: https://arxiv.org/pdf/1707.06347
-
+# Standard library imports
 import numpy as np
 import os
+import time
+import logging # For structured logging
+from typing import Tuple, Dict, Any # For type hinting, Tuple is crucial for Python < 3.9
 
+# PyTorch related imports
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 import torch.optim as optim
-
 from torch.distributions import Categorical
-import wandb
 
-from battlesnake_gym.snake_gym import BattlesnakeGym
+# Environment import (Gymnasium is the successor to Gym)
+import gym as gym
+
+# Optional: Weights & Biases for experiment tracking
+# import wandb
+
+# --- Basic Logging Configuration ---
+# Configures the logging module to output messages with a timestamp, level, and message.
+# This helps in debugging and tracking the training process.
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 class RolloutBuffer:
+    """
+    Stores trajectories (sequences of states, actions, rewards, etc.) collected during environment interaction.
+    This data is used by the PPO agent to update its policy.
+    """
     def __init__(self):
-        """
-            Rollout of each agent until an update is stored here
-        """
-        self.states = {1: [], 2: [], 3: [], 4: []}
-        self.actions = {1: [], 2: [], 3: [], 4: []}
-        self.logprobs = {1: [], 2: [], 3: [], 4: []}
-        self.rewards = {1: [], 2: [], 3: [], 4: []}
-        self.state_values = {1: [], 2: [], 3: [], 4: []}
-        self.dones = {1: [], 2: [], 3: [], 4: []}
+        """Initializes empty lists to store trajectory data."""
+        self.states = []         # List of states encountered
+        self.actions = []        # List of actions taken
+        self.logprobs = []       # List of log probabilities of actions taken
+        self.rewards = []        # List of rewards received
+        self.state_values = []   # List of state values estimated by the critic
+        self.is_terminals = []   # List of booleans indicating if a state was terminal (episode ended naturally)
+                                 # Truncated episodes (ended by max_ep_len) are handled by GAE bootstrapping.
 
-    def store_transition(self, state, action, logprob, reward, done, state_value, key):
+    def store_transition(self, state: np.ndarray, action: int, logprob: float, reward: float, state_value: float, is_terminal: bool):
         """
-            Each transition getting appended
+        Appends a single transition (one step of interaction) to the buffer.
+        
+        Args:
+            state: The state observed from the environment.
+            action: The action taken by the agent.
+            logprob: The log probability of the chosen action under the current policy.
+            reward: The reward received from the environment.
+            state_value: The value of the current state, estimated by the critic.
+            is_terminal: Boolean indicating if the episode terminated at this step.
         """
         self.states.append(state)
         self.actions.append(action)
         self.logprobs.append(logprob)
         self.rewards.append(reward)
         self.state_values.append(state_value)
-        self.dones.append(done)
+        self.is_terminals.append(is_terminal)
     
-    def clear(self, key):
-        self.states.clear()
-        self.actions.clear()
-        self.logprobs.clear()
-        self.rewards.clear()
-        self.state_values.clear()
-        self.dones.clear()
+    def clear(self):
+        """Clears all stored transitions from the buffer. Called after a policy update."""
+        del self.states[:]
+        del self.actions[:]
+        del self.logprobs[:]
+        del self.rewards[:]
+        del self.state_values[:]
+        del self.is_terminals[:]
 
-class RolloutBuffer1:
-    def __init__(self):
-        """
-            Rollout of each agent until an update is stored here
-        """
-        self.states = []
-        self.actions = []
-        self.logprobs = []
-        self.rewards = []
-        self.state_values = []
-        self.dones = []
+    def __len__(self) -> int:
+        """Returns the current number of transitions stored in the buffer."""
+        return len(self.states)
 
-    def store_transition(self, state, action, logprob, reward, done, state_value, key):
-        """
-            Each transition getting appended
-        """
-        self.states.append(state)
-        self.actions.append(action)
-        self.logprobs.append(logprob)
-        self.rewards.append(reward)
-        self.state_values.append(state_value)
-        self.dones.append(done)
-    
-    def clear(self, key):
-        self.states.clear()
-        self.actions.clear()
-        self.logprobs.clear()
-        self.rewards.clear()
-        self.state_values.clear()
-        self.dones.clear()
 
+# Optional: JIT compilation can sometimes provide speedups for neural network forward passes.
+# To use it, uncomment the line below. Test performance with and without it.
+# @torch.jit.script
 class PolicyValueNetwork(nn.Module):
-    def __init__(self, n_actions, n_obs = 4, device = 'cpu'):
+    """
+    Actor-Critic Network for PPO.
+    It has a shared feature extractor, an actor head (outputs action probabilities),
+    and a critic head (outputs state value).
+    """
+    def __init__(self, n_obs: int, n_actions: int, hidden_dim: int = 64, device: str = 'cpu'):
         """
-        A CNN based DQN algorithm considering state space as a 3 channel input and gives a value function and an action to take - it is a shared parameter network where we try to learn 
-        parameters for both Value Function Approximation and Policy Function
+        Initializes the network layers.
+        
+        Args:
+            n_obs: Dimensionality of the observation space.
+            n_actions: Number of possible discrete actions.
+            hidden_dim: Number of units in the hidden layers.
+            device: The device (e.g., 'cpu', 'cuda') to run the network on.
         """
         super(PolicyValueNetwork, self).__init__()
-
-        self.n_actions = n_actions
-        # self.feature_extractor = nn.Sequential(
-        #     nn.Conv2d(3, 15, kernel_size=3),
-        #     nn.ReLU(),
-        #     nn.MaxPool2d(2, 2),
-        #     nn.ReLU(),
-        #     nn.AdaptiveAvgPool2d((4, 4)),
-        #     nn.Flatten(start_dim = 1),
-        #     nn.Linear(15 * 4 * 4, 128),
-        #     nn.ReLU()
-        # ).to(device)
-
-        self.feature_extractor = nn.Sequential(
-            nn.Linear(n_obs, 128),
-            nn.ReLU(),
-            nn.Linear(128, 128),
-            nn.ReLU()
-        ).to(device)
-
-        self.actor_head = nn.Sequential(
-                nn.Linear(128, n_actions, dtype=torch.float32),
-                nn.Softmax(dim=-1)
-            ).to(device)
-        
-        self.critic_head = nn.Linear(128, 1).to(device)
-
         self.device = device
 
-    def forward(self, x):
+        # Shared feature extractor (MLP)
+        self.feature_extractor = nn.Sequential(
+            nn.Linear(n_obs, hidden_dim),
+            nn.Tanh(),  # Tanh activation function
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.Tanh()
+        ).to(device) # Move layers to the specified device
 
+        # Actor head: outputs probabilities for each discrete action
+        self.actor_head = nn.Sequential(
+            nn.Linear(hidden_dim, n_actions),
+            nn.Softmax(dim=-1) # Softmax to get action probabilities
+        ).to(device)
+        
+        # Critic head: outputs a single value representing the estimated state value
+        self.critic_head = nn.Linear(hidden_dim, 1).to(device)
+
+    def forward(self, x: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
+        """
+        Performs a forward pass through the network.
+        
+        Args:
+            x: Input tensor representing the state observation(s).
+               Can be a single observation or a batch.
+               
+        Returns:
+            A tuple containing:
+                - action_probs: Tensor of action probabilities.
+                - state_value: Tensor of estimated state value(s).
+        """
+        # Ensure input is a tensor and on the correct device
+        if not isinstance(x, torch.Tensor):
+            x = torch.tensor(x, dtype=torch.float32, device=self.device)
+        elif x.device != self.device: # If tensor is on wrong device, move it
+            x = x.to(self.device)
+        
+        # If input is a single observation (1D), add a batch dimension (becomes 2D)
+        if x.ndim == 1:
+             x = x.unsqueeze(0)
+
+        # Pass through the shared feature extractor
         features = self.feature_extractor(x)
-
-        policy_probs = self.actor_head(features)
+        # Get action probabilities from the actor head
+        action_probs = self.actor_head(features)
+        # Get state value from the critic head
         state_value = self.critic_head(features)
-        return policy_probs, state_value
+        return action_probs, state_value
     
-    def select_action(self, obs):
+    @torch.no_grad() # Disables gradient calculations for action selection (inference mode)
+    def select_action(self, obs: np.ndarray) -> Tuple[int, float, float]:
         """
-            Get the action probability and corresponding log probablitliy to use in the cost functions. Return these two along with the value function for a given observation
+        Selects an action based on the current policy for a given observation.
+        Used during environment interaction.
+        
+        Args:
+            obs: A NumPy array representing the current environment observation.
+            
+        Returns:
+            A tuple containing:
+                - action: The selected action (integer).
+                - action_logprob: The log probability of the selected action.
+                - state_value: The critic's estimate of the value of the current state.
         """
-        with torch.no_grad():
-            action_out, value = self.forward(obs)
-            # print('stage-0:', action_out.shape, value, obs.shape)
+        # The forward method handles tensor conversion and device placement
+        action_probs, state_value_tensor = self.forward(obs) 
+        
+        # Create a categorical distribution from action probabilities
+        dist = Categorical(probs=action_probs)
+        # Sample an action from the distribution
+        action = dist.sample()
+        # Calculate the log probability of the sampled action
+        action_logprob = dist.log_prob(action)
+        
+        # Return results as Python native types for environment interaction and buffer storage
+        return action.item(), action_logprob.item(), state_value_tensor.item()
 
-            dist = torch.distributions.Categorical(probs=action_out)
-            actions = dist.sample()
-            action_logprobs = dist.log_prob(actions)
-
-            # print(actions, action_logprobs, value)
-        return actions.cpu().numpy(), action_logprobs.cpu().numpy(), value.cpu().numpy()
+    def evaluate_actions(self, states: torch.Tensor, actions: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+        """
+        Evaluates actions taken previously, using the current policy.
+        Used during PPO updates to calculate ratios and entropy.
+        
+        Args:
+            states: A batch of states (tensor).
+            actions: A batch of actions taken in those states (tensor).
+            
+        Returns:
+            A tuple containing:
+                - state_values: Current critic's estimates for the input states.
+                - action_logprobs: Log probabilities of the input actions under the current policy.
+                - dist_entropy: Entropy of the action distribution for the input states.
+        """
+        # states and actions are expected to be tensors from the buffer
+        action_probs, state_values_tensor = self.forward(states)
+        
+        dist = Categorical(action_probs)
+        # Calculate log probabilities of the given actions under the current policy
+        # Actions might have an extra dimension (e.g., [batch_size, 1]), squeeze if needed.
+        action_logprobs = dist.log_prob(actions.squeeze(-1))
+        # Calculate the entropy of the action distribution (encourages exploration)
+        dist_entropy = dist.entropy()
+        
+        # Squeeze state_values to match dimensions for loss calculation (e.g. [batch_size])
+        return state_values_tensor.squeeze(-1), action_logprobs, dist_entropy
 
 
 class PPOAgent:
+    """
+    Implements the Proximal Policy Optimization (PPO) agent.
+    This class manages the policy network, optimizer, and the PPO update logic.
+    """
     def __init__(
             self, 
-            action_dim, 
-            lr_actor, 
-            lr_critic, 
-            num_epochs=10, 
-            eps_clip=0.2, 
-            gamma=0.99,
-            entropy_coef=0.1,
-            value_loss_coef=0.5,
-            batch_size=192,
-            device='cuda',
-            load=False,
-            ckpt_directory = None
+            n_obs_dim: int,
+            action_dim: int, 
+            lr: float = 3e-4,           # Learning rate for the optimizer
+            num_epochs: int = 10,       # Number of epochs to train on the collected data per update
+            eps_clip: float = 0.2,      # Clipping parameter for PPO's surrogate objective
+            gamma: float = 0.99,        # Discount factor for future rewards
+            gae_lambda: float = 0.95,   # Lambda factor for Generalized Advantage Estimation (GAE)
+            entropy_coef: float = 0.01, # Coefficient for the entropy bonus in the loss
+            value_loss_coef: float = 0.5,# Coefficient for the critic's value loss
+            hidden_dim: int = 64,       # Hidden dimension for the PolicyValueNetwork
+            minibatch_size: int = 64,   # Size of minibatches for policy updates
+            device: str = 'cpu',        # Device to run computations on ('cpu' or 'cuda')
+            load_model_path: str = None,# Path to a pre-trained model to load
+            max_grad_norm: float = 0.5  # Maximum norm for gradient clipping (0 to disable)
         ):
+        # Store hyperparameters
         self.gamma = gamma
+        self.gae_lambda = gae_lambda
         self.num_epochs = num_epochs
-        self.batch_size = batch_size
+        self.minibatch_size = minibatch_size
         self.eps_clip = eps_clip
         self.value_loss_coef = value_loss_coef
         self.entropy_coef = entropy_coef
-
-        self.action_dim = action_dim
         self.device = device
+        self.max_grad_norm = max_grad_norm
 
+        # Initialize the policy and value network
         self.policy = PolicyValueNetwork(
-            action_dim, 
-            device=device,
+            n_obs_dim, 
+            action_dim,
+            hidden_dim=hidden_dim,
+            device=device
         )
-
-        # Set the parameters, setup network and optimizer
-        self.optimizer = torch.optim.Adam([
-            {'params': self.policy.feature_extractor.parameters()},
-            {'params': self.policy.actor_head.parameters(), 'lr': lr_actor},
-            {'params': self.policy.critic_head.parameters(), 'lr': lr_critic}
-        ])
-
-        self.buffer = RolloutBuffer1()
-        self.mse_loss = nn.MSELoss()
-
-        # Keys for each buffer
-        self.keys = [1, 2, 3, 4]
-
-        self.start_index = 0
-        
-        if load:
-            # Load from an existing model - ideally partially trained
-            if ckpt_directory is not None:
-                PATH = ckpt_directory
-                all_files = [f for f in os.listdir(PATH) if os.path.isfile(os.path.join(PATH, f))]
-                if len(all_files) > 0:
-                    ind = [int(f.split("_")[-1].split('.')[0]) for f in all_files]
-                    ind = np.array(ind)
-                    PATH = PATH + '/' + all_files[ind.argmax()]
-                    self.policy.load_state_dict(torch.load(PATH, weights_only=True))
-                    self.policy.eval()
-                    self.start_index = np.max(ind)
-                    print(f"Loaded : {PATH}, start_point = {self.start_index}")
-                else:
-                    print("No existing file")
-            else:
-                raise("Enter Checkpoint Directory")
-
-
-    def compute_returns(self):
-        overall_returns = []
-
-        # Compute returns for every agent's trajectory based on the rewards
-        # for key in self.keys:
-        returns = overall_returns
-        discounted_reward = 0
-        for reward, done in zip(reversed(self.buffer.rewards), reversed(self.buffer.dones)):
-            if done:
-                discounted_reward = 0
-            discounted_reward = reward + self.gamma * discounted_reward
-            returns.insert(0, discounted_reward)
-
-        returns = np.array(returns, dtype=np.float32)
-        returns = torch.flatten(torch.from_numpy(returns).float()).to(self.device)
-        overall_returns = returns
-        return overall_returns
-    
-    def update_policy(self):
-        # Compute Returns
-        rewards_to_go = self.compute_returns()
-
-        for key in self.keys:
-            states = torch.from_numpy(np.array([i.detach().cpu().numpy() for i in self.buffer.states])).float().to(self.device)
-            actions = torch.from_numpy(np.array(self.buffer.actions)).float().to(self.device)
-            old_logprobs = torch.from_numpy(np.array(self.buffer.logprobs)).float().to(self.device)
-            state_vals = torch.from_numpy(np.array(self.buffer.state_values)).float().to(self.device)
-
-            # Advantage based on estimated values and returns
-            advantages = rewards_to_go - state_vals
-            advantages = (advantages - advantages.mean()) / (advantages.std() + 1e-6)
-
-
-            for _ in range(self.num_epochs):
-                indices = np.random.permutation(len(self.buffer.states))
-
-                for start_idx in range(0, len(states), self.batch_size):
-                    end_idx = start_idx + self.batch_size
-                    batch_indices = indices[start_idx:end_idx]
-
-                    batch_states = states[batch_indices]
-                    batch_actions = actions[batch_indices]
-                    batch_old_logprobs = old_logprobs[batch_indices]
-                    batch_advantages = advantages[batch_indices]
-                    batch_rewards_to_go = rewards_to_go[batch_indices]
-                    
-                    # evaluate old actions and values
-                    state_values, logprobs, dist_entropy = self.policy.evaluate_actions(batch_states, batch_actions)
-                    # print(logprobs.shape, batch_old_logprobs.shape)
-
-                    # Finding the ratio (pi_theta / pi_theta_old)
-                    ratios = torch.exp(logprobs - batch_old_logprobs.squeeze(-1))
-
-                    # Finding Surrogate Loss
-                    # print(ratios.shape, batch_advantages.shape)
-                    # print(ratios.shape, batch_advantages.shape)
-
-                    # Calculate Loss Function
-                    surr1 = ratios * batch_advantages
-                    surr2 = torch.clamp(ratios, 1-self.eps_clip, 1+self.eps_clip) * batch_advantages
-
-                    # final loss of clipped objective PPO - actor loss
-                    actor_loss = -torch.min(surr1, surr2).mean()
-
-                    # print(state_values.dtype, batch_rewards_to_go.dtype)
-
-                    # criticloss
-                    critic_loss = 0.5 * self.mse_loss(state_values.squeeze(), batch_rewards_to_go)
-                    loss = actor_loss + self.value_loss_coef * critic_loss - self.entropy_coef * dist_entropy.mean()
-                    # print("Final loss:", actor_loss, critic_loss, dist_entropy, loss)
-
-                    # calculate gradients and backpropagate for actor network
-                    self.optimizer.zero_grad()
-                    loss.backward()
-                    self.optimizer.step()
-            # clear the buffer after every update - no model creation happening here
-            self.buffer.clear(key=key)
-
-class PPOTraining:
-    def __init__(self, env, ppo: PPOAgent, n_observations, n_channels, map_size, update_interval, log_interval, save_interval, ckpt_directory, render = False):
-        self.env = env
+        # Initialize the optimizer (AdamW is often a good choice)
+        self.optimizer = optim.AdamW(self.policy.parameters(), lr=lr, eps=1e-5) # eps for numerical stability
+        # Initialize the rollout buffer to store experiences
         self.buffer = RolloutBuffer()
-        self.PPO = ppo
-        self.n_observations = n_observations
-        self.n_channels = n_channels
-        self.map_size = map_size
-        # self.keys = [1, 2, 3, 4]
-        self.update_interval = update_interval
-        self.log_interval = log_interval
-        self.save_interval = save_interval
-        self.ckpt_dir = ckpt_directory
-        self.start_ind = self.PPO.start_index
-        self.render = render
+        # Mean Squared Error loss for the critic
+        self.mse_loss = nn.MSELoss()
+        # Track total steps trained for model loading/saving continuity
+        self.total_steps_trained = 0
 
-    def get_agent_observed_state(self, agent_id, observation):
-        """
-        Agent state is input as 11x11 grids on n+1 dimensions. First dimension is food positions, rest of them are positions of each agent.
-        This is a way to modify that to get a 3x11x11 grid with agent position, ennemy positions and food positions
+        # Load a pre-trained model if a path is provided
+        if load_model_path:
+            self.load_model(load_model_path)
 
-        Agent ID is the current agent's id, and we want to get an output wrt this agent.
-        """
-        food_spaces = observation[:, :, 0]
-        agent_positions = observation[:, :, agent_id + 1]
-
-        remaining_agent_positions = observation[:, :, 1:]
-        remaining_agent_positions = np.sum(remaining_agent_positions, axis = 2) - agent_positions
-
-        stacked = np.stack([agent_positions, remaining_agent_positions, food_spaces])
-        stacked = np.array(stacked, dtype = np.float32)
-
-        return stacked
-
-
-    def _collect_trajectory(self, max_eps_steps, num_train_steps, wandb = None, logpath = None):
-        """
-            Training loop - collect trajectories and then returns - based on which do update using PPO Rule
-        """
-        observation_agents = np.empty((self.n_observations[-1] - 1, self.n_channels, self.map_size[0], self.map_size[1]))
-        state_agents = np.empty((self.n_observations[-1] - 1, self.n_channels, self.map_size[0], self.map_size[1]))
-        print(f"Observation Space Shape: {observation_agents.shape}")
-
-        running_eps_reward = 0
-        running_eps_length = 0
-        running_num_eps = 0
-
-        t_so_far = 0
-        eps_so_far = 0
-
-        metrics = {
-        'eps_rewards': [],
-        'eps_lengths': [],
-        'mean_reward': 0, 
-        'mean_eps_length': 0,
-        'num_episodes': 0,
-        }
-        
-        while eps_so_far < num_train_steps:
-
+    def load_model(self, path: str):
+        """Loads a pre-trained model's state dictionary for policy and optimizer."""
+        try:
+            checkpoint = torch.load(path, map_location=self.device) # Load to the specified device
+            self.policy.load_state_dict(checkpoint['policy_state_dict'])
+            self.optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+            self.total_steps_trained = checkpoint.get('total_steps_trained', 0) # Resume step count
+            self.policy.eval() # Set policy to evaluation mode after loading
+            logging.info(f"Loaded model from {path}, resuming from {self.total_steps_trained} steps.")
+        except FileNotFoundError:
+            logging.warning(f"Model file not found at {path}. Starting from scratch.")
+        except Exception as e:
+            logging.error(f"Error loading model from {path}: {e}. Starting from scratch.")
+            self.total_steps_trained = 0 # Reset step count if loading fails
             
+    def save_model(self, path: str):
+        """Saves the current model's state dictionary (policy and optimizer) and total steps trained."""
+        try:
+            # Create directory if it doesn't exist
+            os.makedirs(os.path.dirname(path), exist_ok=True)
+            torch.save({
+                'policy_state_dict': self.policy.state_dict(),
+                'optimizer_state_dict': self.optimizer.state_dict(),
+                'total_steps_trained': self.total_steps_trained
+            }, path)
+            logging.info(f"Saved model to {path} at {self.total_steps_trained} steps.")
+        except Exception as e:
+            logging.error(f"Error saving model to {path}: {e}")
 
-            state, _, _, info = self.env.reset()
-            for j in range(self.n_observations[-1] - 1):
-                state_space = self.get_agent_observed_state(j, state)
-                state_agents[j] = torch.tensor(state_space)
-            eps_reward = 0
-            eps_length = 0
+    def _compute_gae_and_returns(self, next_value_bootstrap: float, next_is_terminal_bootstrap: bool) -> Tuple[torch.Tensor, torch.Tensor]:
+        """
+        Computes Generalized Advantage Estimation (GAE) and returns (discounted rewards-to-go).
+        GAE provides a balance between high-variance Monte Carlo estimates and biased TD estimates.
 
-            # last_actions = {i: None for i in self.keys}
-
-            for _ in range(1, max_eps_steps + 1):
-                # Collect Experience
-                
-                state_agents = torch.tensor(state_agents, device = self.PPO.device, dtype=torch.float32)
-                actions, logprobs, values = self.PPO.policy.select_action(state_agents)
-
-                # for i, key in enumerate(self.keys):
-                #     last_actions = actions[i]
-
-                next_obs, rewards, terminated, info = self.env.step(actions)
-
-                # Do you want to render???
-                if self.render:
-                    self.env.render()
-
-                # Episode Reward approximation based on each agent's reward - maybe could use a better rep
-                eps_reward += np.sum(list(rewards.values()))/len(list(rewards.values()))
-                t_so_far += 1
-                eps_length += 1
-
-                # id termination of episode
-                termination = np.array(list(terminated.values()), dtype = np.int32)
-                done = np.count_nonzero(termination) == termination.shape[0] - 1 or np.count_nonzero(termination) == termination.shape[0]
-
-                # Storing transiiton of each agent according to keys
-                for i, key in enumerate(self.keys):
-                    self.PPO.buffer.store_transition(state_agents[i], actions[i], logprobs[i], rewards[i], terminated[i], values[i], key=key)
-
-
-                if t_so_far % self.update_interval == 0:
-                    self.PPO.update_policy()
-
-                if t_so_far % self.log_interval == 0:
-                    running_eps_reward /= running_num_eps
-                    running_eps_length /= running_num_eps
-
-                    print(f'episode: {eps_so_far} | step: {t_so_far} | reward: {running_eps_reward:.4f} | episode length: {running_eps_length}')
-
-                    if logpath is not None:
-                        with open(logpath, 'a') as f:
-                            f.write(f'episode: {eps_so_far} | step: {t_so_far} | reward: {running_eps_reward:.4f} | episode length: {running_eps_length}\n')
-
-                    if wandb is not None:
-                        wandb.log({
-                            "mean_episode_reward": running_eps_reward,
-                            "mean_episode_length": running_eps_length,
-                            "episode": eps_so_far,
-                            "total_steps": t_so_far,
-                        }, step=self.start_ind + t_so_far)
-
-                    running_eps_reward = 0
-                    running_eps_length = 0
-                    running_num_eps = 0
-
-                if eps_so_far % self.save_interval == 0:
-                    # Saving learned model till now
-                    checkpoint_path = os.path.join(self.ckpt_dir, f"battlesnake_step_{self.start_ind + eps_so_far}.pt")
-                    torch.save(self.PPO.policy.state_dict(), checkpoint_path)
-
-                state = next_obs
-                if done:
-                    break
-            metrics['eps_rewards'].append(eps_reward)
-            metrics['eps_lengths'].append(eps_length)
-
-            running_eps_reward += eps_reward
-            running_eps_length += eps_length
-            running_num_eps += 1
-            eps_so_far += 1
+        Args:
+            next_value_bootstrap: The critic's value estimate of the state *after* the last state in the buffer.
+                                  Used for bootstrapping if the rollout didn't end with a terminal state.
+            next_is_terminal_bootstrap: Boolean indicating if the state *after* the last state in the buffer is terminal.
         
-        if wandb:
-            wandb.finish()    # close wandb logging
-        # print(f"Training time: {(time.time()-start_time) / 60.0:.2f} mins")
+        Returns:
+            A tuple of tensors:
+                - advantages: Calculated GAE for each step in the buffer.
+                - returns: Calculated returns (targets for the value function) for each step.
+        """
+        num_steps = len(self.buffer.rewards)
+        advantages = torch.zeros(num_steps, device=self.device) # Initialize advantages tensor
+        # returns = torch.zeros(num_steps, device=self.device) # Not strictly needed if calculated from advantages
+        
+        # Convert buffer data (lists of Python scalars/NumPy arrays) to PyTorch tensors on the correct device
+        rewards = torch.tensor(self.buffer.rewards, dtype=torch.float32, device=self.device)
+        state_values = torch.tensor(self.buffer.state_values, dtype=torch.float32, device=self.device)
+        is_terminals = torch.tensor(self.buffer.is_terminals, dtype=torch.float32, device=self.device) # 0.0 for non-terminal, 1.0 for terminal
+
+        last_gae_lam = 0.0 # Stores GAE at t+1, used for recursive calculation
+        # Iterate backwards through the trajectory
+        for t in reversed(range(num_steps)):
+            if t == num_steps - 1: # If this is the last step in the buffer
+                # Use the bootstrapped values for the state *after* this last step
+                next_non_terminal = 1.0 - float(next_is_terminal_bootstrap) # 1.0 if next state is not terminal
+                next_val = next_value_bootstrap                             # Value of the state after this last step
+            else: # For all other steps
+                next_non_terminal = 1.0 - is_terminals[t + 1] # 1.0 if s_{t+1} is not terminal
+                next_val = state_values[t + 1]                # Critic's value of s_{t+1}
+            
+            # Calculate the TD error (delta) for the current step t
+            delta = rewards[t] + self.gamma * next_val * next_non_terminal - state_values[t]
+            # Calculate GAE for step t using TD error and GAE from step t+1
+            advantages[t] = last_gae_lam = delta + self.gamma * self.gae_lambda * next_non_terminal * last_gae_lam
+        
+        # Calculate returns (targets for value function) as GAE + V(s_t)
+        returns_to_go = advantages + state_values 
+        return advantages, returns_to_go
+    
+    def update_policy(self, next_obs_for_bootstrap: np.ndarray, next_done_for_bootstrap: bool) -> Tuple[float, float, float]:
+        """
+        Performs the PPO policy update using data collected in the rollout buffer.
+        
+        Args:
+            next_obs_for_bootstrap: The observation *after* the last step in the buffer. Used for GAE bootstrapping.
+            next_done_for_bootstrap: Boolean indicating if the episode terminated *after* the last step in the buffer.
+        
+        Returns:
+            A tuple of floats for logging:
+                - avg_actor_loss: Average actor loss over the update epochs.
+                - avg_critic_loss: Average critic loss over the update epochs.
+                - avg_entropy: Average policy entropy over the update epochs.
+        """
+        # Estimate the value of the state that comes after the last state in the buffer.
+        # This is needed for GAE calculation (bootstrapping).
+        with torch.no_grad(): # No gradient needed for this value estimation
+            # self.policy.forward handles tensor conversion and device placement
+            _, next_value_tensor = self.policy.forward(next_obs_for_bootstrap)
+            next_value_bootstrap = next_value_tensor.item()
+
+        # Compute GAE and returns (targets for the value function)
+        advantages, rewards_to_go = self._compute_gae_and_returns(next_value_bootstrap, next_done_for_bootstrap)
+        
+        # Normalize advantages for more stable updates (subtract mean, divide by std dev)
+        advantages = (advantages - advantages.mean()) / (advantages.std() + 1e-8) # Add epsilon for numerical stability
+
+        # Prepare data from the buffer for batch processing.
+        # Convert lists of NumPy arrays/scalars to stacked PyTorch tensors.
+        old_states_np = np.array(self.buffer.states, dtype=np.float32) # Assuming states are stored as np.ndarray
+        old_states = torch.tensor(old_states_np, dtype=torch.float32, device=self.device)
+        
+        # Actions are discrete integers, convert to long tensor, add a dimension for batching.
+        old_actions = torch.tensor(np.array(self.buffer.actions), dtype=torch.long, device=self.device).unsqueeze(1)
+        # Log probabilities are floats, convert to float tensor, add a dimension.
+        old_logprobs = torch.tensor(self.buffer.logprobs, dtype=torch.float32, device=self.device).unsqueeze(1)
+
+        num_samples_in_buffer = len(self.buffer)
+        
+        # Accumulators for average losses and entropy for logging
+        total_actor_loss, total_critic_loss, total_entropy = 0.0, 0.0, 0.0
+
+        self.policy.train() # Set the policy network to training mode (enables dropout, batchnorm if used)
+        # Perform multiple epochs of updates on the collected batch of data
+        for epoch in range(self.num_epochs):
+            # Shuffle indices for minibatch creation. `torch.randperm` is efficient on the device.
+            indices = torch.randperm(num_samples_in_buffer, device=self.device)
+
+            # Iterate over the data in minibatches
+            for start_idx in range(0, num_samples_in_buffer, self.minibatch_size):
+                end_idx = min(start_idx + self.minibatch_size, num_samples_in_buffer) # Ensure end_idx doesn't exceed buffer size
+                batch_indices = indices[start_idx:end_idx]
+
+                # Slice the data to create minibatches
+                batch_states = old_states[batch_indices]
+                batch_actions = old_actions[batch_indices]
+                batch_old_logprobs = old_logprobs[batch_indices]
+                batch_advantages = advantages[batch_indices]
+                batch_rewards_to_go = rewards_to_go[batch_indices]
+                
+                # Evaluate actions using the current policy to get new logprobs, values, and entropy
+                current_state_values, current_logprobs, dist_entropy = self.policy.evaluate_actions(batch_states, batch_actions)
+                
+                # Calculate the probability ratio (pi_new / pi_old)
+                # Ensure batch_old_logprobs is squeezed if it has an unnecessary dimension from unsqueeze(1)
+                ratios = torch.exp(current_logprobs - batch_old_logprobs.squeeze(-1))
+
+                # PPO's clipped surrogate objective for the actor
+                surr1 = ratios * batch_advantages
+                surr2 = torch.clamp(ratios, 1 - self.eps_clip, 1 + self.eps_clip) * batch_advantages
+                actor_loss = -torch.min(surr1, surr2).mean() # Negative because we want to maximize this objective
+                
+                # Critic loss: Mean Squared Error between estimated values and actual returns
+                critic_loss = self.mse_loss(current_state_values, batch_rewards_to_go)
+                
+                # Total loss: Combination of actor loss, critic loss, and entropy bonus
+                # Entropy bonus encourages exploration by penalizing overly deterministic policies.
+                loss = actor_loss + self.value_loss_coef * critic_loss - self.entropy_coef * dist_entropy.mean()
+                
+                # Perform backpropagation and optimization step
+                self.optimizer.zero_grad() # Clear old gradients
+                loss.backward()           # Calculate new gradients
+                # Optional: Gradient clipping to prevent exploding gradients
+                if self.max_grad_norm > 0:
+                    torch.nn.utils.clip_grad_norm_(self.policy.parameters(), self.max_grad_norm)
+                self.optimizer.step()      # Update network parameters
+
+                # Accumulate losses for logging
+                total_actor_loss += actor_loss.item()
+                total_critic_loss += critic_loss.item()
+                total_entropy += dist_entropy.mean().item()
+        
+        self.policy.eval() # Set the policy network back to evaluation mode
+        self.buffer.clear() # Clear the rollout buffer after updates
+        
+        # Calculate average losses over all minibatches and epochs
+        num_update_steps = self.num_epochs * (num_samples_in_buffer // self.minibatch_size + (1 if num_samples_in_buffer % self.minibatch_size != 0 else 0) )
+        avg_actor_loss = total_actor_loss / num_update_steps
+        avg_critic_loss = total_critic_loss / num_update_steps
+        avg_entropy = total_entropy / num_update_steps
+        
+        return avg_actor_loss, avg_critic_loss, avg_entropy
+
+
+class PPOTrainer:
+    """
+    Manages the PPO training loop, including environment interaction,
+    data collection, policy updates, logging, and model saving.
+    """
+    def __init__(self, 
+                 env_id: str,                # ID of the Gymnasium environment (e.g., 'CartPole-v1')
+                 agent: PPOAgent,            # The PPOAgent instance
+                 rollout_steps: int = 2048,  # Number of steps to collect in each rollout before updating policy
+                 log_interval_episodes: int = 10, # How often to log average episode rewards (in episodes)
+                 save_interval_steps: int = 50000, # How often to save the model (in global timesteps)
+                 ckpt_dir: str = "models/PPO",  # Directory to save model checkpoints
+                 render_mode: str = False,    # Environment render mode ('human', None, etc.)
+                 seed: int = 42,             # Random seed for reproducibility
+                 max_ep_len: int = 500,       # Maximum length of an episode
+                 render_freq = None
+                ):
+        
+        # Initialize the environment
+        self.env = gym.make(env_id)
+        self.env.reset() # Seed the environment for reproducibility
+        self.env.action_space.seed(seed) # Seed the environment's action space
+        
+        self.agent = agent
+        self.rollout_steps = rollout_steps
+        self.log_interval_episodes = log_interval_episodes
+        self.save_interval_steps = save_interval_steps
+        self.ckpt_dir = ckpt_dir
+        self.max_ep_len = max_ep_len
+        self.seed = seed
+        self.render = render_mode
+        self.render_freq = render_freq
+
+        # Create checkpoint directory if it doesn't exist
+        if self.ckpt_dir:
+            os.makedirs(self.ckpt_dir, exist_ok=True)
+
+        # Buffers for logging episode statistics
+        self.episode_rewards_buffer = [] # Stores rewards of recent episodes for averaging
+        self.episode_lengths_buffer = [] # Stores lengths of recent episodes for averaging
+        self.total_episodes_completed = 0 # Counter for total episodes finished
+        
+        # Track when the last save occurred to manage save intervals
+        # Initialize based on agent's loaded step count to avoid immediate re-save if close to an interval
+        self.last_save_step_count = (agent.total_steps_trained // save_interval_steps) * save_interval_steps
+
+    def train(self, total_training_timesteps: int):
+        """
+        Runs the main PPO training loop.
+        
+        Args:
+            total_training_timesteps: The total number of environment steps to train for across all runs.
+        """
+        logging.info(f"Starting training for {total_training_timesteps} timesteps on device {self.agent.device}.")
+        start_time = time.monotonic() # Use monotonic time for measuring duration
+        
+        # Reset environment to get initial observation. Seed is applied once in __init__ or here.
+        obs = self.env.reset() 
+        
+        current_episode_reward = 0.0 # Accumulates reward for the current episode
+        current_episode_length = 0   # Tracks length of the current episode
+        
+        # The main loop iterates for a total number of timesteps.
+        # `self.agent.total_steps_trained` is cumulative across training runs if a model is loaded.
+        # Loop from the agent's current trained step count up to the desired total.
+        for t_step_global in range(self.agent.total_steps_trained + 1, self.agent.total_steps_trained + total_training_timesteps + 1):
+
+            if self.render:
+                self.env.render(mode='human')
+                if self.render_freq:
+                    time.sleep(self.render_freq)
+            
+            # --- Step 1: Collect one step of experience ---
+            action, log_prob, state_val = self.agent.policy.select_action(obs)
+            next_obs, reward, terminated, info = self.env.step(action)
+            
+            current_episode_reward += reward
+            current_episode_length += 1
+            
+            # Store the transition in the agent's buffer.
+            # `terminated` is True if the episode ended due to environment-defined conditions (e.g., goal reached, failed).
+            # `truncated` is True if the episode ended due to a time limit (e.g., `max_ep_len`).
+            self.agent.buffer.store_transition(obs, action, log_prob, reward, state_val, terminated)
+            obs = next_obs # Update current observation to the next observation
+
+            # --- Step 2: Check if episode is done ---
+            # An episode is 'done' if it's either terminated or truncated, or reaches max_ep_len.
+            done_by_env = terminated 
+            done_by_maxlen = current_episode_length >= self.max_ep_len
+            is_episode_done = done_by_env or done_by_maxlen
+            
+            if is_episode_done:
+                self.total_episodes_completed += 1
+                self.episode_rewards_buffer.append(current_episode_reward)
+                self.episode_lengths_buffer.append(current_episode_length)
+                
+                # Log episode statistics periodically
+                if self.total_episodes_completed % self.log_interval_episodes == 0 and len(self.episode_rewards_buffer) > 0:
+                    # Calculate average reward and length over the last `log_interval_episodes`
+                    avg_reward = np.mean(self.episode_rewards_buffer[-self.log_interval_episodes:])
+                    avg_length = np.mean(self.episode_lengths_buffer[-self.log_interval_episodes:])
+                    elapsed_time = time.monotonic() - start_time
+                    logging.info(
+                        f"Eps: {self.total_episodes_completed} | Steps: {t_step_global}/{self.agent.total_steps_trained + total_training_timesteps} | "
+                        f"Avg Reward (last {self.log_interval_episodes}): {avg_reward:.2f} | "
+                        f"Avg EpLength: {avg_length:.2f} | Time: {elapsed_time:.2f}s"
+                    )
+                
+                # Reset the environment for the next episode
+                obs = self.env.reset()
+                current_episode_reward = 0.0
+                current_episode_length = 0
+
+            # --- Step 3: Update policy if rollout buffer is full ---
+            if len(self.agent.buffer) >= self.rollout_steps:
+                # `done_by_env` is passed for GAE bootstrapping. If the *rollout* ends mid-episode,
+                # `done_by_env` will be False, and GAE will bootstrap using V(next_obs).
+                # If the *rollout* ends exactly when an episode ends, `done_by_env` will be True, and GAE
+                # will use 0 as the value for the terminal state.
+                actor_loss, critic_loss, entropy = self.agent.update_policy(next_obs, done_by_env)
+                # Optional: log update losses
+                # logging.debug(f"Update at step {t_step_global}: ActorL={actor_loss:.3f}, CriticL={critic_loss:.3f}, Entropy={entropy:.3f}")
+
+            # --- Step 4: Save model periodically ---
+            self.agent.total_steps_trained = t_step_global # Update agent's internal global step counter
+            if self.ckpt_dir and (t_step_global - self.last_save_step_count) >= self.save_interval_steps and t_step_global > self.last_save_step_count :
+                save_path = os.path.join(self.ckpt_dir, f"ppo_steps_{t_step_global}.pth")
+                self.agent.save_model(save_path)
+                # Update last_save_step_count to the multiple of save_interval_steps at or before current step
+                self.last_save_step_count = (t_step_global // self.save_interval_steps) * self.save_interval_steps
+
+        # --- End of Training Loop ---
+        logging.info(f"Training finished. Total time: {(time.monotonic() - start_time)/60:.2f} minutes.")
+        # Save the final model
+        if self.ckpt_dir:
+            save_path = os.path.join(self.ckpt_dir, f"ppo_steps_{self.agent.total_steps_trained}_final.pth")
+            self.agent.save_model(save_path)
+        self.env.close() # Close the environment
 
 
 def main():
+    """Main function to configure and run the PPO training."""
+    # Determine compute device (CUDA if available, else CPU)
+    device_str = "cuda" if torch.cuda.is_available() else "cpu"
+    if torch.backends.mps.is_available() and torch.backends.mps.is_built(): # Check for MPS (Apple Silicon)
+         pass # device_str = "mps" # Uncomment if you want to try MPS, but be aware of potential PyTorch compatibility issues.
+    
+    # --- Configuration Dictionary ---
+    # Centralized configuration for all hyperparameters and settings.
+    config: Dict[str, Any] = {
+        "env_id": 'Acrobot-v1',     # Environment ID from Gymnasium
+        "total_training_timesteps": 200_000, # Total environment steps for training
+        "rollout_steps": 2048,       # N: Number of steps to collect per PPO update cycle
+        "hidden_dim": 64,            # Number of units in hidden layers of the PolicyValueNetwork
+        "lr": 3e-4,                  # Learning rate for the AdamW optimizer
+        "gamma": 0.99,               # Discount factor for future rewards
+        "gae_lambda": 0.95,          # Lambda parameter for Generalized Advantage Estimation
+        "num_epochs": 10,            # K: Number of optimization epochs per PPO update cycle
+        "minibatch_size": 64,        # Size of minibatches used during optimization epochs
+        "eps_clip": 0.2,             # PPO clipping parameter (epsilon)
+        "entropy_coef": 0.01,        # Coefficient for the entropy bonus in the loss function
+        "value_loss_coef": 0.5,      # Coefficient for the critic's value loss in the total loss
+        "max_grad_norm": 0.5,        # Maximum norm for gradient clipping (0 to disable)
+        "seed": 42,                  # Random seed for reproducibility
+        "max_ep_len": 500,           # Maximum number of steps per episode (specific to env, e.g., CartPole-v1 is 500)
+        "log_interval_episodes": 20, # Log average performance every N episodes
+        "save_interval_steps": 50_000, # Save model checkpoint every N global timesteps
+        "ckpt_dir": "./models/PPO_Acrobot", # Relative directory to save model checkpoints
+        "load_model_path": "./models/PPO_Acrobot/ppo_steps_100000.pth", # Path to a pre-trained model to load (e.g., "./models/PPO_CartPole/ppo_steps_100000.pth")
+        "render_mode": False,          # Environment render bool - True or False
+        "render_freq": 0.1,         # Time interval (in seconds) to render the environment 
+    }
 
-    device = torch.device(
-        "cuda" if torch.cuda.is_available() else
-        "mps" if torch.backends.mps.is_available() else
-        "cpu"
+    # --- Environment Setup (to get observation and action dimensions) ---
+    # Create a temporary dummy environment to inspect its properties.
+    try:
+        dummy_env = gym.make(config["env_id"])
+        n_obs_dim = dummy_env.observation_space.shape[0] # Assuming 1D observation space
+        
+        if isinstance(dummy_env.action_space, gym.spaces.Discrete):
+            action_dim = dummy_env.action_space.n # Number of discrete actions
+        else: # Handle continuous action spaces if needed in the future
+            action_dim = dummy_env.action_space.shape[0]
+            logging.error("This PPO implementation is designed for Discrete action spaces. Continuous actions are not yet supported.")
+            dummy_env.close()
+            return # Exit if action space is not discrete
+        dummy_env.close() # Close the dummy environment
+    except Exception as e:
+        logging.error(f"Error creating dummy environment '{config['env_id']}': {e}")
+        return
+
+
+    # --- Agent Initialization ---
+    ppo_agent = PPOAgent(
+        n_obs_dim=n_obs_dim,
+        action_dim=action_dim,
+        lr=config["lr"],
+        num_epochs=config["num_epochs"],
+        eps_clip=config["eps_clip"],
+        gamma=config["gamma"],
+        gae_lambda=config["gae_lambda"],
+        entropy_coef=config["entropy_coef"],
+        value_loss_coef=config["value_loss_coef"],
+        hidden_dim=config["hidden_dim"],
+        minibatch_size=config["minibatch_size"],
+        device=device_str,
+        load_model_path=config["load_model_path"],
+        max_grad_norm=config["max_grad_norm"]
     )
-    print(f"Device: {device}")
 
-    ppo = PPOAgent(
-        action_dim=4,
-        lr_actor=3e-4,
-        lr_critic=1e-3,
-        load=False,
-        ckpt_directory="/home/adi/mas/battlesnake/models/PPO_no_back",
-        device=device
+    # --- Trainer Initialization ---
+    trainer = PPOTrainer(
+        env_id=config["env_id"],
+        agent=ppo_agent,
+        rollout_steps=config["rollout_steps"],
+        log_interval_episodes=config["log_interval_episodes"],
+        save_interval_steps=config["save_interval_steps"],
+        ckpt_dir=config["ckpt_dir"],
+        render_mode=config["render_mode"],
+        seed=config["seed"],
+        max_ep_len=config["max_ep_len"],
+        render_freq=config["render_freq"]
     )
-
-    # Game Settings
-    map_size = (11, 11)
-    n_snakes = 4
-
-    env = BattlesnakeGym(map_size=map_size, number_of_snakes=n_snakes)
-    env.seed(42)
-
-    n_actions = env.action_space[0].n
-    print(f"Number of Actions: {n_actions}")
-
-    observation, reward, terminated, info = env.reset()
-    n_observations = observation.shape
-    print(f"Number of Observations: {n_observations}")
-
-    ## Number of Agents
-    n_agents = 4
-    n_channels = 3
-
-
-    training_ppo = PPOTraining(
-        env = env,
-        ppo=ppo,
-        n_observations=n_observations,
-        n_channels=n_channels,
-        map_size=map_size,
-        update_interval=150,
-        log_interval=200,
-        save_interval=2000,
-        ckpt_directory="/home/adi/mas/battlesnake/models/PPO_no_back",
-        render=False
-    )
-
-    # run = wandb.init(
-    # # Set the wandb entity where your project will be logged (generally your team name).
-    # entity="mas4",
-    # # Set the wandb project where this run will be logged.
-    # project="mas-ppo-battlesnake",
-    # # Track hyperparameters and run metadata.
-    # config={
-    #     "learning_rate": 1e-4,
-    #     "architecture": "CNN+PPO",
-    #     "dataset": "BattleSnake"
-    # },
-    # )
-
-    training_ppo._collect_trajectory(1000, 1e7, wandb=None, logpath= None)
+    
+    # --- Start Training ---
+    try:
+        trainer.train(total_training_timesteps=config["total_training_timesteps"])
+    except KeyboardInterrupt: # Allow graceful interruption of training
+        logging.info("Training interrupted by user (KeyboardInterrupt).")
+    except Exception as e: # Catch any other unexpected errors during training
+        logging.error(f"An unexpected error occurred during training: {e}", exc_info=True)
+    finally:
+        logging.info("Training run concluded.")
+        # The trainer's `train` method handles final saving and closing the environment.
 
 if __name__ == "__main__":
     main()
