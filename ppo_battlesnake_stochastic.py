@@ -420,7 +420,7 @@ class PPOAgent:
                         second_agent_action_probs, _ = second_agent.policy(batch_states)
                     
                     kl_div_value = self.KL_divergence(current_policy_action_probs, second_agent_action_probs)
-                    lam_kl = 0.01 # Hyperparameter for KL divergence penalty/bonus
+                    lam_kl = 0.005 # Hyperparameter for KL divergence penalty/bonus
                     total_kl_div += kl_div_value.item()
                 
                 loss = actor_loss + self.value_loss_coef * critic_loss - self.entropy_coef * dist_entropy.mean() + lam_kl * kl_div_value
@@ -508,7 +508,8 @@ class PPOTrainer:
             return
 
         try:
-            files_in_load_dir = os.listdir(self.ckpt_dir)
+            files_in_load_dir = sorted(os.listdir(self.ckpt_dir), key=lambda x: int(x.split('_')[-1][:-4]))
+            print(f"Files in checkpoint directory: {files_in_load_dir}")
         except FileNotFoundError:
             logging.warning(f"Checkpoint directory {self.ckpt_dir} does not exist. Cannot load policies.")
             return
@@ -534,6 +535,9 @@ class PPOTrainer:
                     logging.error(f"Error loading policy from {file_path}: {e}")
         logging.info(f"Current existing policies count: {len(self.existing_policies)}")
 
+    def softmax(self, x):
+        e_x = np.exp(x - np.max(x))  # for numerical stability
+        return e_x / e_x.sum()
 
     def _set_policies_for_agents(self) -> Tuple[List[Any], List[int]]:
         """
@@ -554,7 +558,12 @@ class PPOTrainer:
         if len(self.existing_policies) > 0:
             for _ in range(num_opponents):
                 # Choose randomly from all existing policies (including initial_random_policy at index 0)
-                chosen_idx = np.random.randint(0, len(self.existing_policies))
+                # chosen_idx = np.random.randint(0, len(self.existing_policies))
+                
+                chosen_idx = np.random.choice(
+                    len(self.existing_policies), 
+                    p=self.softmax(np.arange(len(self.existing_policies)))
+                )
                 opponent_policies.append(self.existing_policies[chosen_idx])
                 opponent_source_indices.append(chosen_idx) # Store the index from existing_policies
         else: # Fallback if no policies loaded (should not happen if initial_random_policy is always there)
@@ -791,7 +800,7 @@ def main():
 
     config: Dict[str, Any] = {
         "env_id": 'BattleSnake',
-        "total_training_timesteps": 400_000, # This is per-agent effectively, or total env steps
+        "total_training_timesteps": 100_000, # This is per-agent effectively, or total env steps
         "rollout_steps": 2048,
         "hidden_dim": 64,
         "lr": 3e-4,
@@ -809,9 +818,9 @@ def main():
         "save_interval_steps": 50_000, # Per agent
         "ckpt_dir": "./models/PPOBattlesnake_Corrected",
         # Example: "./models/PPOBattlesnake_Corrected/agent_0_steps_50000.pth"
-        "load_model_path_agent0": None, # Path for agent 0
-        "load_model_path_agent1": None, # Path for agent 1
-        "render_mode": False, # Set to True to watch
+        "load_model_path_agent0": "./models/PPOBattlesnake_Corrected/agent_0_steps_200000.pth", # Path for agent 0
+        "load_model_path_agent1": "./models/PPOBattlesnake_Corrected/agent_0_steps_200000.pth", # Path for agent 1
+        "render_mode": True, # Set to True to watch
         "render_freq": 0.1, # Time in seconds between rendered frames, e.g., 0.1 for 10 FPS
     }
 
