@@ -562,7 +562,7 @@ class PPOTrainer:
                 
                 chosen_idx = np.random.choice(
                     len(self.existing_policies), 
-                    p=self.softmax(np.arange(len(self.existing_policies)))
+                    p=self.softmax(np.array([(i // 2 + 1) for i in range(len(self.existing_policies))]))
                 )
                 opponent_policies.append(self.existing_policies[chosen_idx])
                 opponent_source_indices.append(chosen_idx) # Store the index from existing_policies
@@ -817,10 +817,12 @@ def main():
         "max_ep_len": 500,
         "log_interval_episodes": 20,
         "save_interval_steps": 50_000, # Per agent
-        "ckpt_dir": "./models/PPO_BattleSnake_NEW_WIN_LOSS_PENALTIES_FOR_DEATH_AND_REWARDS_FOR_KILLS",
+        # everything had -0.2 for dying, +1 and -1 for win/loss
+        # "ckpt_dir": "./models/PPO_BattleSnake_NEW_WIN_LOSS_PENALTIES_FOR_DEATH_AND_REWARDS_FOR_KILLS",
+        "ckpt_dir": "./models/PPO_BattleSnakes_push_collection_too",
         # Example: "./models/PPOBattlesnake_Corrected/agent_0_steps_50000.pth"
-        "load_model_path_agent0": "./models/PPO_BattleSnake_NEW_WIN_LOSS_PENALTIES_FOR_DEATH_AND_REWARDS_FOR_KILLS/agent_0_steps_1600001.pth", # Path for agent 0
-        "load_model_path_agent1": "./models/PPO_BattleSnake_NEW_WIN_LOSS_PENALTIES_FOR_DEATH_AND_REWARDS_FOR_KILLS/agent_1_steps_1600001.pth", # Path for agent 1
+        "load_model_path_agent0": None, # Path for agent 0
+        "load_model_path_agent1": None, # Path for agent 1
         "render_mode": True, # Set to True to watch
         "render_freq": 0.5, # Time in seconds between rendered frames, e.g., 0.1 for 10 FPS
     }
