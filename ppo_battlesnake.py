@@ -41,6 +41,25 @@ def get_agent_observed_state(agent_id, observation):
 
     return stacked
 
+def get_agent_observed_state_with_team(agent_id, observation, team_id):
+    """
+    Agent state is input as 11x11 grids on n+1 dimensions. First dimension is food positions, rest of them are positions of each agent.
+    This is a way to modify that to get a 3x11x11 grid with agent position, ennemy positions and food positions
+
+    Agent ID is the current agent's id, and we want to get an output wrt this agent.
+    """
+    food_spaces = observation[:, :, 0]
+    agent_positions = observation[:, :, agent_id + 1]
+    team_agent_positions = observation[:, :, team_id + 1]
+
+    remaining_agent_positions = observation[:, :, 1:]
+    remaining_agent_positions = np.sum(remaining_agent_positions, axis = 2) - agent_positions - team_agent_positions
+
+    stacked = np.stack([agent_positions, team_agent_positions, remaining_agent_positions, food_spaces])
+    stacked = np.array(stacked, dtype = np.float32)
+
+    return stacked
+
 class RolloutBuffer:
     """
     Stores trajectories (sequences of states, actions, rewards, etc.) collected during environment interaction.
@@ -558,6 +577,10 @@ class PPOTrainer:
             # print("Obs Shape", obs.shape)
             # print("Observation")
             agents_obs = [get_agent_observed_state(i, obs) for i in range(4)]
+            print("Agent Observation: \n")
+            print(agents_obs[0])
+            print(agents_obs[1])
+            print(agents_obs[2])
             
             action, log_prob, state_val = self.agent.policy.select_action(agents_obs[0].reshape(1, 3, 11, 11))
             action_rest_agents = [action] + [initial_random_policy(agents_obs[i], self.env.action_space[i]) for i in range(1, len(agents_obs))]
@@ -639,14 +662,14 @@ def main():
     # Centralized configuration for all hyperparameters and settings.
     config: Dict[str, Any] = {
         "env_id": 'BattleSnake',     # Environment ID from Gymnasium
-        "total_training_timesteps": 200_000, # Total environment steps for training
+        "total_training_timesteps": 400_000, # Total environment steps for training
         "rollout_steps": 2048,       # N: Number of steps to collect per PPO update cycle
         "hidden_dim": 64,            # Number of units in hidden layers of the PolicyValueNetwork
         "lr": 3e-4,                  # Learning rate for the AdamW optimizer
         "gamma": 0.99,               # Discount factor for future rewards
         "gae_lambda": 0.95,          # Lambda parameter for Generalized Advantage Estimation
         "num_epochs": 10,            # K: Number of optimization epochs per PPO update cycle
-        "minibatch_size": 64,        # Size of minibatches used during optimization epochs
+        "minibatch_size": 128,        # Size of minibatches used during optimization epochs
         "eps_clip": 0.2,             # PPO clipping parameter (epsilon)
         "entropy_coef": 0.01,        # Coefficient for the entropy bonus in the loss function
         "value_loss_coef": 0.5,      # Coefficient for the critic's value loss in the total loss
@@ -656,9 +679,9 @@ def main():
         "log_interval_episodes": 20, # Log average performance every N episodes
         "save_interval_steps": 50_000, # Save model checkpoint every N global timesteps
         "ckpt_dir": "./models/PPO_BattleSnake1", # Relative directory to save model checkpoints
-        "load_model_path": None, # Path to a pre-trained model to load (e.g., "./models/PPO_CartPole/ppo_steps_100000.pth")
+        "load_model_path": "./models/PPO_BattleSnake1/ppo_steps_50000.pth", # Path to a pre-trained model to load (e.g., "./models/PPO_CartPole/ppo_steps_100000.pth")
         "render_mode": True,          # Environment render bool - True or False
-        "render_freq": 0.5,         # Time interval (in seconds) to render the environment 
+        "render_freq": 10,         # Time interval (in seconds) to render the environment 
     }
 
     # --- Environment Setup (to get observation and action dimensions) ---
@@ -702,7 +725,7 @@ def main():
     )
 
     # --- Trainer Initialization ---
-    env = BattlesnakeGym(map_size=map_size, number_of_snakes=n_snakes)
+    env = BattlesnakeGym(map_size=map_size, number_of_snakes=n_snakes, observation_type = "flat-num")
     trainer = PPOTrainer(
         env=env,
         agent=ppo_agent,

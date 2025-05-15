@@ -1,0 +1,17 @@
+Device: cuda
+Number of Actions: 4
+Number of Observations: (11, 11, 5)
+Traceback (most recent call last):
+  File "evaluate_battlesnakes.py", line 6, in <module>
+    from battlesnake.ppo_battlesnake import PolicyValueNetwork, get_agent_observed_state, initial_random_policy
+  File "/home/adi/mas/battlesnake/battlesnake.py", line 244, in <module>
+    policy_net = DQN(n_actions).to(device)
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/torch/nn/modules/module.py", line 987, in to
+    return self._apply(convert)
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/torch/nn/modules/module.py", line 639, in _apply
+    module._apply(fn)
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/torch/nn/modules/module.py", line 662, in _apply
+    param_applied = fn(param)
+  File "/home/adi/miniconda3/envs/py37/lib/python3.7/site-packages/torch/nn/modules/module.py", line 985, in convert
+    return t.to(device, dtype if t.is_floating_point() or t.is_complex() else None, non_blocking)
+KeyboardInterrupt

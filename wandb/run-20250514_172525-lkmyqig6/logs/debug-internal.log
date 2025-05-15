@@ -1,0 +1,16 @@
+{"time":"2025-05-14T17:25:25.135105291+02:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-05-14T17:25:25.13512687+02:00","level":"INFO","msg":"created symlink","path":"/home/adi/mas/battlesnake/wandb/run-20250514_172525-lkmyqig6/logs/debug-core.log"}
+{"time":"2025-05-14T17:25:25.242285263+02:00","level":"INFO","msg":"created new stream","id":"lkmyqig6"}
+{"time":"2025-05-14T17:25:25.242302509+02:00","level":"INFO","msg":"stream: started","id":"lkmyqig6"}
+{"time":"2025-05-14T17:25:25.242370028+02:00","level":"INFO","msg":"handler: started","stream_id":"lkmyqig6"}
+{"time":"2025-05-14T17:25:25.242602952+02:00","level":"INFO","msg":"sender: started","stream_id":"lkmyqig6"}
+{"time":"2025-05-14T17:25:25.242604244+02:00","level":"INFO","msg":"writer: Do: started","stream_id":"lkmyqig6"}
+{"time":"2025-05-14T17:25:25.761984634+02:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-14T17:25:27.615437864+02:00","level":"INFO","msg":"stream: closing","id":"lkmyqig6"}
+{"time":"2025-05-14T17:25:27.615472333+02:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-14T17:25:27.615917634+02:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-14T17:25:30.684510826+02:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-14T17:25:30.950172242+02:00","level":"INFO","msg":"handler: closed","stream_id":"lkmyqig6"}
+{"time":"2025-05-14T17:25:30.95022061+02:00","level":"INFO","msg":"sender: closed","stream_id":"lkmyqig6"}
+{"time":"2025-05-14T17:25:30.950208216+02:00","level":"INFO","msg":"writer: Close: closed","stream_id":"lkmyqig6"}
+{"time":"2025-05-14T17:25:30.950291796+02:00","level":"INFO","msg":"stream: closed","id":"lkmyqig6"}

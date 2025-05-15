@@ -1,0 +1,43 @@
+{
+  "os": "Linux-6.11.0-25-generic-x86_64-with-debian-trixie-sid",
+  "python": "3.7.12",
+  "startedAt": "2025-05-14T15:25:25.119770Z",
+  "program": "evaluate_battlesnakes.py",
+  "codePath": "evaluate_battlesnakes.py",
+  "git": {
+    "remote": "https://github.com/adithyaa-rg/battlesnake.git",
+    "commit": "c98f6caafae646dccfe2cdf8c328111dab2218df"
+  },
+  "email": "ed21b005@smail.iitm.ac.in",
+  "root": "/home/adi/mas/battlesnake",
+  "host": "adi",
+  "username": "adi",
+  "executable": "/home/adi/miniconda3/envs/py37/bin/python",
+  "codePathLocal": "evaluate_battlesnakes.py",
+  "cpu_count": 4,
+  "cpu_count_logical": 8,
+  "gpu": "NVIDIA GeForce GTX 1650",
+  "gpu_count": 1,
+  "disk": {
+    "/": {
+      "total": "501809635328",
+      "used": "30327050240"
+    }
+  },
+  "memory": {
+    "total": "8091996160"
+  },
+  "cpu": {
+    "count": 4,
+    "countLogical": 8
+  },
+  "gpu_nvidia": [
+    {
+      "name": "NVIDIA GeForce GTX 1650",
+      "memoryTotal": "4294967296",
+      "cudaCores": 896,
+      "architecture": "Turing"
+    }
+  ],
+  "cudaVersion": "12.8"
+}
