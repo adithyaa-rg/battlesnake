@@ -721,8 +721,9 @@ class PPOTrainer:
             # Using the original logic: done if all agents in first team are done.
             # Assuming self.num_learning_agents = 2 for the first team.
             done_by_env = all(terminated_all_snakes[i] for i in range(self.num_learning_agents))
+            done_by_opponents = all(terminated_all_snakes[i] for i in range(self.num_learning_agents, 4))
             done_by_maxlen = current_episode_length >= self.max_ep_len
-            is_episode_done = done_by_env or done_by_maxlen
+            is_episode_done = done_by_env or done_by_maxlen or done_by_opponents
 
             # Policy Updates & Saving (for each learning agent)
             for i in range(self.num_learning_agents):
@@ -800,7 +801,7 @@ def main():
 
     config: Dict[str, Any] = {
         "env_id": 'BattleSnake',
-        "total_training_timesteps": 100_000, # This is per-agent effectively, or total env steps
+        "total_training_timesteps": 800_000, # This is per-agent effectively, or total env steps
         "rollout_steps": 2048,
         "hidden_dim": 64,
         "lr": 3e-4,
@@ -816,12 +817,12 @@ def main():
         "max_ep_len": 500,
         "log_interval_episodes": 20,
         "save_interval_steps": 50_000, # Per agent
-        "ckpt_dir": "./models/PPOBattlesnake_Corrected",
+        "ckpt_dir": "./models/PPO_BattleSnake_NEW_WIN_LOSS_PENALTIES_FOR_DEATH_AND_REWARDS_FOR_KILLS",
         # Example: "./models/PPOBattlesnake_Corrected/agent_0_steps_50000.pth"
-        "load_model_path_agent0": "./models/PPOBattlesnake_Corrected/agent_0_steps_200000.pth", # Path for agent 0
-        "load_model_path_agent1": "./models/PPOBattlesnake_Corrected/agent_0_steps_200000.pth", # Path for agent 1
+        "load_model_path_agent0": "./models/PPO_BattleSnake_NEW_WIN_LOSS_PENALTIES_FOR_DEATH_AND_REWARDS_FOR_KILLS/agent_0_steps_400000.pth", # Path for agent 0
+        "load_model_path_agent1": "./models/PPO_BattleSnake_NEW_WIN_LOSS_PENALTIES_FOR_DEATH_AND_REWARDS_FOR_KILLS/agent_1_steps_400000.pth", # Path for agent 1
         "render_mode": True, # Set to True to watch
-        "render_freq": 0.1, # Time in seconds between rendered frames, e.g., 0.1 for 10 FPS
+        "render_freq": 0.5, # Time in seconds between rendered frames, e.g., 0.1 for 10 FPS
     }
 
     map_size = (11, 11)
