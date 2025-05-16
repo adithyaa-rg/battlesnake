@@ -687,8 +687,10 @@ class PPOTrainer:
 
 
             next_obs_dict_all_snakes, rewards_all_snakes, terminated_all_snakes, info_all_snakes = self.env.step(actions_for_env)
-            done_by_env = all(terminated_all_snakes[i] for i in range(self.num_learning_agents))
-            done_by_opponents = all(terminated_all_snakes[i] for i in range(self.num_learning_agents, 4))
+            # done_by_env = (terminated_all_snakes[i] for i in range(self.num_learning_agents))
+            terminated_all_snakes_list = list(terminated_all_snakes.values())
+            done_by_env = (terminated_all_snakes_list[2] and terminated_all_snakes_list[3]) and (terminated_all_snakes_list[0] or terminated_all_snakes_list[1]) # snakes 2 and 3 are out, and one of the learning agents is out
+            done_by_opponents = np.sum(terminated_all_snakes_list) >= 3 # If 3 or more snakes are out, the game is done
 
             # Accumulate rewards and length
             for i in range(self.num_learning_agents):
@@ -700,8 +702,7 @@ class PPOTrainer:
                 # if done_by_env:
                     # If the learning agents are done, we penalize them for being done
                 #     rewards_all_snakes[i] -= -1.0
-                if done_by_opponents:
-                    win_count += 1
+                
                     # If opponents are done, we reward the learning agents if they aren't done/rewarded
                     # print(f"Rewards for all snakes: {rewards_all_snakes}")
                     # if not terminated_all_snakes[i]:
@@ -737,7 +738,9 @@ class PPOTrainer:
             # Using the original logic: done if all agents in first team are done.
             # Assuming self.num_learning_agents = 2 for the first team.
             done_by_maxlen = current_episode_length >= self.max_ep_len
-            is_episode_done = done_by_env or done_by_maxlen or done_by_opponents
+            is_episode_done = done_by_opponents or done_by_maxlen
+            if done_by_env:
+                win_count += 1
 
             # Policy Updates & Saving (for each learning agent)
             for i in range(self.num_learning_agents):
@@ -833,7 +836,7 @@ def main():
         "save_interval_steps": 50_000, # Per agent
         # everything had -0.2 for dying, +1 and -1 for win/loss
         # "ckpt_dir": "./models/PPO_BattleSnake_NEW_WIN_LOSS_PENALTIES_FOR_DEATH_AND_REWARDS_FOR_KILLS",
-        "ckpt_dir": "./models/PPO_BattleSnakes_go_offense",
+        "ckpt_dir": "./models/PPO_BattleSnakes_go_offense_no_contact",
         # Example: "./models/PPOBattlesnake_Corrected/agent_0_steps_50000.pth"
         "load_model_path_agent0": None, # Path for agent 0
         "load_model_path_agent1": None, # Path for agent 1
