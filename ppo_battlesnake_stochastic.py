@@ -683,6 +683,8 @@ class PPOTrainer:
 
 
             next_obs_dict_all_snakes, rewards_all_snakes, terminated_all_snakes, info_all_snakes = self.env.step(actions_for_env)
+            done_by_env = all(terminated_all_snakes[i] for i in range(self.num_learning_agents))
+            done_by_opponents = all(terminated_all_snakes[i] for i in range(self.num_learning_agents, 4))
 
             # Accumulate rewards and length
             for i in range(self.num_learning_agents):
@@ -691,7 +693,15 @@ class PPOTrainer:
 
             # Store transitions for learning agents
             for i in range(self.num_learning_agents):
-                # Observation stored should be the one that led to the action
+                if done_by_env:
+                    # If the learning agents are done, we penalize them for being done
+                    rewards_all_snakes[i] = -1.0
+                if done_by_opponents:
+                    # If opponents are done, we reward the learning agents if they aren't done/rewarded
+                    # print(f"Rewards for all snakes: {rewards_all_snakes}")
+                    rewards_all_snakes[i] = 1.0
+                # print("Dones and Rewards: ", terminated_all_snakes, rewards_all_snakes)
+                # print("Episode Termination: ", done_by_env, done_by_opponents)
                 self.agents[i].buffer.store_transition(
                     agents_processed_obs[i], # The obs for agent i
                     current_actions_learning[i],
@@ -720,8 +730,6 @@ class PPOTrainer:
             
             # Using the original logic: done if all agents in first team are done.
             # Assuming self.num_learning_agents = 2 for the first team.
-            done_by_env = all(terminated_all_snakes[i] for i in range(self.num_learning_agents))
-            done_by_opponents = all(terminated_all_snakes[i] for i in range(self.num_learning_agents, 4))
             done_by_maxlen = current_episode_length >= self.max_ep_len
             is_episode_done = done_by_env or done_by_maxlen or done_by_opponents
 
@@ -801,7 +809,7 @@ def main():
 
     config: Dict[str, Any] = {
         "env_id": 'BattleSnake',
-        "total_training_timesteps": 800_000, # This is per-agent effectively, or total env steps
+        "total_training_timesteps": 5_000_000, # This is per-agent effectively, or total env steps
         "rollout_steps": 2048,
         "hidden_dim": 64,
         "lr": 3e-4,
@@ -816,13 +824,13 @@ def main():
         "seed": 42,
         "max_ep_len": 500,
         "log_interval_episodes": 20,
-        "save_interval_steps": 50_000, # Per agent
+        "save_interval_steps": 25_000, # Per agent
         # everything had -0.2 for dying, +1 and -1 for win/loss
         # "ckpt_dir": "./models/PPO_BattleSnake_NEW_WIN_LOSS_PENALTIES_FOR_DEATH_AND_REWARDS_FOR_KILLS",
-        "ckpt_dir": "./models/PPO_BattleSnakes_push_collection_too",
+        "ckpt_dir": "./models/PPO_BattleSnakes_win_loss",
         # Example: "./models/PPOBattlesnake_Corrected/agent_0_steps_50000.pth"
-        "load_model_path_agent0": None, # Path for agent 0
-        "load_model_path_agent1": None, # Path for agent 1
+        "load_model_path_agent0": "./models/PPO_BattleSnakes_win_loss/agent_1_steps_5150001.pth", # Path for agent 0
+        "load_model_path_agent1": "./models/PPO_BattleSnakes_win_loss/agent_1_steps_5150001.pth", # Path for agent 1
         "render_mode": True, # Set to True to watch
         "render_freq": 0.5, # Time in seconds between rendered frames, e.g., 0.1 for 10 FPS
     }
