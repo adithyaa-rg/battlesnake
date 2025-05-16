@@ -642,7 +642,7 @@ class PPOTrainer:
         # The t_step_global should reflect the actual number of environment interactions.
         # Each agent's total_steps_trained will be updated internally by the PPOAgent.
         # This loop is for global environment steps.
-
+        win_count = 0
         for t_step_global in range(1, total_training_timesteps + 1):
             # Update policies for the game (can change per episode or less frequently)
             # For now, let's set them once per episode start (handled in the 'if is_episode_done' block)
@@ -701,10 +701,11 @@ class PPOTrainer:
                     # If the learning agents are done, we penalize them for being done
                 #     rewards_all_snakes[i] -= -1.0
                 if done_by_opponents:
+                    win_count += 1
                     # If opponents are done, we reward the learning agents if they aren't done/rewarded
                     # print(f"Rewards for all snakes: {rewards_all_snakes}")
-                    if not terminated_all_snakes[i]:
-                        rewards_all_snakes[i] += 1.0
+                    # if not terminated_all_snakes[i]:
+                    #     rewards_all_snakes[i] += 1.0
                 # print("Dones and Rewards: ", terminated_all_snakes, rewards_all_snakes)
                 # print("Episode Termination: ", done_by_env, done_by_opponents)
                 self.agents[i].buffer.store_transition(
@@ -784,11 +785,10 @@ class PPOTrainer:
                 if self.total_episodes_completed % self.log_interval_episodes == 0 and len(self.episode_rewards_buffer) > 0:
                     avg_reward = np.mean(self.episode_rewards_buffer[-self.log_interval_episodes:])
                     avg_length = np.mean(self.episode_lengths_buffer[-self.log_interval_episodes:])
-                    win_percentage = len(np.where(self.episode_rewards_buffer == 1)) / self.log_interval_episodes # Assuming win is positive reward
                     elapsed_time = time.monotonic() - start_time
                     logging.info(
                         f"Eps: {self.total_episodes_completed} | Global Steps (Agent 0): {self.agents[0].total_steps_trained} | "
-                        f"Avg Reward (last {self.log_interval_episodes}): {avg_reward:.2f} | Win %: {win_percentage} | Avg Len: {avg_length:.2f} | Time: {elapsed_time:.2f}s"
+                        f"Avg Reward (last {self.log_interval_episodes}): {avg_reward:.2f} | Win %: {win_count / self.total_episodes_completed * 100} | Avg Len: {avg_length:.2f} | Time: {elapsed_time:.2f}s"
                     )
                 
                 # Reset for next episode
@@ -833,14 +833,27 @@ def main():
         "save_interval_steps": 50_000, # Per agent
         # everything had -0.2 for dying, +1 and -1 for win/loss
         # "ckpt_dir": "./models/PPO_BattleSnake_NEW_WIN_LOSS_PENALTIES_FOR_DEATH_AND_REWARDS_FOR_KILLS",
-        "ckpt_dir": "./models/PPO_BattleSnakes_win",
+        "ckpt_dir": "./models/PPO_BattleSnakes_go_offense",
         # Example: "./models/PPOBattlesnake_Corrected/agent_0_steps_50000.pth"
-        "load_model_path_agent0": "./models/PPO_BattleSnakes_win/agent_0_steps_1400000.pth", # Path for agent 0
-        "load_model_path_agent1": "./models/PPO_BattleSnakes_win/agent_1_steps_1400000.pth", # Path for agent 1
-        # currently trying only reward for wins and group wins and nothing else for anything else
-        "render_mode": True, # Set to True to watch
+        "load_model_path_agent0": None, # Path for agent 0
+        "load_model_path_agent1": None, # Path for agent 1
+        "render_mode": False, # Set to True to watch
         "render_freq": 0.5, # Time in seconds between rendered frames, e.g., 0.1 for 10 FPS
     }
+    """
+        "another_turn": 0.000,
+        "ate_food": 1.,
+        "won": 10,
+        "died": -10,
+        "ate_another_snake": 3.0,
+        "hit_wall": -0.0,
+        "hit_other_snake": 0,
+        "hit_self": -1.0,
+        "was_eaten": -1.0,
+        "other_snake_hit_body": -1,
+        "forbidden_move": -1.0,
+        "starved": -5.0
+        """
 
     map_size = (11, 11)
     n_snakes = 4 # Standard Battlesnake usually has 2 or 4. This code assumes 4.
