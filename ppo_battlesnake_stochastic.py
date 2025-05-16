@@ -179,6 +179,9 @@ def initial_random_policy(observation: np.ndarray, action_space: gym.spaces.Disc
         # This is a tricky part for a "simple" policy.
         # For now, let's stick to the original fallback.
         return action_space.sample()
+    
+def random_policy(observation: np.ndarray, action_space: gym.spaces.Discrete) -> int:
+    return action_space.sample()
 
 
 class PolicyValueNetwork(nn.Module):
@@ -475,7 +478,7 @@ class PPOTrainer:
         self.render_freq = render_freq
         self.dummy_agent = dummy_agent # Should be a PPOAgent instance to get network params
 
-        self.existing_policies: List[Any] = [initial_random_policy] # Can hold PolicyValueNetwork or functions
+        self.existing_policies: List[Any] = [random_policy, initial_random_policy] # Can hold PolicyValueNetwork or functions
         if self.ckpt_dir:
             os.makedirs(self.ckpt_dir, exist_ok=True)
             self._update_existing_policies()
@@ -499,7 +502,7 @@ class PPOTrainer:
 
     def _update_existing_policies(self):
         """Loads existing policies (PolicyValueNetwork instances) from the checkpoint directory."""
-        self.existing_policies = [initial_random_policy] # Start with the random policy
+        self.existing_policies = [initial_random_policy, random_policy] # Start with the random policy
         if not self.dummy_agent:
             logging.warning("No dummy_agent provided to PPOTrainer, cannot load existing policies.")
             return
@@ -569,6 +572,7 @@ class PPOTrainer:
         else: # Fallback if no policies loaded (should not happen if initial_random_policy is always there)
             for _ in range(num_opponents):
                 opponent_policies.append(initial_random_policy)
+                opponent_policies.append(random_policy)
                 opponent_source_indices.append(0) # Assuming initial_random_policy is effectively index 0
 
         # The game expects 4 policies.
@@ -698,7 +702,7 @@ class PPOTrainer:
                 #     rewards_all_snakes[i] -= -1.0
                 if done_by_opponents:
                     # If opponents are done, we reward the learning agents if they aren't done/rewarded
-                    print(f"Rewards for all snakes: {rewards_all_snakes}")
+                    # print(f"Rewards for all snakes: {rewards_all_snakes}")
                     if not terminated_all_snakes[i]:
                         rewards_all_snakes[i] += 1.0
                 # print("Dones and Rewards: ", terminated_all_snakes, rewards_all_snakes)
@@ -811,7 +815,7 @@ def main():
 
     config: Dict[str, Any] = {
         "env_id": 'BattleSnake',
-        "total_training_timesteps": 200_000, # This is per-agent effectively, or total env steps
+        "total_training_timesteps": 2_000_000, # This is per-agent effectively, or total env steps
         "rollout_steps": 2048,
         "hidden_dim": 64,
         "lr": 3e-4,
@@ -826,14 +830,15 @@ def main():
         "seed": 42,
         "max_ep_len": 500,
         "log_interval_episodes": 100,
-        "save_interval_steps": 100_000, # Per agent
+        "save_interval_steps": 50_000, # Per agent
         # everything had -0.2 for dying, +1 and -1 for win/loss
         # "ckpt_dir": "./models/PPO_BattleSnake_NEW_WIN_LOSS_PENALTIES_FOR_DEATH_AND_REWARDS_FOR_KILLS",
-        "ckpt_dir": "./models/PPO_BattleSnakes_win_loss_individual",
+        "ckpt_dir": "./models/PPO_BattleSnakes_win",
         # Example: "./models/PPOBattlesnake_Corrected/agent_0_steps_50000.pth"
-        "load_model_path_agent0": "./models/PPO_BattleSnakes_win_loss_individual/agent_0_steps_2525001.pth", # Path for agent 0
-        "load_model_path_agent1": "./models/PPO_BattleSnakes_win_loss_individual/agent_1_steps_2525001.pth", # Path for agent 1
-        "render_mode": False, # Set to True to watch
+        "load_model_path_agent0": "./models/PPO_BattleSnakes_win/agent_0_steps_1400000.pth", # Path for agent 0
+        "load_model_path_agent1": "./models/PPO_BattleSnakes_win/agent_1_steps_1400000.pth", # Path for agent 1
+        # currently trying only reward for wins and group wins and nothing else for anything else
+        "render_mode": True, # Set to True to watch
         "render_freq": 0.5, # Time in seconds between rendered frames, e.g., 0.1 for 10 FPS
     }
 
