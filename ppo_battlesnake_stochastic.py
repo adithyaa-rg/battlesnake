@@ -696,10 +696,11 @@ class PPOTrainer:
                 # if done_by_env:
                     # If the learning agents are done, we penalize them for being done
                 #     rewards_all_snakes[i] -= -1.0
-                # if done_by_opponents:
+                if done_by_opponents:
                     # If opponents are done, we reward the learning agents if they aren't done/rewarded
-                    # print(f"Rewards for all snakes: {rewards_all_snakes}")
-                    # rewards_all_snakes[i] += 1.0
+                    print(f"Rewards for all snakes: {rewards_all_snakes}")
+                    if not terminated_all_snakes[i]:
+                        rewards_all_snakes[i] += 1.0
                 # print("Dones and Rewards: ", terminated_all_snakes, rewards_all_snakes)
                 # print("Episode Termination: ", done_by_env, done_by_opponents)
                 self.agents[i].buffer.store_transition(
@@ -779,10 +780,11 @@ class PPOTrainer:
                 if self.total_episodes_completed % self.log_interval_episodes == 0 and len(self.episode_rewards_buffer) > 0:
                     avg_reward = np.mean(self.episode_rewards_buffer[-self.log_interval_episodes:])
                     avg_length = np.mean(self.episode_lengths_buffer[-self.log_interval_episodes:])
+                    win_percentage = len(np.where(self.episode_rewards_buffer == 1)) / self.log_interval_episodes # Assuming win is positive reward
                     elapsed_time = time.monotonic() - start_time
                     logging.info(
                         f"Eps: {self.total_episodes_completed} | Global Steps (Agent 0): {self.agents[0].total_steps_trained} | "
-                        f"Avg Reward (last {self.log_interval_episodes}): {avg_reward:.2f} | Avg Len: {avg_length:.2f} | Time: {elapsed_time:.2f}s"
+                        f"Avg Reward (last {self.log_interval_episodes}): {avg_reward:.2f} | Win %: {win_percentage} | Avg Len: {avg_length:.2f} | Time: {elapsed_time:.2f}s"
                     )
                 
                 # Reset for next episode
@@ -809,29 +811,29 @@ def main():
 
     config: Dict[str, Any] = {
         "env_id": 'BattleSnake',
-        "total_training_timesteps": 800_000, # This is per-agent effectively, or total env steps
+        "total_training_timesteps": 200_000, # This is per-agent effectively, or total env steps
         "rollout_steps": 2048,
         "hidden_dim": 64,
         "lr": 3e-4,
         "gamma": 0.99,
         "gae_lambda": 0.95,
         "num_epochs": 10,
-        "minibatch_size": 128, # Was 64, if GPU memory allows, 128 or 256 can be faster
+        "minibatch_size": 256, # Was 64, if GPU memory allows, 128 or 256 can be faster
         "eps_clip": 0.2,
         "entropy_coef": 0.01,
         "value_loss_coef": 0.5,
         "max_grad_norm": 0.5,
         "seed": 42,
         "max_ep_len": 500,
-        "log_interval_episodes": 20,
-        "save_interval_steps": 25_000, # Per agent
+        "log_interval_episodes": 100,
+        "save_interval_steps": 100_000, # Per agent
         # everything had -0.2 for dying, +1 and -1 for win/loss
         # "ckpt_dir": "./models/PPO_BattleSnake_NEW_WIN_LOSS_PENALTIES_FOR_DEATH_AND_REWARDS_FOR_KILLS",
         "ckpt_dir": "./models/PPO_BattleSnakes_win_loss_individual",
         # Example: "./models/PPOBattlesnake_Corrected/agent_0_steps_50000.pth"
-        "load_model_path_agent0": "./models/PPO_BattleSnakes_win_loss_individual/agent_0_steps_1550000.pth", # Path for agent 0
-        "load_model_path_agent1": "./models/PPO_BattleSnakes_win_loss_individual/agent_1_steps_1550000.pth", # Path for agent 1
-        "render_mode": True, # Set to True to watch
+        "load_model_path_agent0": "./models/PPO_BattleSnakes_win_loss_individual/agent_0_steps_2525001.pth", # Path for agent 0
+        "load_model_path_agent1": "./models/PPO_BattleSnakes_win_loss_individual/agent_1_steps_2525001.pth", # Path for agent 1
+        "render_mode": False, # Set to True to watch
         "render_freq": 0.5, # Time in seconds between rendered frames, e.g., 0.1 for 10 FPS
     }
 
