@@ -412,7 +412,7 @@ class PPOAgent:
                 critic_loss = self.mse_loss(current_state_values, batch_rewards_to_go)
                 
                 kl_div_value = torch.tensor(0.0, device=self.device)
-                lam_kl = 0.0
+                lam_kl = 0.02
 
                 if second_agent is not None and hasattr(second_agent, 'policy'):
                     with torch.no_grad(): # Do not train the second agent
@@ -693,13 +693,13 @@ class PPOTrainer:
 
             # Store transitions for learning agents
             for i in range(self.num_learning_agents):
-                if done_by_env:
+                # if done_by_env:
                     # If the learning agents are done, we penalize them for being done
-                    rewards_all_snakes[i] = -1.0
-                if done_by_opponents:
+                #     rewards_all_snakes[i] -= -1.0
+                # if done_by_opponents:
                     # If opponents are done, we reward the learning agents if they aren't done/rewarded
                     # print(f"Rewards for all snakes: {rewards_all_snakes}")
-                    rewards_all_snakes[i] = 1.0
+                    # rewards_all_snakes[i] += 1.0
                 # print("Dones and Rewards: ", terminated_all_snakes, rewards_all_snakes)
                 # print("Episode Termination: ", done_by_env, done_by_opponents)
                 self.agents[i].buffer.store_transition(
@@ -809,7 +809,7 @@ def main():
 
     config: Dict[str, Any] = {
         "env_id": 'BattleSnake',
-        "total_training_timesteps": 5_000_000, # This is per-agent effectively, or total env steps
+        "total_training_timesteps": 800_000, # This is per-agent effectively, or total env steps
         "rollout_steps": 2048,
         "hidden_dim": 64,
         "lr": 3e-4,
@@ -827,11 +827,11 @@ def main():
         "save_interval_steps": 25_000, # Per agent
         # everything had -0.2 for dying, +1 and -1 for win/loss
         # "ckpt_dir": "./models/PPO_BattleSnake_NEW_WIN_LOSS_PENALTIES_FOR_DEATH_AND_REWARDS_FOR_KILLS",
-        "ckpt_dir": "./models/PPO_BattleSnakes_win_loss",
+        "ckpt_dir": "./models/PPO_BattleSnakes_win_loss_individual",
         # Example: "./models/PPOBattlesnake_Corrected/agent_0_steps_50000.pth"
-        "load_model_path_agent0": "./models/PPO_BattleSnakes_win_loss/agent_1_steps_5150001.pth", # Path for agent 0
-        "load_model_path_agent1": "./models/PPO_BattleSnakes_win_loss/agent_1_steps_5150001.pth", # Path for agent 1
-        "render_mode": True, # Set to True to watch
+        "load_model_path_agent0": "./models/PPO_BattleSnakes_win_loss_individual/agent_0_steps_575000.pth", # Path for agent 0
+        "load_model_path_agent1": "./models/PPO_BattleSnakes_win_loss_individual/agent_1_steps_575000.pth", # Path for agent 1
+        "render_mode": False, # Set to True to watch
         "render_freq": 0.5, # Time in seconds between rendered frames, e.g., 0.1 for 10 FPS
     }
 
