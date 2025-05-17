@@ -838,9 +838,9 @@ def main():
         # "ckpt_dir": "./models/PPO_BattleSnake_NEW_WIN_LOSS_PENALTIES_FOR_DEATH_AND_REWARDS_FOR_KILLS",
         "ckpt_dir": "./models/PPO_BattleSnakes_go_offense_no_contact",
         # Example: "./models/PPOBattlesnake_Corrected/agent_0_steps_50000.pth"
-        "load_model_path_agent0": None, # Path for agent 0
-        "load_model_path_agent1": None, # Path for agent 1
-        "render_mode": False, # Set to True to watch
+        "load_model_path_agent0": "./models/PPO_BattleSnakes_go_offense_no_contact/agent_0_steps_2900000.pth", # Path for agent 0
+        "load_model_path_agent1": "./models/PPO_BattleSnakes_go_offense_no_contact/agent_1_steps_2900000.pth", # Path for agent 1
+        "render_mode": True, # Set to True to watch
         "render_freq": 0.5, # Time in seconds between rendered frames, e.g., 0.1 for 10 FPS
     }
     """
