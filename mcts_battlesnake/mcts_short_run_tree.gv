@@ -1,0 +1,131 @@
+// Monte Carlo Search Tree
+digraph {
+	rankdir=TB
+	node [fontsize=10]
+	edge [fontsize=8]
+	123785080131792 [label="Pos: (0, 0)
+Visits: 17
+Q-Value: 1.00
+AvgReward: 0.06
+Depth: 0
+Fully Expanded" fillcolor=lightblue shape=box style=filled]
+	123785080133264 [label="Pos: (1, 0)
+Visits: 4
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 1
+Untried Moves: 1" fillcolor=whitesmoke shape=box style=filled]
+	123785080133072 [label="Pos: (1, -1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 2
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080133264 -> 123785080133072 [label="(0, -1)"]
+	123785080135248 [label="Pos: (0, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 2
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080133264 -> 123785080135248 [label="(-1, 0)"]
+	123785080134800 [label="Pos: (1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 2
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080133264 -> 123785080134800 [label="(0, 1)"]
+	123785080131792 -> 123785080133264 [label="(1, 0)"]
+	123785080133968 [label="Pos: (0, -1)
+Visits: 5
+Q-Value: 1.00
+AvgReward: 0.20
+Depth: 1
+Fully Expanded" fillcolor=lightgrey shape=box style=filled]
+	123785080133904 [label="Pos: (0, -2)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 2
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080133968 -> 123785080133904 [label="(0, -1)"]
+	123785080134032 [label="Pos: (-1, -1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 2
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080133968 -> 123785080134032 [label="(-1, 0)"]
+	123785080134864 [label="Pos: (0, 0)
+Visits: 1
+Q-Value: 1.00
+AvgReward: 1.00
+Depth: 2
+Untried Moves: 4" fillcolor=mediumseagreen shape=box style=filled]
+	123785080133968 -> 123785080134864 [label="(0, 1)"]
+	123785080131984 [label="Pos: (1, -1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 2
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080133968 -> 123785080131984 [label="(1, 0)"]
+	123785080131792 -> 123785080133968 [label="(0, -1)"]
+	123785080134672 [label="Pos: (-1, 0)
+Visits: 4
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 1
+Untried Moves: 1" fillcolor=whitesmoke shape=box style=filled]
+	123785080133008 [label="Pos: (0, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 2
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080134672 -> 123785080133008 [label="(1, 0)"]
+	123785080135056 [label="Pos: (-1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 2
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080134672 -> 123785080135056 [label="(0, 1)"]
+	123785080134352 [label="Pos: (-2, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 2
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080134672 -> 123785080134352 [label="(-1, 0)"]
+	123785080131792 -> 123785080134672 [label="(-1, 0)"]
+	123785080135440 [label="Pos: (0, 1)
+Visits: 4
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 1
+Untried Moves: 1" fillcolor=whitesmoke shape=box style=filled]
+	123785080132240 [label="Pos: (0, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 2
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080135440 -> 123785080132240 [label="(0, -1)"]
+	123785080132752 [label="Pos: (1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 2
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080135440 -> 123785080132752 [label="(1, 0)"]
+	123785080134288 [label="Pos: (0, 2)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 2
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080135440 -> 123785080134288 [label="(0, 1)"]
+	123785080131792 -> 123785080135440 [label="(0, 1)"]
+}

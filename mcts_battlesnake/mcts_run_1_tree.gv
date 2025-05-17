@@ -1,0 +1,1930 @@
+// Monte Carlo Search Tree
+digraph {
+	rankdir=TB
+	node [fontsize=10]
+	edge [fontsize=8]
+	123785091331216 [label="Pos: (0, 0)
+Visits: 1478
+Q-Value: 1192.00
+AvgReward: 0.81
+Depth: 0
+Fully Expanded" fillcolor=lightblue shape=box style=filled]
+	123785090112080 [label="Pos: (0, 1)
+Visits: 75
+Q-Value: 18.00
+AvgReward: 0.24
+Depth: 1
+Fully Expanded" fillcolor=lightgrey shape=box style=filled]
+	123785079919504 [label="Pos: (-1, 1)
+Visits: 10
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 2
+Fully Expanded" fillcolor=whitesmoke shape=box style=filled]
+	123785079922256 [label="Pos: (-1, 2)
+Visits: 3
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 2" fillcolor=whitesmoke shape=box style=filled]
+	123785080009040 [label="Pos: (-2, 2)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079922256 -> 123785080009040 [label="(-1, 0)"]
+	123785080054736 [label="Pos: (-1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079922256 -> 123785080054736 [label="(0, -1)"]
+	123785079919504 -> 123785079922256 [label="(0, 1)"]
+	123785079942032 [label="Pos: (-2, 1)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 3" fillcolor=whitesmoke shape=box style=filled]
+	123785080010320 [label="Pos: (-2, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079942032 -> 123785080010320 [label="(0, -1)"]
+	123785079919504 -> 123785079942032 [label="(-1, 0)"]
+	123785079961168 [label="Pos: (-1, 0)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 3" fillcolor=whitesmoke shape=box style=filled]
+	123785080025232 [label="Pos: (0, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079961168 -> 123785080025232 [label="(1, 0)"]
+	123785079919504 -> 123785079961168 [label="(0, -1)"]
+	123785079989136 [label="Pos: (0, 1)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 3" fillcolor=whitesmoke shape=box style=filled]
+	123785080028304 [label="Pos: (-1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079989136 -> 123785080028304 [label="(-1, 0)"]
+	123785079919504 -> 123785079989136 [label="(1, 0)"]
+	123785090112080 -> 123785079919504 [label="(-1, 0)"]
+	123785079920592 [label="Pos: (0, 0)
+Visits: 15
+Q-Value: 2.00
+AvgReward: 0.13
+Depth: 2
+Fully Expanded" fillcolor=lightgrey shape=box style=filled]
+	123785079939216 [label="Pos: (-1, 0)
+Visits: 3
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 2" fillcolor=whitesmoke shape=box style=filled]
+	123785080009168 [label="Pos: (-2, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079939216 -> 123785080009168 [label="(-1, 0)"]
+	123785080054224 [label="Pos: (-1, -1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079939216 -> 123785080054224 [label="(0, -1)"]
+	123785079920592 -> 123785079939216 [label="(-1, 0)"]
+	123785079942928 [label="Pos: (0, 1)
+Visits: 3
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 2" fillcolor=whitesmoke shape=box style=filled]
+	123785080010832 [label="Pos: (-1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079942928 -> 123785080010832 [label="(-1, 0)"]
+	123785080054864 [label="Pos: (1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079942928 -> 123785080054864 [label="(1, 0)"]
+	123785079920592 -> 123785079942928 [label="(0, 1)"]
+	123785079962320 [label="Pos: (1, 0)
+Visits: 5
+Q-Value: 2.00
+AvgReward: 0.40
+Depth: 3
+Fully Expanded" fillcolor=lightgrey shape=box style=filled]
+	123785080025488 [label="Pos: (1, 1)
+Visits: 1
+Q-Value: 1.00
+AvgReward: 1.00
+Depth: 4
+Untried Moves: 4" fillcolor=mediumseagreen shape=box style=filled]
+	123785079962320 -> 123785080025488 [label="(0, 1)"]
+	123785080025744 [label="Pos: (0, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079962320 -> 123785080025744 [label="(-1, 0)"]
+	123785080028816 [label="Pos: (1, -1)
+Visits: 1
+Q-Value: 1.00
+AvgReward: 1.00
+Depth: 4
+Untried Moves: 4" fillcolor=mediumseagreen shape=box style=filled]
+	123785079962320 -> 123785080028816 [label="(0, -1)"]
+	123785080028944 [label="Pos: (2, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079962320 -> 123785080028944 [label="(1, 0)"]
+	123785079920592 -> 123785079962320 [label="(1, 0)"]
+	123785079990672 [label="Pos: (0, -1)
+Visits: 3
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 2" fillcolor=whitesmoke shape=box style=filled]
+	123785080025616 [label="Pos: (0, -2)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079990672 -> 123785080025616 [label="(0, -1)"]
+	123785080075664 [label="Pos: (-1, -1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079990672 -> 123785080075664 [label="(-1, 0)"]
+	123785079920592 -> 123785079990672 [label="(0, -1)"]
+	123785090112080 -> 123785079920592 [label="(0, -1)"]
+	123785079921104 [label="Pos: (0, 2)
+Visits: 15
+Q-Value: 2.00
+AvgReward: 0.13
+Depth: 2
+Fully Expanded" fillcolor=lightgrey shape=box style=filled]
+	123785079940240 [label="Pos: (1, 2)
+Visits: 4
+Q-Value: 1.00
+AvgReward: 0.25
+Depth: 3
+Untried Moves: 1" fillcolor=lightgrey shape=box style=filled]
+	123785080009296 [label="Pos: (2, 2)
+Visits: 1
+Q-Value: 1.00
+AvgReward: 1.00
+Depth: 4
+TERMINAL (WIN)" fillcolor=palegreen shape=box style=filled]
+	123785079940240 -> 123785080009296 [label="(1, 0)"]
+	123785080010192 [label="Pos: (1, 3)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079940240 -> 123785080010192 [label="(0, 1)"]
+	123785080026384 [label="Pos: (1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079940240 -> 123785080026384 [label="(0, -1)"]
+	123785079921104 -> 123785079940240 [label="(1, 0)"]
+	123785079960144 [label="Pos: (-1, 2)
+Visits: 3
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 2" fillcolor=whitesmoke shape=box style=filled]
+	123785080009488 [label="Pos: (-1, 3)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079960144 -> 123785080009488 [label="(0, 1)"]
+	123785080054992 [label="Pos: (-2, 2)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079960144 -> 123785080054992 [label="(-1, 0)"]
+	123785079921104 -> 123785079960144 [label="(-1, 0)"]
+	123785079963088 [label="Pos: (0, 3)
+Visits: 4
+Q-Value: 1.00
+AvgReward: 0.25
+Depth: 3
+Untried Moves: 1" fillcolor=lightgrey shape=box style=filled]
+	123785080009808 [label="Pos: (0, 2)
+Visits: 1
+Q-Value: 1.00
+AvgReward: 1.00
+Depth: 4
+Untried Moves: 4" fillcolor=mediumseagreen shape=box style=filled]
+	123785079963088 -> 123785080009808 [label="(0, -1)"]
+	123785080011856 [label="Pos: (-1, 3)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079963088 -> 123785080011856 [label="(-1, 0)"]
+	123785080054352 [label="Pos: (1, 3)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079963088 -> 123785080054352 [label="(1, 0)"]
+	123785079921104 -> 123785079963088 [label="(0, 1)"]
+	123785079991184 [label="Pos: (0, 1)
+Visits: 3
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 2" fillcolor=whitesmoke shape=box style=filled]
+	123785080009936 [label="Pos: (1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079991184 -> 123785080009936 [label="(1, 0)"]
+	123785080076176 [label="Pos: (-1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079991184 -> 123785080076176 [label="(-1, 0)"]
+	123785079921104 -> 123785079991184 [label="(0, -1)"]
+	123785090112080 -> 123785079921104 [label="(0, 1)"]
+	123785079921616 [label="Pos: (1, 1)
+Visits: 34
+Q-Value: 14.00
+AvgReward: 0.41
+Depth: 2
+Fully Expanded" fillcolor=lightgoldenrodyellow shape=box style=filled]
+	123785079941520 [label="Pos: (2, 1)
+Visits: 12
+Q-Value: 7.00
+AvgReward: 0.58
+Depth: 3
+Fully Expanded" fillcolor=lightgoldenrodyellow shape=box style=filled]
+	123785079991952 [label="Pos: (3, 1)
+Visits: 2
+Q-Value: 1.00
+AvgReward: 0.50
+Depth: 4
+Untried Moves: 3" fillcolor=lightgoldenrodyellow shape=box style=filled]
+	123785080026640 [label="Pos: (4, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079991952 -> 123785080026640 [label="(1, 0)"]
+	123785079941520 -> 123785079991952 [label="(1, 0)"]
+	123785080008784 [label="Pos: (2, 2)
+Visits: 4
+Q-Value: 4.00
+AvgReward: 1.00
+Depth: 4
+TERMINAL (WIN)" fillcolor=palegreen shape=box style=filled]
+	123785079941520 -> 123785080008784 [label="(0, 1)"]
+	123785080009744 [label="Pos: (2, 0)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 3" fillcolor=whitesmoke shape=box style=filled]
+	123785080074384 [label="Pos: (3, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080009744 -> 123785080074384 [label="(1, 0)"]
+	123785079941520 -> 123785080009744 [label="(0, -1)"]
+	123785080012624 [label="Pos: (1, 1)
+Visits: 3
+Q-Value: 2.00
+AvgReward: 0.67
+Depth: 4
+Untried Moves: 2" fillcolor=lightgoldenrodyellow shape=box style=filled]
+	123785080029072 [label="Pos: (2, 1)
+Visits: 1
+Q-Value: 1.00
+AvgReward: 1.00
+Depth: 5
+Untried Moves: 4" fillcolor=mediumseagreen shape=box style=filled]
+	123785080012624 -> 123785080029072 [label="(1, 0)"]
+	123785080054480 [label="Pos: (1, 2)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080012624 -> 123785080054480 [label="(0, 1)"]
+	123785079941520 -> 123785080012624 [label="(-1, 0)"]
+	123785079921616 -> 123785079941520 [label="(1, 0)"]
+	123785079960656 [label="Pos: (1, 0)
+Visits: 6
+Q-Value: 1.00
+AvgReward: 0.17
+Depth: 3
+Fully Expanded" fillcolor=lightgrey shape=box style=filled]
+	123785079992080 [label="Pos: (1, 1)
+Visits: 2
+Q-Value: 1.00
+AvgReward: 0.50
+Depth: 4
+Untried Moves: 3" fillcolor=lightgoldenrodyellow shape=box style=filled]
+	123785080075152 [label="Pos: (0, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079992080 -> 123785080075152 [label="(-1, 0)"]
+	123785079960656 -> 123785079992080 [label="(0, 1)"]
+	123785080008976 [label="Pos: (1, -1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079960656 -> 123785080008976 [label="(0, -1)"]
+	123785080011344 [label="Pos: (2, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079960656 -> 123785080011344 [label="(1, 0)"]
+	123785080053968 [label="Pos: (0, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079960656 -> 123785080053968 [label="(-1, 0)"]
+	123785079921616 -> 123785079960656 [label="(0, -1)"]
+	123785079988496 [label="Pos: (0, 1)
+Visits: 5
+Q-Value: 1.00
+AvgReward: 0.20
+Depth: 3
+Fully Expanded" fillcolor=lightgrey shape=box style=filled]
+	123785079992208 [label="Pos: (-1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079988496 -> 123785079992208 [label="(-1, 0)"]
+	123785080026128 [label="Pos: (0, 2)
+Visits: 1
+Q-Value: 1.00
+AvgReward: 1.00
+Depth: 4
+Untried Moves: 4" fillcolor=mediumseagreen shape=box style=filled]
+	123785079988496 -> 123785080026128 [label="(0, 1)"]
+	123785080026256 [label="Pos: (1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079988496 -> 123785080026256 [label="(1, 0)"]
+	123785080054096 [label="Pos: (0, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079988496 -> 123785080054096 [label="(0, -1)"]
+	123785079921616 -> 123785079988496 [label="(-1, 0)"]
+	123785079991696 [label="Pos: (1, 2)
+Visits: 10
+Q-Value: 5.00
+AvgReward: 0.50
+Depth: 3
+Fully Expanded" fillcolor=lightgoldenrodyellow shape=box style=filled]
+	123785079991888 [label="Pos: (1, 1)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 3" fillcolor=whitesmoke shape=box style=filled]
+	123785080053904 [label="Pos: (1, 2)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079991888 -> 123785080053904 [label="(0, 1)"]
+	123785079991696 -> 123785079991888 [label="(0, -1)"]
+	123785080009552 [label="Pos: (2, 2)
+Visits: 4
+Q-Value: 4.00
+AvgReward: 1.00
+Depth: 4
+TERMINAL (WIN)" fillcolor=palegreen shape=box style=filled]
+	123785079991696 -> 123785080009552 [label="(1, 0)"]
+	123785080010064 [label="Pos: (0, 2)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 3" fillcolor=whitesmoke shape=box style=filled]
+	123785080054608 [label="Pos: (1, 2)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080010064 -> 123785080054608 [label="(1, 0)"]
+	123785079991696 -> 123785080010064 [label="(-1, 0)"]
+	123785080025168 [label="Pos: (1, 3)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079991696 -> 123785080025168 [label="(0, 1)"]
+	123785079921616 -> 123785079991696 [label="(0, 1)"]
+	123785090112080 -> 123785079921616 [label="(1, 0)"]
+	123785091331216 -> 123785090112080 [label="(0, 1)"]
+	123785090113872 [label="Pos: (1, 0)
+Visits: 1317
+Q-Value: 1164.00
+AvgReward: 0.88
+Depth: 1
+Fully Expanded" fillcolor=mediumseagreen shape=box style=filled]
+	123785079919440 [label="Pos: (2, 0)
+Visits: 24
+Q-Value: 6.00
+AvgReward: 0.25
+Depth: 2
+Fully Expanded" fillcolor=lightgrey shape=box style=filled]
+	123785079921488 [label="Pos: (1, 0)
+Visits: 5
+Q-Value: 1.00
+AvgReward: 0.20
+Depth: 3
+Fully Expanded" fillcolor=lightgrey shape=box style=filled]
+	123785079963344 [label="Pos: (2, 0)
+Visits: 1
+Q-Value: 1.00
+AvgReward: 1.00
+Depth: 4
+Untried Moves: 4" fillcolor=mediumseagreen shape=box style=filled]
+	123785079921488 -> 123785079963344 [label="(1, 0)"]
+	123785079991312 [label="Pos: (0, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079921488 -> 123785079991312 [label="(-1, 0)"]
+	123785080012240 [label="Pos: (1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079921488 -> 123785080012240 [label="(0, 1)"]
+	123785080074640 [label="Pos: (1, -1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079921488 -> 123785080074640 [label="(0, -1)"]
+	123785079919440 -> 123785079921488 [label="(-1, 0)"]
+	123785079940624 [label="Pos: (3, 0)
+Visits: 4
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 1" fillcolor=whitesmoke shape=box style=filled]
+	123785079963472 [label="Pos: (3, -1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079940624 -> 123785079963472 [label="(0, -1)"]
+	123785080055504 [label="Pos: (2, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079940624 -> 123785080055504 [label="(-1, 0)"]
+	123785080074768 [label="Pos: (4, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079940624 -> 123785080074768 [label="(1, 0)"]
+	123785079919440 -> 123785079940624 [label="(1, 0)"]
+	123785079943056 [label="Pos: (2, 1)
+Visits: 10
+Q-Value: 5.00
+AvgReward: 0.50
+Depth: 3
+Fully Expanded" fillcolor=lightgoldenrodyellow shape=box style=filled]
+	123785079960784 [label="Pos: (3, 1)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 3" fillcolor=whitesmoke shape=box style=filled]
+	123785080074512 [label="Pos: (2, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079960784 -> 123785080074512 [label="(-1, 0)"]
+	123785079943056 -> 123785079960784 [label="(1, 0)"]
+	123785080011984 [label="Pos: (2, 2)
+Visits: 4
+Q-Value: 4.00
+AvgReward: 1.00
+Depth: 4
+TERMINAL (WIN)" fillcolor=palegreen shape=box style=filled]
+	123785079943056 -> 123785080011984 [label="(0, 1)"]
+	123785080012176 [label="Pos: (2, 0)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 3" fillcolor=whitesmoke shape=box style=filled]
+	123785080077072 [label="Pos: (2, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080012176 -> 123785080077072 [label="(0, 1)"]
+	123785079943056 -> 123785080012176 [label="(0, -1)"]
+	123785080028048 [label="Pos: (1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079943056 -> 123785080028048 [label="(-1, 0)"]
+	123785079919440 -> 123785079943056 [label="(0, 1)"]
+	123785079959696 [label="Pos: (2, -1)
+Visits: 4
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 1" fillcolor=whitesmoke shape=box style=filled]
+	123785079988752 [label="Pos: (1, -1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079959696 -> 123785079988752 [label="(-1, 0)"]
+	123785080056656 [label="Pos: (2, -2)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079959696 -> 123785080056656 [label="(0, -1)"]
+	123785080075024 [label="Pos: (3, -1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079959696 -> 123785080075024 [label="(1, 0)"]
+	123785079919440 -> 123785079959696 [label="(0, -1)"]
+	123785090113872 -> 123785079919440 [label="(1, 0)"]
+	123785079919952 [label="Pos: (1, -1)
+Visits: 16
+Q-Value: 1.00
+AvgReward: 0.06
+Depth: 2
+Fully Expanded" fillcolor=salmon shape=box style=filled]
+	123785079922000 [label="Pos: (0, -1)
+Visits: 5
+Q-Value: 1.00
+AvgReward: 0.20
+Depth: 3
+Fully Expanded" fillcolor=lightgrey shape=box style=filled]
+	123785079989264 [label="Pos: (0, 0)
+Visits: 1
+Q-Value: 1.00
+AvgReward: 1.00
+Depth: 4
+Untried Moves: 4" fillcolor=mediumseagreen shape=box style=filled]
+	123785079922000 -> 123785079989264 [label="(0, 1)"]
+	123785080026512 [label="Pos: (1, -1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079922000 -> 123785080026512 [label="(1, 0)"]
+	123785080028432 [label="Pos: (-1, -1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079922000 -> 123785080028432 [label="(-1, 0)"]
+	123785080077264 [label="Pos: (0, -2)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079922000 -> 123785080077264 [label="(0, -1)"]
+	123785079919952 -> 123785079922000 [label="(-1, 0)"]
+	123785079941648 [label="Pos: (2, -1)
+Visits: 4
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 1" fillcolor=whitesmoke shape=box style=filled]
+	123785079989392 [label="Pos: (1, -1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079941648 -> 123785079989392 [label="(-1, 0)"]
+	123785080056400 [label="Pos: (2, -2)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079941648 -> 123785080056400 [label="(0, -1)"]
+	123785080101648 [label="Pos: (2, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079941648 -> 123785080101648 [label="(0, 1)"]
+	123785079919952 -> 123785079941648 [label="(1, 0)"]
+	123785079959760 [label="Pos: (1, -2)
+Visits: 3
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 2" fillcolor=whitesmoke shape=box style=filled]
+	123785079990288 [label="Pos: (1, -3)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079959760 -> 123785079990288 [label="(0, -1)"]
+	123785080057296 [label="Pos: (0, -2)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079959760 -> 123785080057296 [label="(-1, 0)"]
+	123785079919952 -> 123785079959760 [label="(0, -1)"]
+	123785079962448 [label="Pos: (1, 0)
+Visits: 3
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 2" fillcolor=whitesmoke shape=box style=filled]
+	123785080010960 [label="Pos: (1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079962448 -> 123785080010960 [label="(0, 1)"]
+	123785080075536 [label="Pos: (0, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079962448 -> 123785080075536 [label="(-1, 0)"]
+	123785079919952 -> 123785079962448 [label="(0, 1)"]
+	123785090113872 -> 123785079919952 [label="(0, -1)"]
+	123785079920208 [label="Pos: (0, 0)
+Visits: 14
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 2
+Fully Expanded" fillcolor=whitesmoke shape=box style=filled]
+	123785079922512 [label="Pos: (0, 1)
+Visits: 4
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 1" fillcolor=whitesmoke shape=box style=filled]
+	123785079989520 [label="Pos: (1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079922512 -> 123785079989520 [label="(1, 0)"]
+	123785080056272 [label="Pos: (-1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079922512 -> 123785080056272 [label="(-1, 0)"]
+	123785080101520 [label="Pos: (0, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079922512 -> 123785080101520 [label="(0, -1)"]
+	123785079920208 -> 123785079922512 [label="(0, 1)"]
+	123785079942160 [label="Pos: (0, -1)
+Visits: 3
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 2" fillcolor=whitesmoke shape=box style=filled]
+	123785080010448 [label="Pos: (1, -1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079942160 -> 123785080010448 [label="(1, 0)"]
+	123785080057424 [label="Pos: (-1, -1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079942160 -> 123785080057424 [label="(-1, 0)"]
+	123785079920208 -> 123785079942160 [label="(0, -1)"]
+	123785079960272 [label="Pos: (-1, 0)
+Visits: 3
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 2" fillcolor=whitesmoke shape=box style=filled]
+	123785080025360 [label="Pos: (0, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079960272 -> 123785080025360 [label="(1, 0)"]
+	123785080075792 [label="Pos: (-2, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079960272 -> 123785080075792 [label="(-1, 0)"]
+	123785079920208 -> 123785079960272 [label="(-1, 0)"]
+	123785079962832 [label="Pos: (1, 0)
+Visits: 3
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 2" fillcolor=whitesmoke shape=box style=filled]
+	123785080028176 [label="Pos: (2, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079962832 -> 123785080028176 [label="(1, 0)"]
+	123785080100176 [label="Pos: (1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079962832 -> 123785080100176 [label="(0, 1)"]
+	123785079920208 -> 123785079962832 [label="(1, 0)"]
+	123785090113872 -> 123785079920208 [label="(-1, 0)"]
+	123785079920976 [label="Pos: (1, 1)
+Visits: 1262
+Q-Value: 1156.00
+AvgReward: 0.92
+Depth: 2
+Fully Expanded" fillcolor=mediumseagreen shape=box style=filled]
+	123785079939600 [label="Pos: (2, 1)
+Visits: 613
+Q-Value: 575.00
+AvgReward: 0.94
+Depth: 3
+Fully Expanded" fillcolor=mediumseagreen shape=box style=filled]
+	123785079961296 [label="Pos: (3, 1)
+Visits: 18
+Q-Value: 5.00
+AvgReward: 0.28
+Depth: 4
+Fully Expanded" fillcolor=lightgrey shape=box style=filled]
+	123785080055632 [label="Pos: (4, 1)
+Visits: 4
+Q-Value: 1.00
+AvgReward: 0.25
+Depth: 5
+Untried Moves: 4" fillcolor=lightgrey shape=box style=filled]
+	123785079961296 -> 123785080055632 [label="(1, 0)"]
+	123785080055824 [label="Pos: (3, 0)
+Visits: 4
+Q-Value: 1.00
+AvgReward: 0.25
+Depth: 5
+Untried Moves: 4" fillcolor=lightgrey shape=box style=filled]
+	123785079961296 -> 123785080055824 [label="(0, -1)"]
+	123785080056528 [label="Pos: (2, 1)
+Visits: 3
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079961296 -> 123785080056528 [label="(-1, 0)"]
+	123785080076560 [label="Pos: (3, 2)
+Visits: 6
+Q-Value: 3.00
+AvgReward: 0.50
+Depth: 5
+Untried Moves: 4" fillcolor=lightgoldenrodyellow shape=box style=filled]
+	123785079961296 -> 123785080076560 [label="(0, 1)"]
+	123785079939600 -> 123785079961296 [label="(1, 0)"]
+	123785080027024 [label="Pos: (2, 0)
+Visits: 16
+Q-Value: 4.00
+AvgReward: 0.25
+Depth: 4
+Fully Expanded" fillcolor=lightgrey shape=box style=filled]
+	123785080027408 [label="Pos: (2, -1)
+Visits: 4
+Q-Value: 1.00
+AvgReward: 0.25
+Depth: 5
+Untried Moves: 4" fillcolor=lightgrey shape=box style=filled]
+	123785080027024 -> 123785080027408 [label="(0, -1)"]
+	123785080056144 [label="Pos: (1, 0)
+Visits: 4
+Q-Value: 1.00
+AvgReward: 0.25
+Depth: 5
+Untried Moves: 4" fillcolor=lightgrey shape=box style=filled]
+	123785080027024 -> 123785080056144 [label="(-1, 0)"]
+	123785080076304 [label="Pos: (2, 1)
+Visits: 4
+Q-Value: 1.00
+AvgReward: 0.25
+Depth: 5
+Untried Moves: 4" fillcolor=lightgrey shape=box style=filled]
+	123785080027024 -> 123785080076304 [label="(0, 1)"]
+	123785080077840 [label="Pos: (3, 0)
+Visits: 3
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080027024 -> 123785080077840 [label="(1, 0)"]
+	123785079939600 -> 123785080027024 [label="(0, -1)"]
+	123785080027152 [label="Pos: (2, 2)
+Visits: 559
+Q-Value: 559.00
+AvgReward: 1.00
+Depth: 4
+TERMINAL (WIN)" fillcolor=palegreen shape=box style=filled]
+	123785079939600 -> 123785080027152 [label="(0, 1)"]
+	123785080027344 [label="Pos: (1, 1)
+Visits: 19
+Q-Value: 6.00
+AvgReward: 0.32
+Depth: 4
+Fully Expanded" fillcolor=lightgrey shape=box style=filled]
+	123785080055120 [label="Pos: (1, 2)
+Visits: 9
+Q-Value: 5.00
+AvgReward: 0.56
+Depth: 5
+Untried Moves: 4" fillcolor=lightgoldenrodyellow shape=box style=filled]
+	123785080027344 -> 123785080055120 [label="(0, 1)"]
+	123785080055312 [label="Pos: (1, 0)
+Visits: 3
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080027344 -> 123785080055312 [label="(0, -1)"]
+	123785080057040 [label="Pos: (2, 1)
+Visits: 3
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080027344 -> 123785080057040 [label="(1, 0)"]
+	123785080076752 [label="Pos: (0, 1)
+Visits: 3
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080027344 -> 123785080076752 [label="(-1, 0)"]
+	123785079939600 -> 123785080027344 [label="(-1, 0)"]
+	123785079920976 -> 123785079939600 [label="(1, 0)"]
+	123785079939792 [label="Pos: (1, 2)
+Visits: 613
+Q-Value: 575.00
+AvgReward: 0.94
+Depth: 3
+Fully Expanded" fillcolor=mediumseagreen shape=box style=filled]
+	123785079988304 [label="Pos: (1, 1)
+Visits: 20
+Q-Value: 7.00
+AvgReward: 0.35
+Depth: 4
+Fully Expanded" fillcolor=lightgrey shape=box style=filled]
+	123785080056784 [label="Pos: (1, 0)
+Visits: 5
+Q-Value: 2.00
+AvgReward: 0.40
+Depth: 5
+Untried Moves: 4" fillcolor=lightgrey shape=box style=filled]
+	123785079988304 -> 123785080056784 [label="(0, -1)"]
+	123785080076432 [label="Pos: (1, 2)
+Visits: 6
+Q-Value: 3.00
+AvgReward: 0.50
+Depth: 5
+Untried Moves: 4" fillcolor=lightgoldenrodyellow shape=box style=filled]
+	123785079988304 -> 123785080076432 [label="(0, 1)"]
+	123785080077328 [label="Pos: (0, 1)
+Visits: 3
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079988304 -> 123785080077328 [label="(-1, 0)"]
+	123785080098960 [label="Pos: (2, 1)
+Visits: 5
+Q-Value: 2.00
+AvgReward: 0.40
+Depth: 5
+Untried Moves: 4" fillcolor=lightgrey shape=box style=filled]
+	123785079988304 -> 123785080098960 [label="(1, 0)"]
+	123785079939792 -> 123785079988304 [label="(0, -1)"]
+	123785080027536 [label="Pos: (2, 2)
+Visits: 560
+Q-Value: 560.00
+AvgReward: 1.00
+Depth: 4
+TERMINAL (WIN)" fillcolor=palegreen shape=box style=filled]
+	123785079939792 -> 123785080027536 [label="(1, 0)"]
+	123785080027728 [label="Pos: (1, 3)
+Visits: 22
+Q-Value: 8.00
+AvgReward: 0.36
+Depth: 4
+Fully Expanded" fillcolor=lightgrey shape=box style=filled]
+	123785080056976 [label="Pos: (1, 4)
+Visits: 4
+Q-Value: 1.00
+AvgReward: 0.25
+Depth: 5
+Untried Moves: 4" fillcolor=lightgrey shape=box style=filled]
+	123785080027728 -> 123785080056976 [label="(0, 1)"]
+	123785080077456 [label="Pos: (2, 3)
+Visits: 7
+Q-Value: 3.00
+AvgReward: 0.43
+Depth: 5
+Untried Moves: 4" fillcolor=lightgoldenrodyellow shape=box style=filled]
+	123785080027728 -> 123785080077456 [label="(1, 0)"]
+	123785080077648 [label="Pos: (0, 3)
+Visits: 3
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080027728 -> 123785080077648 [label="(-1, 0)"]
+	123785080099024 [label="Pos: (1, 2)
+Visits: 7
+Q-Value: 4.00
+AvgReward: 0.57
+Depth: 5
+Untried Moves: 4" fillcolor=lightgoldenrodyellow shape=box style=filled]
+	123785080027728 -> 123785080099024 [label="(0, -1)"]
+	123785079939792 -> 123785080027728 [label="(0, 1)"]
+	123785080055376 [label="Pos: (0, 2)
+Visits: 10
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Fully Expanded" fillcolor=whitesmoke shape=box style=filled]
+	123785080057168 [label="Pos: (1, 2)
+Visits: 3
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080055376 -> 123785080057168 [label="(1, 0)"]
+	123785080077776 [label="Pos: (0, 3)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080055376 -> 123785080077776 [label="(0, 1)"]
+	123785080099344 [label="Pos: (-1, 2)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080055376 -> 123785080099344 [label="(-1, 0)"]
+	123785080100048 [label="Pos: (0, 1)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080055376 -> 123785080100048 [label="(0, -1)"]
+	123785079939792 -> 123785080055376 [label="(-1, 0)"]
+	123785079920976 -> 123785079939792 [label="(0, 1)"]
+	123785079939984 [label="Pos: (1, 0)
+Visits: 16
+Q-Value: 2.00
+AvgReward: 0.12
+Depth: 3
+Fully Expanded" fillcolor=lightgrey shape=box style=filled]
+	123785079990800 [label="Pos: (0, 0)
+Visits: 5
+Q-Value: 1.00
+AvgReward: 0.20
+Depth: 4
+Fully Expanded" fillcolor=lightgrey shape=box style=filled]
+	123785080076816 [label="Pos: (0, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079990800 -> 123785080076816 [label="(0, 1)"]
+	123785080100688 [label="Pos: (1, 0)
+Visits: 1
+Q-Value: 1.00
+AvgReward: 1.00
+Depth: 5
+Untried Moves: 4" fillcolor=mediumseagreen shape=box style=filled]
+	123785079990800 -> 123785080100688 [label="(1, 0)"]
+	123785080100880 [label="Pos: (0, -1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079990800 -> 123785080100880 [label="(0, -1)"]
+	123785080101840 [label="Pos: (-1, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079990800 -> 123785080101840 [label="(-1, 0)"]
+	123785079939984 -> 123785079990800 [label="(-1, 0)"]
+	123785080027792 [label="Pos: (1, 1)
+Visits: 3
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 2" fillcolor=whitesmoke shape=box style=filled]
+	123785080077968 [label="Pos: (0, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080027792 -> 123785080077968 [label="(-1, 0)"]
+	123785080100944 [label="Pos: (1, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080027792 -> 123785080100944 [label="(0, -1)"]
+	123785079939984 -> 123785080027792 [label="(0, 1)"]
+	123785080055952 [label="Pos: (1, -1)
+Visits: 4
+Q-Value: 1.00
+AvgReward: 0.25
+Depth: 4
+Untried Moves: 1" fillcolor=lightgrey shape=box style=filled]
+	123785080099408 [label="Pos: (1, -2)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080055952 -> 123785080099408 [label="(0, -1)"]
+	123785080101072 [label="Pos: (0, -1)
+Visits: 1
+Q-Value: 1.00
+AvgReward: 1.00
+Depth: 5
+Untried Moves: 4" fillcolor=mediumseagreen shape=box style=filled]
+	123785080055952 -> 123785080101072 [label="(-1, 0)"]
+	123785080101264 [label="Pos: (2, -1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080055952 -> 123785080101264 [label="(1, 0)"]
+	123785079939984 -> 123785080055952 [label="(0, -1)"]
+	123785080057552 [label="Pos: (2, 0)
+Visits: 3
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 2" fillcolor=whitesmoke shape=box style=filled]
+	123785080100496 [label="Pos: (2, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080057552 -> 123785080100496 [label="(0, 1)"]
+	123785080101392 [label="Pos: (1, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080057552 -> 123785080101392 [label="(-1, 0)"]
+	123785079939984 -> 123785080057552 [label="(1, 0)"]
+	123785079920976 -> 123785079939984 [label="(0, -1)"]
+	123785079942544 [label="Pos: (0, 1)
+Visits: 19
+Q-Value: 4.00
+AvgReward: 0.21
+Depth: 3
+Fully Expanded" fillcolor=lightgrey shape=box style=filled]
+	123785080011472 [label="Pos: (0, 0)
+Visits: 4
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 1" fillcolor=whitesmoke shape=box style=filled]
+	123785080076944 [label="Pos: (1, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080011472 -> 123785080076944 [label="(1, 0)"]
+	123785080099920 [label="Pos: (-1, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080011472 -> 123785080099920 [label="(-1, 0)"]
+	123785080101712 [label="Pos: (0, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080011472 -> 123785080101712 [label="(0, 1)"]
+	123785079942544 -> 123785080011472 [label="(0, -1)"]
+	123785080027920 [label="Pos: (0, 2)
+Visits: 8
+Q-Value: 4.00
+AvgReward: 0.50
+Depth: 4
+Fully Expanded" fillcolor=lightgoldenrodyellow shape=box style=filled]
+	123785080078096 [label="Pos: (0, 1)
+Visits: 2
+Q-Value: 2.00
+AvgReward: 1.00
+Depth: 5
+Untried Moves: 4" fillcolor=mediumseagreen shape=box style=filled]
+	123785080027920 -> 123785080078096 [label="(0, -1)"]
+	123785080099600 [label="Pos: (1, 2)
+Visits: 2
+Q-Value: 1.00
+AvgReward: 0.50
+Depth: 5
+Untried Moves: 4" fillcolor=lightgoldenrodyellow shape=box style=filled]
+	123785080027920 -> 123785080099600 [label="(1, 0)"]
+	123785080099728 [label="Pos: (0, 3)
+Visits: 2
+Q-Value: 1.00
+AvgReward: 0.50
+Depth: 5
+Untried Moves: 4" fillcolor=lightgoldenrodyellow shape=box style=filled]
+	123785080027920 -> 123785080099728 [label="(0, 1)"]
+	123785080099856 [label="Pos: (-1, 2)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080027920 -> 123785080099856 [label="(-1, 0)"]
+	123785079942544 -> 123785080027920 [label="(0, 1)"]
+	123785080056016 [label="Pos: (1, 1)
+Visits: 3
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 2" fillcolor=whitesmoke shape=box style=filled]
+	123785080078288 [label="Pos: (1, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080056016 -> 123785080078288 [label="(0, -1)"]
+	123785080100304 [label="Pos: (1, 2)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080056016 -> 123785080100304 [label="(0, 1)"]
+	123785079942544 -> 123785080056016 [label="(1, 0)"]
+	123785080074896 [label="Pos: (-1, 1)
+Visits: 3
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 2" fillcolor=whitesmoke shape=box style=filled]
+	123785080099152 [label="Pos: (-2, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080074896 -> 123785080099152 [label="(-1, 0)"]
+	123785080100624 [label="Pos: (0, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 5
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785080074896 -> 123785080100624 [label="(1, 0)"]
+	123785079942544 -> 123785080074896 [label="(-1, 0)"]
+	123785079920976 -> 123785079942544 [label="(-1, 0)"]
+	123785090113872 -> 123785079920976 [label="(0, 1)"]
+	123785091331216 -> 123785090113872 [label="(1, 0)"]
+	123785090117584 [label="Pos: (-1, 0)
+Visits: 43
+Q-Value: 5.00
+AvgReward: 0.12
+Depth: 1
+Fully Expanded" fillcolor=lightgrey shape=box style=filled]
+	123785079919696 [label="Pos: (-2, 0)
+Visits: 12
+Q-Value: 2.00
+AvgReward: 0.17
+Depth: 2
+Fully Expanded" fillcolor=lightgrey shape=box style=filled]
+	123785079920848 [label="Pos: (-2, 1)
+Visits: 3
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 2" fillcolor=whitesmoke shape=box style=filled]
+	123785079961424 [label="Pos: (-2, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079920848 -> 123785079961424 [label="(0, -1)"]
+	123785080075280 [label="Pos: (-3, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079920848 -> 123785080075280 [label="(-1, 0)"]
+	123785079919696 -> 123785079920848 [label="(0, 1)"]
+	123785079939152 [label="Pos: (-2, -1)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 3" fillcolor=whitesmoke shape=box style=filled]
+	123785079988880 [label="Pos: (-2, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079939152 -> 123785079988880 [label="(0, 1)"]
+	123785079919696 -> 123785079939152 [label="(0, -1)"]
+	123785079940752 [label="Pos: (-1, 0)
+Visits: 4
+Q-Value: 1.00
+AvgReward: 0.25
+Depth: 3
+Untried Moves: 1" fillcolor=lightgrey shape=box style=filled]
+	123785079942672 [label="Pos: (0, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079940752 -> 123785079942672 [label="(1, 0)"]
+	123785080010576 [label="Pos: (-1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079940752 -> 123785080010576 [label="(0, 1)"]
+	123785080025872 [label="Pos: (-2, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079940752 -> 123785080025872 [label="(-1, 0)"]
+	123785079919696 -> 123785079940752 [label="(1, 0)"]
+	123785079941264 [label="Pos: (-3, 0)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 3" fillcolor=whitesmoke shape=box style=filled]
+	123785079990160 [label="Pos: (-3, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079941264 -> 123785079990160 [label="(0, 1)"]
+	123785079919696 -> 123785079941264 [label="(-1, 0)"]
+	123785090117584 -> 123785079919696 [label="(-1, 0)"]
+	123785079920080 [label="Pos: (0, 0)
+Visits: 8
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 2
+Fully Expanded" fillcolor=whitesmoke shape=box style=filled]
+	123785079921872 [label="Pos: (-1, 0)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 3" fillcolor=whitesmoke shape=box style=filled]
+	123785079990416 [label="Pos: (-1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079921872 -> 123785079990416 [label="(0, 1)"]
+	123785079920080 -> 123785079921872 [label="(-1, 0)"]
+	123785079941776 [label="Pos: (1, 0)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 3" fillcolor=whitesmoke shape=box style=filled]
+	123785080011088 [label="Pos: (1, -1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079941776 -> 123785080011088 [label="(0, -1)"]
+	123785079920080 -> 123785079941776 [label="(1, 0)"]
+	123785079960400 [label="Pos: (0, 1)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 3" fillcolor=whitesmoke shape=box style=filled]
+	123785080028560 [label="Pos: (0, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079960400 -> 123785080028560 [label="(0, -1)"]
+	123785079920080 -> 123785079960400 [label="(0, 1)"]
+	123785079962960 [label="Pos: (0, -1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079920080 -> 123785079962960 [label="(0, -1)"]
+	123785090117584 -> 123785079920080 [label="(1, 0)"]
+	123785079920336 [label="Pos: (-1, 1)
+Visits: 14
+Q-Value: 3.00
+AvgReward: 0.21
+Depth: 2
+Fully Expanded" fillcolor=lightgrey shape=box style=filled]
+	123785079921360 [label="Pos: (-1, 0)
+Visits: 3
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 2" fillcolor=whitesmoke shape=box style=filled]
+	123785079962576 [label="Pos: (0, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079921360 -> 123785079962576 [label="(1, 0)"]
+	123785080075920 [label="Pos: (-1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079921360 -> 123785080075920 [label="(0, 1)"]
+	123785079920336 -> 123785079921360 [label="(0, -1)"]
+	123785079940112 [label="Pos: (-1, 2)
+Visits: 4
+Q-Value: 1.00
+AvgReward: 0.25
+Depth: 3
+Untried Moves: 1" fillcolor=lightgrey shape=box style=filled]
+	123785079989648 [label="Pos: (0, 2)
+Visits: 1
+Q-Value: 1.00
+AvgReward: 1.00
+Depth: 4
+Untried Moves: 4" fillcolor=mediumseagreen shape=box style=filled]
+	123785079940112 -> 123785079989648 [label="(1, 0)"]
+	123785079990032 [label="Pos: (-2, 2)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079940112 -> 123785079990032 [label="(-1, 0)"]
+	123785080012368 [label="Pos: (-1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079940112 -> 123785080012368 [label="(0, -1)"]
+	123785079920336 -> 123785079940112 [label="(0, 1)"]
+	123785079940944 [label="Pos: (0, 1)
+Visits: 4
+Q-Value: 1.00
+AvgReward: 0.25
+Depth: 3
+Untried Moves: 1" fillcolor=lightgrey shape=box style=filled]
+	123785079989776 [label="Pos: (0, 2)
+Visits: 1
+Q-Value: 1.00
+AvgReward: 1.00
+Depth: 4
+Untried Moves: 4" fillcolor=mediumseagreen shape=box style=filled]
+	123785079940944 -> 123785079989776 [label="(0, 1)"]
+	123785079991440 [label="Pos: (1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079940944 -> 123785079991440 [label="(1, 0)"]
+	123785080026768 [label="Pos: (-1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079940944 -> 123785080026768 [label="(-1, 0)"]
+	123785079920336 -> 123785079940944 [label="(1, 0)"]
+	123785079959888 [label="Pos: (-2, 1)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 3" fillcolor=whitesmoke shape=box style=filled]
+	123785079989904 [label="Pos: (-3, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079959888 -> 123785079989904 [label="(-1, 0)"]
+	123785079920336 -> 123785079959888 [label="(-1, 0)"]
+	123785090117584 -> 123785079920336 [label="(0, 1)"]
+	123785079920464 [label="Pos: (-1, -1)
+Visits: 8
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 2
+Fully Expanded" fillcolor=whitesmoke shape=box style=filled]
+	123785079922128 [label="Pos: (-2, -1)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 3" fillcolor=whitesmoke shape=box style=filled]
+	123785079990928 [label="Pos: (-1, -1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079922128 -> 123785079990928 [label="(1, 0)"]
+	123785079920464 -> 123785079922128 [label="(-1, 0)"]
+	123785079942288 [label="Pos: (-1, 0)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 3" fillcolor=whitesmoke shape=box style=filled]
+	123785080011600 [label="Pos: (-1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079942288 -> 123785080011600 [label="(0, 1)"]
+	123785079920464 -> 123785079942288 [label="(0, 1)"]
+	123785079960912 [label="Pos: (0, -1)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 3" fillcolor=whitesmoke shape=box style=filled]
+	123785080057680 [label="Pos: (1, -1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079960912 -> 123785080057680 [label="(1, 0)"]
+	123785079920464 -> 123785079960912 [label="(1, 0)"]
+	123785079988368 [label="Pos: (-1, -2)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079920464 -> 123785079988368 [label="(0, -1)"]
+	123785090117584 -> 123785079920464 [label="(0, -1)"]
+	123785091331216 -> 123785090117584 [label="(-1, 0)"]
+	123785079919376 [label="Pos: (0, -1)
+Visits: 43
+Q-Value: 5.00
+AvgReward: 0.12
+Depth: 1
+Fully Expanded" fillcolor=lightgrey shape=box style=filled]
+	123785079919824 [label="Pos: (-1, -1)
+Visits: 9
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 2
+Fully Expanded" fillcolor=whitesmoke shape=box style=filled]
+	123785079922384 [label="Pos: (-1, -2)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 3" fillcolor=whitesmoke shape=box style=filled]
+	123785079989008 [label="Pos: (0, -2)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079922384 -> 123785079989008 [label="(1, 0)"]
+	123785079919824 -> 123785079922384 [label="(0, -1)"]
+	123785079941392 [label="Pos: (-2, -1)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 3" fillcolor=whitesmoke shape=box style=filled]
+	123785080010704 [label="Pos: (-1, -1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079941392 -> 123785080010704 [label="(1, 0)"]
+	123785079919824 -> 123785079941392 [label="(-1, 0)"]
+	123785079960016 [label="Pos: (0, -1)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 3" fillcolor=whitesmoke shape=box style=filled]
+	123785080026896 [label="Pos: (1, -1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079960016 -> 123785080026896 [label="(1, 0)"]
+	123785079919824 -> 123785079960016 [label="(1, 0)"]
+	123785079962064 [label="Pos: (-1, 0)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 3" fillcolor=whitesmoke shape=box style=filled]
+	123785080076048 [label="Pos: (-1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079962064 -> 123785080076048 [label="(0, 1)"]
+	123785079919824 -> 123785079962064 [label="(0, 1)"]
+	123785079919376 -> 123785079919824 [label="(-1, 0)"]
+	123785079920720 [label="Pos: (0, 0)
+Visits: 17
+Q-Value: 5.00
+AvgReward: 0.29
+Depth: 2
+Fully Expanded" fillcolor=lightgrey shape=box style=filled]
+	123785079939344 [label="Pos: (1, 0)
+Visits: 4
+Q-Value: 1.00
+AvgReward: 0.25
+Depth: 3
+Untried Moves: 1" fillcolor=lightgrey shape=box style=filled]
+	123785079941200 [label="Pos: (2, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079939344 -> 123785079941200 [label="(1, 0)"]
+	123785079963216 [label="Pos: (0, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079939344 -> 123785079963216 [label="(-1, 0)"]
+	123785080012496 [label="Pos: (1, -1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079939344 -> 123785080012496 [label="(0, -1)"]
+	123785079920720 -> 123785079939344 [label="(1, 0)"]
+	123785079940368 [label="Pos: (-1, 0)
+Visits: 4
+Q-Value: 1.00
+AvgReward: 0.25
+Depth: 3
+Untried Moves: 1" fillcolor=lightgrey shape=box style=filled]
+	123785079942800 [label="Pos: (-1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079940368 -> 123785079942800 [label="(0, 1)"]
+	123785079988624 [label="Pos: (-2, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079940368 -> 123785079988624 [label="(-1, 0)"]
+	123785080026000 [label="Pos: (-1, -1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079940368 -> 123785080026000 [label="(0, -1)"]
+	123785079920720 -> 123785079940368 [label="(-1, 0)"]
+	123785079940560 [label="Pos: (0, -1)
+Visits: 3
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 2" fillcolor=whitesmoke shape=box style=filled]
+	123785079961936 [label="Pos: (-1, -1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079940560 -> 123785079961936 [label="(-1, 0)"]
+	123785080075408 [label="Pos: (0, -2)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079940560 -> 123785080075408 [label="(0, -1)"]
+	123785079920720 -> 123785079940560 [label="(0, -1)"]
+	123785079941008 [label="Pos: (0, 1)
+Visits: 5
+Q-Value: 3.00
+AvgReward: 0.60
+Depth: 3
+Fully Expanded" fillcolor=lightgoldenrodyellow shape=box style=filled]
+	123785079961552 [label="Pos: (0, 2)
+Visits: 1
+Q-Value: 1.00
+AvgReward: 1.00
+Depth: 4
+Untried Moves: 4" fillcolor=mediumseagreen shape=box style=filled]
+	123785079941008 -> 123785079961552 [label="(0, 1)"]
+	123785079961680 [label="Pos: (1, 1)
+Visits: 1
+Q-Value: 1.00
+AvgReward: 1.00
+Depth: 4
+Untried Moves: 4" fillcolor=mediumseagreen shape=box style=filled]
+	123785079941008 -> 123785079961680 [label="(1, 0)"]
+	123785079961808 [label="Pos: (0, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079941008 -> 123785079961808 [label="(0, -1)"]
+	123785079991568 [label="Pos: (-1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079941008 -> 123785079991568 [label="(-1, 0)"]
+	123785079920720 -> 123785079941008 [label="(0, 1)"]
+	123785079919376 -> 123785079920720 [label="(0, 1)"]
+	123785079921232 [label="Pos: (0, -2)
+Visits: 8
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 2
+Fully Expanded" fillcolor=whitesmoke shape=box style=filled]
+	123785079939536 [label="Pos: (0, -3)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 3" fillcolor=whitesmoke shape=box style=filled]
+	123785079990544 [label="Pos: (1, -3)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079939536 -> 123785079990544 [label="(1, 0)"]
+	123785079921232 -> 123785079939536 [label="(0, -1)"]
+	123785079941904 [label="Pos: (-1, -2)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 3" fillcolor=whitesmoke shape=box style=filled]
+	123785080011216 [label="Pos: (-1, -3)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079941904 -> 123785080011216 [label="(0, -1)"]
+	123785079921232 -> 123785079941904 [label="(-1, 0)"]
+	123785079960528 [label="Pos: (0, -1)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 3" fillcolor=whitesmoke shape=box style=filled]
+	123785080028688 [label="Pos: (0, -2)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079960528 -> 123785080028688 [label="(0, -1)"]
+	123785079921232 -> 123785079960528 [label="(0, 1)"]
+	123785079962192 [label="Pos: (1, -2)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079921232 -> 123785079962192 [label="(1, 0)"]
+	123785079919376 -> 123785079921232 [label="(0, -1)"]
+	123785079921744 [label="Pos: (1, -1)
+Visits: 8
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 2
+Fully Expanded" fillcolor=whitesmoke shape=box style=filled]
+	123785079939856 [label="Pos: (0, -1)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 3" fillcolor=whitesmoke shape=box style=filled]
+	123785079991056 [label="Pos: (1, -1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079939856 -> 123785079991056 [label="(1, 0)"]
+	123785079921744 -> 123785079939856 [label="(-1, 0)"]
+	123785079942416 [label="Pos: (2, -1)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 3" fillcolor=whitesmoke shape=box style=filled]
+	123785080011728 [label="Pos: (2, 0)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079942416 -> 123785080011728 [label="(0, 1)"]
+	123785079921744 -> 123785079942416 [label="(1, 0)"]
+	123785079961040 [label="Pos: (1, 0)
+Visits: 2
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 3" fillcolor=whitesmoke shape=box style=filled]
+	123785080074320 [label="Pos: (1, 1)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 4
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079961040 -> 123785080074320 [label="(0, 1)"]
+	123785079921744 -> 123785079961040 [label="(0, 1)"]
+	123785079962704 [label="Pos: (1, -2)
+Visits: 1
+Q-Value: 0.00
+AvgReward: 0.00
+Depth: 3
+Untried Moves: 4" fillcolor=whitesmoke shape=box style=filled]
+	123785079921744 -> 123785079962704 [label="(0, -1)"]
+	123785079919376 -> 123785079921744 [label="(1, 0)"]
+	123785091331216 -> 123785079919376 [label="(0, -1)"]
+}
