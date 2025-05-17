@@ -168,6 +168,7 @@ def play_battlesnake_mcts(num_games=25):
             simulation_depth=50, # Added a simulation depth limit
             num_threads=4
         )
+        
 
         game_steps = 0
         while True:
@@ -175,9 +176,13 @@ def play_battlesnake_mcts(num_games=25):
             json_state = env.get_json()
             observation = env._get_state()
             state1 = State(json_state=json_state, observation=observation)
+            state1 = State(json_state=json_state, observation=observation, agent_id=1)
+            state1 = State(json_state=json_state, observation=observation, agent_id=2)
+            state1 = State(json_state=json_state, observation=observation, agent_id=3)
 
             # Update the MCTS root, reusing the tree if possible
             mcts1.update_root(state1)
+            
 
             best_action1 = mcts1.run()
 

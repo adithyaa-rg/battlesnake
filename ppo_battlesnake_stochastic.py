@@ -643,6 +643,7 @@ class PPOTrainer:
         # Each agent's total_steps_trained will be updated internally by the PPOAgent.
         # This loop is for global environment steps.
         win_count = 0
+        termination = [False, False]
         for t_step_global in range(1, total_training_timesteps + 1):
             # Update policies for the game (can change per episode or less frequently)
             # For now, let's set them once per episode start (handled in the 'if is_episode_done' block)
@@ -709,6 +710,12 @@ class PPOTrainer:
                     #     rewards_all_snakes[i] += 1.0
                 # print("Dones and Rewards: ", terminated_all_snakes, rewards_all_snakes)
                 # print("Episode Termination: ", done_by_env, done_by_opponents)
+                if termination[i]:
+                    continue  # Already handled the terminal state, don't store further
+
+                if terminated_all_snakes[i]:
+                    termination[i] = True
+
                 self.agents[i].buffer.store_transition(
                     agents_processed_obs[i], # The obs for agent i
                     current_actions_learning[i],
@@ -739,7 +746,7 @@ class PPOTrainer:
             # Assuming self.num_learning_agents = 2 for the first team.
             done_by_maxlen = current_episode_length >= self.max_ep_len
             is_episode_done = done_by_opponents or done_by_maxlen
-            if done_by_env:
+            if done_by_env and is_episode_done:
                 win_count += 1
 
             # Policy Updates & Saving (for each learning agent)
@@ -780,6 +787,7 @@ class PPOTrainer:
 
             if is_episode_done:
                 self.total_episodes_completed += 1
+                termination = [False, False]
                 # Aggregate rewards for logging (e.g., average reward of learning agents)
                 avg_episode_reward_learning_agents = np.mean([current_episode_rewards[i] for i in range(self.num_learning_agents)])
                 self.episode_rewards_buffer.append(avg_episode_reward_learning_agents)
@@ -836,11 +844,11 @@ def main():
         "save_interval_steps": 50_000, # Per agent
         # everything had -0.2 for dying, +1 and -1 for win/loss
         # "ckpt_dir": "./models/PPO_BattleSnake_NEW_WIN_LOSS_PENALTIES_FOR_DEATH_AND_REWARDS_FOR_KILLS",
-        "ckpt_dir": "./models/PPO_BattleSnakes_go_offense_no_contact",
+        "ckpt_dir": "./models/PPO_BattleSnakes_go_offense_no_contact_hopefully_less_overfit",
         # Example: "./models/PPOBattlesnake_Corrected/agent_0_steps_50000.pth"
-        "load_model_path_agent0": "./models/PPO_BattleSnakes_go_offense_no_contact/agent_0_steps_2900000.pth", # Path for agent 0
-        "load_model_path_agent1": "./models/PPO_BattleSnakes_go_offense_no_contact/agent_1_steps_2900000.pth", # Path for agent 1
-        "render_mode": True, # Set to True to watch
+        "load_model_path_agent0": "", # Path for agent 0
+        "load_model_path_agent1": "", # Path for agent 1
+        "render_mode": False, # Set to True to watch
         "render_freq": 0.5, # Time in seconds between rendered frames, e.g., 0.1 for 10 FPS
     }
     """
