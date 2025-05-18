@@ -826,7 +826,7 @@ def main():
 
     config: Dict[str, Any] = {
         "env_id": 'BattleSnake',
-        "total_training_timesteps": 2_000_000, # This is per-agent effectively, or total env steps
+        "total_training_timesteps": 5_000_000, # This is per-agent effectively, or total env steps
         "rollout_steps": 2048,
         "hidden_dim": 64,
         "lr": 3e-4,
@@ -846,8 +846,8 @@ def main():
         # "ckpt_dir": "./models/PPO_BattleSnake_NEW_WIN_LOSS_PENALTIES_FOR_DEATH_AND_REWARDS_FOR_KILLS",
         "ckpt_dir": "./models/PPO_BattleSnakes_go_offense_no_contact_hopefully_less_overfit",
         # Example: "./models/PPOBattlesnake_Corrected/agent_0_steps_50000.pth"
-        "load_model_path_agent0": "./models/PPO_BattleSnakes_go_offense_no_contact_hopefully_less_overfit/agent_1_steps_1350000.pth", # Path for agent 0
-        "load_model_path_agent1": "./models/PPO_BattleSnakes_go_offense_no_contact_hopefully_less_overfit/agent_0_steps_1350000.pth", # Path for agent 1
+        "load_model_path_agent0": "./models/PPO_BattleSnakes_go_offense_no_contact_hopefully_less_overfit/agent_1_steps_6350001.pth", # Path for agent 0
+        "load_model_path_agent1": "./models/PPO_BattleSnakes_go_offense_no_contact_hopefully_less_overfit/agent_0_steps_6350001.pth", # Path for agent 1
         "render_mode": True, # Set to True to watch
         "render_freq": 0.5, # Time in seconds between rendered frames, e.g., 0.1 for 10 FPS
     }
