@@ -459,7 +459,7 @@ class PPOTrainer:
                  save_interval_steps: int = 50000,
                  ckpt_dir: str = "models/PPO",
                  render_mode: bool = False, # Changed from str to bool
-                 seed: int = 42,
+                 seed: int = np.random.randint(0, 10000),
                  max_ep_len: int = 500,
                  render_freq: float = None, # Should be float for time.sleep
                  dummy_agent: PPOAgent = None): # Used for config like action_dim
@@ -842,7 +842,7 @@ def main():
         "entropy_coef": 0.01,
         "value_loss_coef": 0.5,
         "max_grad_norm": 0.5,
-        "seed": 63,
+        "seed": np.random.randint(0, 10000),
         "max_ep_len": 500,
         "log_interval_episodes": 100,
         "save_interval_steps": 50_000, # Per agent
