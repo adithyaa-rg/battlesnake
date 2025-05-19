@@ -3,7 +3,7 @@ import pandas as pd
 import torch
 import time
 from battlesnake_gym.snake_gym import BattlesnakeGym
-from ppo_battlesnake import PolicyValueNetwork, get_agent_observed_state, initial_random_policy
+from ppo_battlesnake_stochastic import PolicyValueNetwork, get_agent_observed_state, initial_random_policy, team_ids
 
 actions = {
     0: "down",
@@ -21,14 +21,13 @@ env = BattlesnakeGym(
 win_counter = 0
 num_games = 0
 obs, _, _, _ = env.reset()
-
 for i in range(1000):
-    obs_inputs = [get_agent_observed_state(i, obs) for i in range(4)]
+    obs_inputs = [get_agent_observed_state(i, obs, team_ids[i]) for i in range(4)]
     obs_input = obs_inputs[0]
 
     actions_agent = np.zeros(4, dtype=np.float32)
-    model = PolicyValueNetwork(None, 4, hidden_dim=64)
-    model_path = "./models/PPO_Acrobot/ppo_steps_50000.pth"
+    model = PolicyValueNetwork(4, hidden_dim=64)
+    model_path = "./models/PPO_BattleSnakes_go_offense_no_contact_hopefully_less_overfit/agent_1_steps_15750001.pth"
     checkpoint = torch.load(model_path)
 
     model.load_state_dict(checkpoint['policy_state_dict'])

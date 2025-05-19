@@ -658,6 +658,10 @@ class PPOTrainer:
             # Get processed observations for all 4 snakes
             # obs_dict_all_snakes is the raw multi-snake observation from env.step or env.reset
             agents_processed_obs = [get_agent_observed_state(snake_idx, obs_dict_all_snakes, team_ids[snake_idx]) for snake_idx in range(4)]
+            # print(f"Agent 1: observed state 1: {agents_processed_obs[0]}")
+            # print(f"Agent 2: observed state 2: {agents_processed_obs[1]}")
+            # print(f"Agent 3: observed state 3: {agents_processed_obs[2]}")
+            # print(f"Agent 4: observed state 4: {agents_processed_obs[3]}")
 
             actions_for_env = [0] * 4 # List to hold actions for all 4 snakes
             
@@ -686,7 +690,7 @@ class PPOTrainer:
                     logging.error(f"Unknown policy type for snake {snake_idx}: {type(policy_object)}")
                     actions_for_env[snake_idx] = self.env.action_space[snake_idx].sample() # Fallback
 
-
+            print(f"Actions for all snakes: {actions_for_env}")
             next_obs_dict_all_snakes, rewards_all_snakes, terminated_all_snakes, info_all_snakes = self.env.step(actions_for_env)
             # done_by_env = (terminated_all_snakes[i] for i in range(self.num_learning_agents))
             terminated_all_snakes_list = list(terminated_all_snakes.values())
@@ -838,7 +842,7 @@ def main():
         "entropy_coef": 0.01,
         "value_loss_coef": 0.5,
         "max_grad_norm": 0.5,
-        "seed": 42,
+        "seed": 63,
         "max_ep_len": 500,
         "log_interval_episodes": 100,
         "save_interval_steps": 50_000, # Per agent
