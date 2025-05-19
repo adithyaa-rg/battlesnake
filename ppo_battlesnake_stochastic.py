@@ -512,7 +512,7 @@ class PPOTrainer:
 
         try:
             files_in_load_dir = sorted(os.listdir(self.ckpt_dir), key=lambda x: int(x.split('_')[-1][:-4]))
-            print(f"Files in checkpoint directory: {files_in_load_dir}")
+            # print(f"Files in checkpoint directory: {files_in_load_dir}")
         except FileNotFoundError:
             logging.warning(f"Checkpoint directory {self.ckpt_dir} does not exist. Cannot load policies.")
             return
@@ -531,12 +531,12 @@ class PPOTrainer:
                         loaded_policy_net.load_state_dict(checkpoint['policy_state_dict'])
                         loaded_policy_net.eval()
                         self.existing_policies.append(loaded_policy_net)
-                        logging.info(f"Loaded existing policy from {file_path}")
+                        # logging.info(f"Loaded existing policy from {file_path}")
                     else:
                         logging.warning(f"Checkpoint {file_path} does not contain 'policy_state_dict'. Skipping.")
                 except Exception as e:
                     logging.error(f"Error loading policy from {file_path}: {e}")
-        logging.info(f"Current existing policies count: {len(self.existing_policies)}")
+        # logging.info(f"Current existing policies count: {len(self.existing_policies)}")
 
     def softmax(self, x):
         e_x = np.exp(x - np.max(x))  # for numerical stability
@@ -846,9 +846,9 @@ def main():
         # "ckpt_dir": "./models/PPO_BattleSnake_NEW_WIN_LOSS_PENALTIES_FOR_DEATH_AND_REWARDS_FOR_KILLS",
         "ckpt_dir": "./models/PPO_BattleSnakes_go_offense_no_contact_hopefully_less_overfit",
         # Example: "./models/PPOBattlesnake_Corrected/agent_0_steps_50000.pth"
-        "load_model_path_agent0": "./models/PPO_BattleSnakes_go_offense_no_contact_hopefully_less_overfit/agent_1_steps_7300000.pth", # Path for agent 0
-        "load_model_path_agent1": "./models/PPO_BattleSnakes_go_offense_no_contact_hopefully_less_overfit/agent_0_steps_7300000.pth", # Path for agent 1
-        "render_mode": False, # Set to True to watch
+        "load_model_path_agent0": "./models/PPO_BattleSnakes_go_offense_no_contact_hopefully_less_overfit/agent_1_steps_15750001.pth", # Path for agent 0
+        "load_model_path_agent1": "./models/PPO_BattleSnakes_go_offense_no_contact_hopefully_less_overfit/agent_0_steps_15750001.pth", # Path for agent 1
+        "render_mode": True, # Set to True to watch
         "render_freq": 0.5, # Time in seconds between rendered frames, e.g., 0.1 for 10 FPS
     }
     """
@@ -922,7 +922,7 @@ def main():
         dummy_agent=ppo_agent1 # Used for params when loading opponent policies
     )
 
-    logging.info(f"Initial existing policies: {[type(p) for p in trainer.existing_policies]}")
+    # logging.info(f"Initial existing policies: {[type(p) for p in trainer.existing_policies]}")
     # policies, indices = trainer._set_policies_for_agents()
     # logging.info(f"Sample game policies setup: {[type(p) for p in policies]}, Indices: {indices}")
 

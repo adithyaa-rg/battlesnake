@@ -1,0 +1,67 @@
+2025-05-18 18:24:49,936 - INFO - Eps: 100 | Global Steps (Agent 0): 10503981 | Avg Reward (last 100): -0.45 | Win %: 59.0 | Avg Len: 39.81 | Time: 16.87s
+2025-05-18 18:25:03,870 - INFO - Eps: 200 | Global Steps (Agent 0): 10507506 | Avg Reward (last 100): -0.50 | Win %: 55.50000000000001 | Avg Len: 35.25 | Time: 30.81s
+2025-05-18 18:25:21,081 - INFO - Eps: 300 | Global Steps (Agent 0): 10511953 | Avg Reward (last 100): -0.65 | Win %: 49.666666666666664 | Avg Len: 44.47 | Time: 48.02s
+2025-05-18 18:25:38,311 - INFO - Eps: 400 | Global Steps (Agent 0): 10516233 | Avg Reward (last 100): -0.43 | Win %: 51.74999999999999 | Avg Len: 42.80 | Time: 65.25s
+2025-05-18 18:25:54,917 - INFO - Eps: 500 | Global Steps (Agent 0): 10520465 | Avg Reward (last 100): -0.48 | Win %: 52.400000000000006 | Avg Len: 42.32 | Time: 81.85s
+2025-05-18 18:26:10,347 - INFO - Eps: 600 | Global Steps (Agent 0): 10524353 | Avg Reward (last 100): -0.55 | Win %: 51.33333333333333 | Avg Len: 38.88 | Time: 97.28s
+2025-05-18 18:26:26,414 - INFO - Eps: 700 | Global Steps (Agent 0): 10528429 | Avg Reward (last 100): -0.48 | Win %: 51.857142857142854 | Avg Len: 40.76 | Time: 113.35s
+2025-05-18 18:26:44,084 - INFO - Eps: 800 | Global Steps (Agent 0): 10532660 | Avg Reward (last 100): -0.46 | Win %: 52.625 | Avg Len: 42.31 | Time: 131.02s
+2025-05-18 18:27:01,780 - INFO - Eps: 900 | Global Steps (Agent 0): 10537233 | Avg Reward (last 100): -0.42 | Win %: 53.333333333333336 | Avg Len: 45.73 | Time: 148.72s
+2025-05-18 18:27:17,005 - INFO - Eps: 1000 | Global Steps (Agent 0): 10541114 | Avg Reward (last 100): -0.49 | Win %: 53.7 | Avg Len: 38.81 | Time: 163.94s
+2025-05-18 18:27:33,352 - INFO - Eps: 1100 | Global Steps (Agent 0): 10545133 | Avg Reward (last 100): -0.55 | Win %: 53.36363636363637 | Avg Len: 40.19 | Time: 180.29s
+2025-05-18 18:27:49,752 - INFO - Eps: 1200 | Global Steps (Agent 0): 10549355 | Avg Reward (last 100): -0.50 | Win %: 53.5 | Avg Len: 42.22 | Time: 196.69s
+2025-05-18 18:27:52,747 - INFO - Saved model to ./models/PPO_BattleSnakes_go_offense_no_contact_hopefully_less_overfit/agent_0_steps_10550000.pth at 10550000 steps.
+2025-05-18 18:27:56,859 - INFO - Saved model to ./models/PPO_BattleSnakes_go_offense_no_contact_hopefully_less_overfit/agent_1_steps_10550000.pth at 10550000 steps.
+2025-05-18 18:28:16,008 - INFO - Eps: 1300 | Global Steps (Agent 0): 10553829 | Avg Reward (last 100): -0.46 | Win %: 53.84615384615385 | Avg Len: 44.74 | Time: 222.94s
+2025-05-18 18:28:32,527 - INFO - Eps: 1400 | Global Steps (Agent 0): 10558076 | Avg Reward (last 100): -0.53 | Win %: 53.642857142857146 | Avg Len: 42.47 | Time: 239.46s
+2025-05-18 18:28:50,200 - INFO - Eps: 1500 | Global Steps (Agent 0): 10562477 | Avg Reward (last 100): -0.45 | Win %: 53.93333333333333 | Avg Len: 44.01 | Time: 257.14s
+2025-05-18 18:29:06,514 - INFO - Eps: 1600 | Global Steps (Agent 0): 10566670 | Avg Reward (last 100): -0.67 | Win %: 52.93750000000001 | Avg Len: 41.93 | Time: 273.45s
+2025-05-18 18:29:21,280 - INFO - Eps: 1700 | Global Steps (Agent 0): 10570426 | Avg Reward (last 100): -0.59 | Win %: 52.294117647058826 | Avg Len: 37.56 | Time: 288.22s
+2025-05-18 18:29:39,370 - INFO - Eps: 1800 | Global Steps (Agent 0): 10574554 | Avg Reward (last 100): -0.48 | Win %: 52.44444444444445 | Avg Len: 41.28 | Time: 306.31s
+2025-05-18 18:29:56,311 - INFO - Eps: 1900 | Global Steps (Agent 0): 10578725 | Avg Reward (last 100): -0.43 | Win %: 52.89473684210526 | Avg Len: 41.71 | Time: 323.25s
+2025-05-18 18:30:13,895 - INFO - Eps: 2000 | Global Steps (Agent 0): 10583085 | Avg Reward (last 100): -0.45 | Win %: 53.0 | Avg Len: 43.60 | Time: 340.83s
+2025-05-18 18:30:29,243 - INFO - Eps: 2100 | Global Steps (Agent 0): 10586989 | Avg Reward (last 100): -0.50 | Win %: 53.142857142857146 | Avg Len: 39.04 | Time: 356.18s
+2025-05-18 18:30:43,035 - INFO - Eps: 2200 | Global Steps (Agent 0): 10590469 | Avg Reward (last 100): -0.56 | Win %: 52.90909090909091 | Avg Len: 34.80 | Time: 369.97s
+2025-05-18 18:30:58,659 - INFO - Eps: 2300 | Global Steps (Agent 0): 10594295 | Avg Reward (last 100): -0.51 | Win %: 52.91304347826087 | Avg Len: 38.26 | Time: 385.59s
+2025-05-18 18:31:17,585 - INFO - Eps: 2400 | Global Steps (Agent 0): 10598902 | Avg Reward (last 100): -0.56 | Win %: 52.708333333333336 | Avg Len: 46.07 | Time: 404.52s
+2025-05-18 18:31:22,649 - INFO - Saved model to ./models/PPO_BattleSnakes_go_offense_no_contact_hopefully_less_overfit/agent_0_steps_10600000.pth at 10600000 steps.
+2025-05-18 18:31:27,320 - INFO - Saved model to ./models/PPO_BattleSnakes_go_offense_no_contact_hopefully_less_overfit/agent_1_steps_10600000.pth at 10600000 steps.
+2025-05-18 18:31:42,276 - INFO - Eps: 2500 | Global Steps (Agent 0): 10602802 | Avg Reward (last 100): -0.50 | Win %: 52.76 | Avg Len: 39.00 | Time: 429.21s
+2025-05-18 18:31:58,894 - INFO - Eps: 2600 | Global Steps (Agent 0): 10607058 | Avg Reward (last 100): -0.52 | Win %: 52.61538461538462 | Avg Len: 42.56 | Time: 445.83s
+2025-05-18 18:32:15,743 - INFO - Eps: 2700 | Global Steps (Agent 0): 10611380 | Avg Reward (last 100): -0.55 | Win %: 52.37037037037037 | Avg Len: 43.22 | Time: 462.68s
+2025-05-18 18:32:36,145 - INFO - Eps: 2800 | Global Steps (Agent 0): 10615276 | Avg Reward (last 100): -0.41 | Win %: 52.642857142857146 | Avg Len: 38.96 | Time: 483.08s
+2025-05-18 18:32:54,960 - INFO - Eps: 2900 | Global Steps (Agent 0): 10619360 | Avg Reward (last 100): -0.44 | Win %: 52.89655172413793 | Avg Len: 40.84 | Time: 501.90s
+2025-05-18 18:33:14,888 - INFO - Eps: 3000 | Global Steps (Agent 0): 10623533 | Avg Reward (last 100): -0.52 | Win %: 52.86666666666666 | Avg Len: 41.73 | Time: 521.82s
+2025-05-18 18:33:35,963 - INFO - Eps: 3100 | Global Steps (Agent 0): 10628723 | Avg Reward (last 100): -0.42 | Win %: 53.03225806451613 | Avg Len: 51.90 | Time: 542.90s
+2025-05-18 18:33:57,255 - INFO - Eps: 3200 | Global Steps (Agent 0): 10633508 | Avg Reward (last 100): -0.49 | Win %: 53.09374999999999 | Avg Len: 47.85 | Time: 564.19s
+2025-05-18 18:34:16,171 - INFO - Eps: 3300 | Global Steps (Agent 0): 10637809 | Avg Reward (last 100): -0.58 | Win %: 52.96969696969697 | Avg Len: 43.01 | Time: 583.11s
+2025-05-18 18:34:39,464 - INFO - Eps: 3400 | Global Steps (Agent 0): 10642331 | Avg Reward (last 100): -0.58 | Win %: 52.794117647058826 | Avg Len: 45.22 | Time: 606.40s
+2025-05-18 18:35:01,675 - INFO - Eps: 3500 | Global Steps (Agent 0): 10646778 | Avg Reward (last 100): -0.39 | Win %: 53.142857142857146 | Avg Len: 44.47 | Time: 628.61s
+2025-05-18 18:35:17,375 - INFO - Saved model to ./models/PPO_BattleSnakes_go_offense_no_contact_hopefully_less_overfit/agent_0_steps_10650000.pth at 10650000 steps.
+2025-05-18 18:35:21,838 - INFO - Saved model to ./models/PPO_BattleSnakes_go_offense_no_contact_hopefully_less_overfit/agent_1_steps_10650000.pth at 10650000 steps.
+2025-05-18 18:35:30,439 - INFO - Eps: 3600 | Global Steps (Agent 0): 10651177 | Avg Reward (last 100): -0.36 | Win %: 53.52777777777777 | Avg Len: 43.99 | Time: 657.37s
+2025-05-18 18:35:59,456 - INFO - Eps: 3700 | Global Steps (Agent 0): 10655397 | Avg Reward (last 100): -0.52 | Win %: 53.51351351351351 | Avg Len: 42.20 | Time: 686.39s
+2025-05-18 18:36:21,094 - INFO - Eps: 3800 | Global Steps (Agent 0): 10659756 | Avg Reward (last 100): -0.47 | Win %: 53.57894736842105 | Avg Len: 43.59 | Time: 708.03s
+2025-05-18 18:36:44,979 - INFO - Eps: 3900 | Global Steps (Agent 0): 10664698 | Avg Reward (last 100): -0.48 | Win %: 53.61538461538462 | Avg Len: 49.42 | Time: 731.91s
+2025-05-18 18:37:04,141 - INFO - Eps: 4000 | Global Steps (Agent 0): 10668959 | Avg Reward (last 100): -0.49 | Win %: 53.6 | Avg Len: 42.61 | Time: 751.08s
+2025-05-18 18:37:22,805 - INFO - Eps: 4100 | Global Steps (Agent 0): 10673097 | Avg Reward (last 100): -0.48 | Win %: 53.6829268292683 | Avg Len: 41.38 | Time: 769.74s
+2025-05-18 18:37:39,412 - INFO - Eps: 4200 | Global Steps (Agent 0): 10676726 | Avg Reward (last 100): -0.49 | Win %: 53.642857142857146 | Avg Len: 36.29 | Time: 786.35s
+2025-05-18 18:37:58,675 - INFO - Eps: 4300 | Global Steps (Agent 0): 10680801 | Avg Reward (last 100): -0.47 | Win %: 53.674418604651166 | Avg Len: 40.75 | Time: 805.61s
+2025-05-18 18:38:15,316 - INFO - Eps: 4400 | Global Steps (Agent 0): 10684488 | Avg Reward (last 100): -0.45 | Win %: 53.81818181818182 | Avg Len: 36.87 | Time: 822.25s
+2025-05-18 18:38:34,484 - INFO - Eps: 4500 | Global Steps (Agent 0): 10688567 | Avg Reward (last 100): -0.52 | Win %: 53.75555555555556 | Avg Len: 40.79 | Time: 841.42s
+2025-05-18 18:38:52,748 - INFO - Eps: 4600 | Global Steps (Agent 0): 10692593 | Avg Reward (last 100): -0.47 | Win %: 53.7608695652174 | Avg Len: 40.26 | Time: 859.68s
+2025-05-18 18:39:12,292 - INFO - Eps: 4700 | Global Steps (Agent 0): 10696962 | Avg Reward (last 100): -0.56 | Win %: 53.680851063829785 | Avg Len: 43.69 | Time: 879.23s
+2025-05-18 18:39:26,344 - INFO - Saved model to ./models/PPO_BattleSnakes_go_offense_no_contact_hopefully_less_overfit/agent_0_steps_10700000.pth at 10700000 steps.
+2025-05-18 18:39:30,213 - INFO - Saved model to ./models/PPO_BattleSnakes_go_offense_no_contact_hopefully_less_overfit/agent_1_steps_10700000.pth at 10700000 steps.
+2025-05-18 18:39:38,233 - INFO - Eps: 4800 | Global Steps (Agent 0): 10700826 | Avg Reward (last 100): -0.46 | Win %: 53.75 | Avg Len: 38.64 | Time: 905.17s
+2025-05-18 18:39:56,142 - INFO - Eps: 4900 | Global Steps (Agent 0): 10704759 | Avg Reward (last 100): -0.43 | Win %: 53.85714285714286 | Avg Len: 39.33 | Time: 923.08s
+2025-05-18 18:40:16,764 - INFO - Eps: 5000 | Global Steps (Agent 0): 10708883 | Avg Reward (last 100): -0.49 | Win %: 53.839999999999996 | Avg Len: 41.24 | Time: 943.70s
+2025-05-18 18:40:36,923 - INFO - Eps: 5100 | Global Steps (Agent 0): 10713224 | Avg Reward (last 100): -0.58 | Win %: 53.64705882352941 | Avg Len: 43.41 | Time: 963.86s
+2025-05-18 18:40:56,889 - INFO - Eps: 5200 | Global Steps (Agent 0): 10717545 | Avg Reward (last 100): -0.46 | Win %: 53.69230769230769 | Avg Len: 43.21 | Time: 983.82s
+2025-05-18 18:41:15,618 - INFO - Eps: 5300 | Global Steps (Agent 0): 10721697 | Avg Reward (last 100): -0.59 | Win %: 53.509433962264154 | Avg Len: 41.52 | Time: 1002.55s
+2025-05-18 18:41:34,894 - INFO - Eps: 5400 | Global Steps (Agent 0): 10725729 | Avg Reward (last 100): -0.49 | Win %: 53.53703703703704 | Avg Len: 40.32 | Time: 1021.83s
+2025-05-18 18:41:54,336 - INFO - Eps: 5500 | Global Steps (Agent 0): 10729985 | Avg Reward (last 100): -0.48 | Win %: 53.527272727272724 | Avg Len: 42.56 | Time: 1041.27s
+2025-05-18 18:42:13,645 - INFO - Eps: 5600 | Global Steps (Agent 0): 10734310 | Avg Reward (last 100): -0.58 | Win %: 53.35714285714286 | Avg Len: 43.25 | Time: 1060.58s
+2025-05-18 18:42:32,658 - INFO - Eps: 5700 | Global Steps (Agent 0): 10738405 | Avg Reward (last 100): -0.48 | Win %: 53.421052631578945 | Avg Len: 40.95 | Time: 1079.59s
+2025-05-18 18:42:53,870 - INFO - Eps: 5800 | Global Steps (Agent 0): 10742855 | Avg Reward (last 100): -0.44 | Win %: 53.5344827586207 | Avg Len: 44.50 | Time: 1100.81s
+2025-05-18 18:43:16,426 - INFO - Eps: 5900 | Global Steps (Agent 0): 10747455 | Avg Reward (last 100): -0.54 | Win %: 53.44067796610169 | Avg Len: 46.00 | Time: 1123.36s
