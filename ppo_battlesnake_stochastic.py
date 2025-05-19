@@ -852,7 +852,7 @@ def main():
         # Example: "./models/PPOBattlesnake_Corrected/agent_0_steps_50000.pth"
         "load_model_path_agent0": "./models/PPO_BattleSnakes_go_offense_no_contact_hopefully_less_overfit/agent_1_steps_15750001.pth", # Path for agent 0
         "load_model_path_agent1": "./models/PPO_BattleSnakes_go_offense_no_contact_hopefully_less_overfit/agent_0_steps_15750001.pth", # Path for agent 1
-        "render_mode": True, # Set to True to watch
+        "render_mode": False, # Set to True to watch
         "render_freq": 0.5, # Time in seconds between rendered frames, e.g., 0.1 for 10 FPS
     }
     """
