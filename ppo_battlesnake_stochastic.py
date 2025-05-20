@@ -690,7 +690,7 @@ class PPOTrainer:
                     logging.error(f"Unknown policy type for snake {snake_idx}: {type(policy_object)}")
                     actions_for_env[snake_idx] = self.env.action_space[snake_idx].sample() # Fallback
 
-            print(f"Actions for all snakes: {actions_for_env}")
+            # print(f"Actions for all snakes: {actions_for_env}")
             next_obs_dict_all_snakes, rewards_all_snakes, terminated_all_snakes, info_all_snakes = self.env.step(actions_for_env)
             # done_by_env = (terminated_all_snakes[i] for i in range(self.num_learning_agents))
             terminated_all_snakes_list = list(terminated_all_snakes.values())
@@ -848,11 +848,11 @@ def main():
         "save_interval_steps": 50_000, # Per agent
         # everything had -0.2 for dying, +1 and -1 for win/loss
         # "ckpt_dir": "./models/PPO_BattleSnake_NEW_WIN_LOSS_PENALTIES_FOR_DEATH_AND_REWARDS_FOR_KILLS",
-        "ckpt_dir": "./models/PPO_battlesnake_all_possible_overfitting_removed",
+        "ckpt_dir": "./models/PPO_BattleSnakes_go_offense_no_contact_hopefully_less_overfit",
         # Example: "./models/PPOBattlesnake_Corrected/agent_0_steps_50000.pth"
-        "load_model_path_agent0": None, # Path for agent 0
-        "load_model_path_agent1": None, # Path for agent 1
-        "render_mode": False, # Set to True to watch
+        "load_model_path_agent0": "models/PPO_BattleSnake_NEW_WIN_LOSS_PENALTIES_FOR_DEATH_AND_REWARDS_FOR_KILLS/agent_0_steps_1600001.pth", # Path for agent 0
+        "load_model_path_agent1": "models/PPO_BattleSnake_NEW_WIN_LOSS_PENALTIES_FOR_DEATH_AND_REWARDS_FOR_KILLS/agent_0_steps_1600001.pth", # Path for agent 1
+        "render_mode": True, # Set to True to watch
         "render_freq": 0.5, # Time in seconds between rendered frames, e.g., 0.1 for 10 FPS
     }
     """
